@@ -13,7 +13,7 @@ const history = createBrowserHistory({
 
 export const AppContext = createContext()
 
-export AppProvider = ({ children }) => (
+export const AppProvider = ({ children }) => (
   <AppContext.Provider
     value={{
       useLoading: useReducer(loadingReducer, initLoadingState),
@@ -21,7 +21,7 @@ export AppProvider = ({ children }) => (
       useAuth: useReducer(authReducer, initAuthState),
       useToast: useReducer(toastReducer, initToastState),
       useModal: useReducer(modalReducer, initModalState),
-      useCheckout: useReducer(checkoutReducer, initCheckoutState)
+      useCheckout: useReducer(checkoutReducer, initCheckoutState),
       history
     }}
   >
