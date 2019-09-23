@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import InputComponent from '../inputs/InputComponent'
 import FieldComponent from '../fields/FieldComponent'
+import Label from '../label/Label'
 
 const Desktop = () => {
   const [username, setUsername] = useState()
@@ -22,13 +23,8 @@ const Desktop = () => {
     <div>
       <h1>Test</h1>
       <form onSubmit={handleSubmit}>
-        <InputComponent
-          name='username'
-          placeholder='yes we can'
-          handleChange={handleName}
-        />
         <FieldComponent
-          label={<label>Email*</label>}
+          label={<Label name='Email *' />}
           name='email'
           type='email'
           placeholder='ex: username@mail.com'
