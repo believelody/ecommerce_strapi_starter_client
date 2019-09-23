@@ -6,14 +6,12 @@ import LoginPage from '../../pages/LoginPage'
 
 const Main = ({}) => {
   return (
-    <Pane width='75%' height='100%' margin={0} padding={0}>
+    <Pane width='80%' height='100%' margin={0} padding={0}>
       <main>
-        <BrowserRouter>
-          <Switch>
-            <Route path='/' exact component={HomePage} />
-            <Route path='/login' exact component={LoginPage} />
-          </Switch>
-        </BrowserRouter>
+        <Switch>
+          <Route path='/' exact component={HomePage} />
+          <Route path='/login' exact component={LoginPage} />
+        </Switch>
       </main>
     </Pane>
   )
