@@ -1,39 +1,23 @@
-import React, { useState } from 'react'
-import InputComponent from '../inputs/InputComponent'
-import FieldComponent from '../fields/FieldComponent'
-import Label from '../label/Label'
+import React from 'react'
+import { Pane, Text } from 'evergreen-ui'
 
 const Desktop = () => {
-  const [username, setUsername] = useState()
-  const [email, setEmail] = useState()
-  const [errors, setErrors] = useState(null)
-
-  const handleName = e => setUsername(e.target.value)
-  const handleEmail = e => setEmail(e.target.value)
-
-  const handleSubmit = e => {
-    e.preventDefault()
-    setErrors(null)
-    if (!email) {
-      setErrors({ email: 'Email is required' })
-    }
-  }
-
   return (
-    <div>
-      <h1>Test</h1>
-      <form onSubmit={handleSubmit}>
-        <FieldComponent
-          label={<Label name='Email *' />}
-          name='email'
-          type='email'
-          placeholder='ex: username@mail.com'
-          handleChange={handleEmail}
-          error={errors && errors.email}
-        />
-        <input type='submit' value='Submit' />
-      </form>
-    </div>
+    <Pane
+      display='flex'
+      justifyContent="center"
+      alignItems="center"
+      padding={0}
+      margin={0}
+      height='97vh'
+    >
+      <Pane width='25%' height='100%' margin={0} padding={0}>
+        <Text>Pane 1</Text>
+      </Pane>
+      <Pane width='75%' height='100%' margin={0} padding={0}>
+        <Text>Pane 2</Text>
+      </Pane>
+    </Pane>
   )
 }
 

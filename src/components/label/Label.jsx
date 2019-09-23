@@ -1,9 +1,11 @@
 import React from 'react'
-import { Heading, Pane } from 'evergreen-ui'
+import { Heading, Pane, Strong } from 'evergreen-ui'
 
 const Label = ({ name }) => (
   <Pane>
-    <Heading size={500}>{name}</Heading>
+    <Heading size={500}>
+      <Strong>{name}</Strong>
+    </Heading>
   </Pane>
 )
 
