@@ -1,5 +1,7 @@
 import React from 'react'
 import { Pane, Text } from 'evergreen-ui'
+import Sidenav from '../sidenav/Sidenav'
+import Main from '../main/Main'
 
 const Desktop = () => {
   return (
@@ -11,12 +13,8 @@ const Desktop = () => {
       margin={0}
       height='97vh'
     >
-      <Pane width='25%' height='100%' margin={0} padding={0}>
-        <Text>Pane 1</Text>
-      </Pane>
-      <Pane width='75%' height='100%' margin={0} padding={0}>
-        <Text>Pane 2</Text>
-      </Pane>
+      <Sidenav />
+      <Main />
     </Pane>
   )
 }
