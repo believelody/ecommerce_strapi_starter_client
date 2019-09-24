@@ -4,6 +4,7 @@ import { Pane, Text } from 'evergreen-ui'
 import HomePage from '../../pages/HomePage'
 import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
+import PasswordForgottenPage from '../../pages/PasswordForgottenPage'
 
 const Main = ({}) => {
   return (
@@ -13,6 +14,7 @@ const Main = ({}) => {
           <Route path='/' exact component={HomePage} />
           <Route path='/login' exact component={LoginPage} />
           <Route path='/register' exact component={RegisterPage} />
+          <Route path='/forgot-password' exact component={PasswordForgottenPage} />
         </Switch>
       </main>
     </Pane>

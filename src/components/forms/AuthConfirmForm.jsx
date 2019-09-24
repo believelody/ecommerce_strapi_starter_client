@@ -4,7 +4,7 @@ import api from '../../api'
 import { useAppHooks } from '../../context'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
-import ErrorAlert from '../errors/ErrorAlert'
+import ErrorAlert from '../alerts/ErrorAlert'
 
 const AuthConfirmForm = ({ setVerification }) => {
   const { useAuth, useToast, history } = useAppHooks()
