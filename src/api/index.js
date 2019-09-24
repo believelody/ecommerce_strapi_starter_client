@@ -5,6 +5,8 @@ import profile from './profile'
 import shipping from './shipping'
 import user from './user'
 import order from './order'
+import category from './category'
+import tag from './tag'
 
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL : 'localhost:1337'
 export const strapi = new Strapi(apiUrl)
@@ -15,4 +17,4 @@ export const login = (email, password) => strapi.login(email, password)
 export const create = (path, data) => strapi.createEntry(path, data)
 export const send = obj => strapi.request('POST', '/email', {data: obj})
 
-export default {order, product, profile, shipping, user, variant}
+export default {order, product, profile, shipping, user, variant, category, tag}
