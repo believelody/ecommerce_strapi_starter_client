@@ -6,7 +6,7 @@ import LoginPage from '../../pages/LoginPage'
 
 const Main = ({}) => {
   return (
-    <Pane width='80%' height='100%' margin={0} padding={0}>
+    <Pane width='80%' margin={0} padding={0}>
       <main>
         <Switch>
           <Route path='/' exact component={HomePage} />

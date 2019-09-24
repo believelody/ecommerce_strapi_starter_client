@@ -4,8 +4,7 @@ import LoginForm from '../components/forms/LoginForm'
 
 const LoginPage = () => {
   return (
-    <Pane>
-      <p>Login Page</p>
+    <Pane height='100%' display='flex' alignItems='end' justifyContent='center'>
       <LoginForm />
     </Pane>
   )

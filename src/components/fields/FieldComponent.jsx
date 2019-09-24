@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Pane, TextInputField } from 'evergreen-ui'
 
-const FieldComponent = ({ label, description, hint, name, type = 'text', placeholder, handleChange, error, validationMessage }) => {
+const FieldComponent = ({
+  label, description = '', hint = '', name, type = 'text', placeholder, handleChange, error, validationMessage
+}) => {
   return (
     <Pane>
       <TextInputField
