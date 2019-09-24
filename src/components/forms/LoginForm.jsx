@@ -4,6 +4,7 @@ import { Pane, Card, Text, Button, Alert } from 'evergreen-ui'
 import InputComponent from '../inputs/InputComponent'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
+import ErrorAlert from '../errors/ErrorAlert'
 import { useAppHooks } from '../../context'
 import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERROR } from '../../reducers/authReducer'
 
@@ -22,11 +23,10 @@ const LoginForm = () => {
     e.preventDefault()
     dispatchAuth({ type: RESET_ERROR })
     if (!email) {
-      dispatchAuth({ type: ERROR_AUTH, payload: {mail: 'Email is required'}})
+      dispatchAuth({ type: ERROR_AUTH, payload: {email: 'Email is required'}})
     }
     if (!password) {
-      // dispatchAuth({ type: ERROR_AUTH, payload: {password: 'Password is required'}})
-      dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: 'Incorrect password'}})
+      dispatchAuth({ type: ERROR_AUTH, payload: {password: 'Password is required'}})
     }
     try {
 
@@ -46,7 +46,9 @@ const LoginForm = () => {
       elevation={2}
       width='60%'
     >
-      <Text size={500}>Connect to your account</Text>
+      <Pane borderBottom width='100%' paddingY={5} textAlign='center'>
+        <Text size={500}>Connect to your account</Text>
+      </Pane>
       <Pane textAlign='center' marginY={20}>
         <form onSubmit={handleSubmit}>
           <FieldComponent
@@ -68,9 +70,7 @@ const LoginForm = () => {
           />
           {
             errors && errors.authFailed &&
-            <Pane marginBottom={10}>
-              <Alert title={errors.authFailed} intent='danger' />
-            </Pane>
+            <ErrorAlert label='authFailed' errors={errors} />
           }
           <Button appearance='primary'>Login</Button>
         </form>
