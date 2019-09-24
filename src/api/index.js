@@ -1,8 +1,8 @@
 import Strapi from 'strapi-sdk-javascript'
-import brand from './variant'
-import brew from './product'
-import brew from './profile'
-import brew from './shipping'
+import variant from './variant'
+import product from './product'
+import profile from './profile'
+import shipping from './shipping'
 import user from './user'
 import order from './order'
 

@@ -1,9 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: ["babel-polyfill", "./src/index.js"],
+  devtool: 'cheap-module-source-map',
   module: {
     rules: [
       {
@@ -27,7 +29,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({ template: 'public/index.html' }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new Dotenv()
   ],
   devServer: {
     contentBase: './public',
