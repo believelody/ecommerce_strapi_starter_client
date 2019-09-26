@@ -17,4 +17,4 @@ export const login = (email, password) => strapi.login(email, password)
 export const create = (path, data) => strapi.createEntry(path, data)
 export const send = obj => strapi.request('POST', '/email', {data: obj})
 
-export default {order, product, profile, shipping, user, variant, category, tag}
+export default {order, product, profile, shipping, user, variant, category}

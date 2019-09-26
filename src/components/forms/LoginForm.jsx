@@ -33,24 +33,24 @@ const LoginForm = () => {
     if (!password) {
       dispatchAuth({ type: ERROR_AUTH, payload: {password: 'Password is required'}})
     }
-    dispatchLoading({ type: SET_LOADING })
-    try {
-      const res = await api.user.login(email, password)
-      dispatchAuth({
-          type: SUCCESS_AUTH,
-          payload: {
-              user: { _id: res.user._id, name: res.user.username, email: res.user.email }
-          }
-      })
-      setToken(res.jwt)
-      setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
-      dispatchToast({ type: SET_TOAST, payload: { msg: `Welcome ${res.user.username}` } })
-      setEmail('')
-      setPassword('')
-      history.push('/profile')
-    } catch (e) {
-      dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
-    }
+    dispatchLoading({ type: SET_LOADING, payload: {msg: 'Please wait a while...'} })
+    // try {
+    //   const res = await api.user.login(email, password)
+    //   dispatchAuth({
+    //       type: SUCCESS_AUTH,
+    //       payload: {
+    //           user: { _id: res.user._id, name: res.user.username, email: res.user.email }
+    //       }
+    //   })
+    //   setToken(res.jwt)
+    //   setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
+    //   dispatchToast({ type: SET_TOAST, payload: { msg: `Welcome ${res.user.username}` } })
+    //   setEmail('')
+    //   setPassword('')
+    //   history.push('/profile')
+    // } catch (e) {
+    //   dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
+    // }
     dispatchLoading({ type: RESET_LOADING })
   }
 
