@@ -3,6 +3,7 @@ import { Pane, Text } from 'evergreen-ui'
 import Logo from '../logo/Logo'
 import SidenavHeader from '../header/SidenavHeader'
 import UserCard from '../cards/UserCard'
+import TabMenu from '../tabs/TabMenu'
 import Footer from '../footer/Footer'
 
 const Sidenav = ({}) => {
@@ -13,6 +14,7 @@ const Sidenav = ({}) => {
           <Logo name='Brand Store' size={700} />
         </SidenavHeader>
         <UserCard />
+        <TabMenu />
         <Footer />
       </aside>
     </Pane>
