@@ -7,6 +7,7 @@ const HomeTab = ({index, handleSelect}) => (
     isSelected={index === 0}
     aria-controls={`panel-home`}
     id='home'
+    width='50%'
   >
     <Text size={600}>Home</Text>
   </Tab>

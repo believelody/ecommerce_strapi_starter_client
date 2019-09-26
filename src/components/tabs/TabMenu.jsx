@@ -11,7 +11,7 @@ const TabMenu = () => {
   return (
     <Pane marginTop={10} elevation={1}>
       <Pane borderBottom with='100%'>
-        <Tablist paddingY={5} marginRight='auto'>
+        <Tablist paddingY={5} display='flex'>
           <HomeTab index={index} handleSelect={selectIndex} />
           <CartTab index={index} handleSelect={selectIndex} />
         </Tablist>

@@ -7,6 +7,7 @@ const CartTab = ({index, handleSelect}) => (
     isSelected={index === 1}
     aria-controls={`panel-cart`}
     id='cart'
+    width='50%'
   >
     <Text size={600}>Cart</Text>
   </Tab>
