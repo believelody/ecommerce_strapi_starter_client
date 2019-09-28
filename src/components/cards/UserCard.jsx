@@ -34,7 +34,7 @@ const UserCard = () => {
           paddingBottom={5}
         />
         <Pane paddingTop={10}>
-          <Button intent='warning' onClick={logout}>Logout</Button>
+          <Button intent='danger' onClick={logout}>Logout</Button>
         </Pane>
       </Card>
     </Pane>

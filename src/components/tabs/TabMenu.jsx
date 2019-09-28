@@ -2,8 +2,14 @@ import React, { useState } from 'react'
 import { Pane, Tablist, Paragraph } from 'evergreen-ui'
 import HomeTab from './HomeTab'
 import CartTab from './CartTab'
+import EmptyCart from '../cart/EmptyCart'
+import CartList from '../cart/CartList'
+import { useAppHooks } from '../../context'
 
 const TabMenu = () => {
+  const { useCart } = useAppHooks()
+  const [{cart}, dispatchCart] = useCart
+
   const [index, setIndex] = useState(0)
 
   const selectIndex = i => setIndex(i)
@@ -32,7 +38,9 @@ const TabMenu = () => {
         aria-hidden={index !== 1}
         display={index === 1 ? 'block' : 'none'}
       >
-        <Paragraph>Cart</Paragraph>
+        <Paragraph>
+          { cart.length > 0 ? <CartList /> : <EmptyCart /> }
+        </Paragraph>
       </Pane>
     </Pane>
   )

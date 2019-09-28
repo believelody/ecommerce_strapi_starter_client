@@ -11,6 +11,6 @@ ul {
   list-style: none;
 }
 
-a {
+a, a:active {
   text-decoration: none;
 }
