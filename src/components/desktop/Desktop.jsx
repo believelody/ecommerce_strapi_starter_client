@@ -11,7 +11,7 @@ const Desktop = () => {
       <Pane
         display='flex'
         justifyContent="center"
-        alignItems="center"
+        alignItems="start"
         padding={0}
         margin={0}
         height='98vh'

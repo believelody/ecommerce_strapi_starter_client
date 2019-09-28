@@ -38,9 +38,7 @@ const TabMenu = () => {
         aria-hidden={index !== 1}
         display={index === 1 ? 'block' : 'none'}
       >
-        <Paragraph>
-          { cart.length > 0 ? <CartList /> : <EmptyCart /> }
-        </Paragraph>
+        { cart.length > 0 ? <CartList /> : <EmptyCart /> }
       </Pane>
     </Pane>
   )
