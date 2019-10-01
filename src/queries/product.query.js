@@ -7,6 +7,22 @@ export const getProductsQuery = () => `
       thumbnails {
         name,
         url
+      },
+      colors {
+        _id,
+        name,
+        skus {
+          _id,
+          unit
+        }
+      },
+      sizes {
+        _id,
+        name,
+        skus {
+          _id,
+          unit
+        }
       }
     }
   }
@@ -23,16 +39,18 @@ export const getProductQuery = id => `
         name,
         url
       },
-      variants {
+      colors {
         _id,
         name,
-        label,
-        dimension,
-        image {
-          name,
-          url
-        },
-        sku {
+        skus {
+          _id,
+          unit
+        }
+      },
+      sizes {
+        _id,
+        name,
+        skus {
           _id,
           unit
         }

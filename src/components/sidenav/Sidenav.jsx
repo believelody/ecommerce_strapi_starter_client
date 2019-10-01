@@ -14,7 +14,7 @@ const Sidenav = ({}) => {
   const [{isConnected}, dispatchAuth] = useAuth
 
   return (
-    <Pane elevation={2} width='20%' height='100%' margin={0} padding={0} position='relative'>
+    <Pane elevation={2} width='25%' height='100%' margin={0} padding={0} position='relative'>
       <aside>
         <SidenavHeader>
           <Logo name='Brand Store' size={700} />

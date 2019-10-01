@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ListItem, Pane, Card, Button, Text, Badge, Popover, Position } from 'evergreen-ui'
+import { ListItem, Pane, Card, Button, Text, Badge, Popover, Position, toaster } from 'evergreen-ui'
 import Slider from 'react-animated-slider'
-import { apiUrl } from '../../api'
-import Label from '../label/Label'
-import BuyNowMenu from '../menu/BuyNowMenu'
 import styled from 'styled-components'
+import Label from '../label/Label'
+import ProductOptions from '../products/ProductOptions'
+import { apiUrl } from '../../api'
+import { useAppHooks } from '../../context'
+import { ADD_TO_CART, IMPORT_CART_FROM_LOCALSTORAGE, UPDATE_QUANTITY } from '../../reducers/cartReducer'
+import {setCart} from '../../utils/cart.utils'
 import isMobile from '../../utils/isMobile.utils'
 
 const ImageStyle = styled.div`
@@ -17,7 +20,91 @@ const ImageStyle = styled.div`
   background-size: cover;
 `
 
-const ProductItem = ({product}) => {
+const ProductItem = ({product }) => {
+  const COLORS = product.colors
+    .map((color, index) => ({label: color.name, value: index}))
+  const SIZES = product.sizes
+    .map((size, index) => ({label: size.name, value: index}))
+
+  const { useCart } = useAppHooks()
+  const [{cart}, dispatchCart] = useCart
+
+  const [quantity, setQuantity] = useState(0)
+  const [selectedColor, setColor] = useState(0)
+  const [selectedSize, setSize] = useState(0)
+  const [errors, setErrors] = useState(null)
+
+  const decreaseQuantity = e => {
+    if (errors) {
+      delete errors.quantity
+    }
+    setQuantity(prevQuantity => prevQuantity === 0 ? 0 : prevQuantity - 1)
+  }
+
+  const increaseQuantity = e => {
+    if (errors) {
+      delete errors.quantity
+    }
+    setQuantity(prevQuantity => prevQuantity === 20 ? 20 : prevQuantity + 1)
+  }
+
+  const noMoreItem = (color, size) => {
+    let variant = color.skus.find(skuColor => size.skus.find(skuSize => skuSize._id === skuColor._id))
+    return variant && variant.unit === 0
+  }
+
+  const checkItemInCart = (cart, product) => {
+    return cart.findIndex(item => item.product._id === product._id && item.color._id === product.colors[selectedColor]._id && item.size._id === product.sizes[selectedSize]._id)
+  }
+
+  const handleBuyItem = e => {
+    if (quantity === 0) {
+      setErrors({...errors, quantity: 'You have to choose at least 1 item'})
+    }
+    else if (noMoreItem(product.colors[selectedColor], product.sizes[selectedSize])) {
+      setErrors({...errors, nomore: 'You cannot add this item in your cart'})
+    }
+    else if (cart.length > 0) {
+      let itemIndex = checkItemInCart(cart, product)
+      if (itemIndex > -1) {
+        let updatedCart = cart
+        updatedCart[itemIndex].quantity += quantity
+        setCart(updatedCart)
+        // dispatchCart({type: UPDATE_QUANTITY, payload: {index: itemIndex, quantity} })
+        toaster.success(`You successfully updated ${product.name}'s quantity`)
+      }
+    }
+    else {
+      setErrors(null)
+      const newItem = {product, quantity, color: product.colors[selectedColor], size: product.sizes[selectedSize]}
+      setCart([newItem, ...cart])
+      toaster.success(`You successfully added ${product.name} in your cart`, {
+        description: `Item: ${product.name} x ${quantity} - Color: ${product.colors[selectedColor].name} - Size: ${product.sizes[selectedSize].name}`
+      })
+      dispatchCart({ type: ADD_TO_CART, payload: {item: newItem}})
+    }
+  }
+
+  const handleColor = value => {
+    if (noMoreItem(product.colors[value], product.sizes[selectedSize])) {
+      setErrors({...errors, nomore: `This variant item is no longer available `})
+    }
+    else if (errors && errors.nomore) {
+      delete errors.nomore
+    }
+    setColor(value)
+  }
+
+  const handleSize = value => {
+    if (noMoreItem(product.colors[selectedColor], product.sizes[value])) {
+      setErrors({...errors, nomore: `This variant item is no longer available`})
+    }
+    else if (errors && errors.nomore) {
+      delete errors.nomore
+    }
+    setSize(value)
+  }
+
   return (
     <ListItem
       width={320}
@@ -53,7 +140,23 @@ const ProductItem = ({product}) => {
           </Button>
           <Popover
             position={Position.BOTTOM_LEFT}
-            content={<BuyNowMenu product={product} />}
+            content={
+              <ProductOptions
+                product={product}
+                quantity={quantity}
+                selectedColor={selectedColor}
+                selectedSize={selectedSize}
+                colors={COLORS}
+                sizes={SIZES}
+                decreaseQuantity={decreaseQuantity}
+                increaseQuantity={increaseQuantity}
+                handleColor={handleColor}
+                handleSize={handleSize}
+                handleBuyItem={handleBuyItem}
+                errors={errors}
+                withCartButton
+              />
+            }
           >
             <Button width={90} appearance='primary' intent='success' iconAfter='cart'>
               Buy Now

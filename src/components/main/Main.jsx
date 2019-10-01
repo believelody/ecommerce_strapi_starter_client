@@ -8,7 +8,7 @@ import PasswordForgottenPage from '../../pages/PasswordForgottenPage'
 
 const Main = ({}) => {
   return (
-    <Pane width='80%' margin={0} padding={0}>
+    <Pane width='75%' margin={0} padding={0}>
       <main>
         <Switch>
           <Route path='/' exact component={HomePage} />
