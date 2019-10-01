@@ -7,7 +7,7 @@ import Label from '../label/Label'
 import ProductOptions from '../products/ProductOptions'
 import { apiUrl } from '../../api'
 import { useAppHooks } from '../../context'
-import { ADD_TO_CART, IMPORT_CART_FROM_LOCALSTORAGE, UPDATE_QUANTITY } from '../../reducers/cartReducer'
+import { ADD_TO_CART, IMPORT_CART_FROM_LOCALSTORAGE } from '../../reducers/cartReducer'
 import {setCart} from '../../utils/cart.utils'
 import isMobile from '../../utils/isMobile.utils'
 
@@ -70,7 +70,6 @@ const ProductItem = ({product }) => {
         let updatedCart = cart
         updatedCart[itemIndex].quantity += quantity
         setCart(updatedCart)
-        // dispatchCart({type: UPDATE_QUANTITY, payload: {index: itemIndex, quantity} })
         toaster.success(`You successfully updated ${product.name}'s quantity`)
       }
     }

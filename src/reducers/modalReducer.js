@@ -6,7 +6,9 @@ export const initModalState = {
     msg: null,
     title: null,
     isOpened: false,
-    children: null
+    children: null,
+    status: 'none',
+    action: null
 }
 
 export const modalReducer = (state, { type, payload }) => {
@@ -15,7 +17,10 @@ export const modalReducer = (state, { type, payload }) => {
             return {
                 ...state,
                 msg: payload.msg,
-                isOpened: true
+                isOpened: true,
+                title: payload.title,
+                status: payload.status,
+                action: payload.action
             }
 
         case OPEN_MODAL_CONFIRM:
@@ -24,7 +29,7 @@ export const modalReducer = (state, { type, payload }) => {
                 msg: null,
                 isOpened: true,
                 children: payload.children,
-                title: payload.title
+                title: payload.title,
             }
 
         case CLOSE_MODAL:
@@ -33,7 +38,9 @@ export const modalReducer = (state, { type, payload }) => {
                 msg: null,
                 isOpened: false,
                 title: null,
-                children: null
+                children: null,
+                status: 'none',
+                action: null
             }
 
         default:

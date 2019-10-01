@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Pane, Text, Button, Table, Icon } from 'evergreen-ui'
 import CartItem from './CartItem'
@@ -21,11 +21,11 @@ const CartList = () => {
   return (
     <Pane>
       <Pane paddingY={10} display='flex' background='blueTint' alignItems='center' justifyContent='center'>
-        <Icon icon='caret-right' />
+        <Icon icon='caret-right' color='success' />
         <Link to='/checkout'>
           <Text color='green' size={500}>Checkout</Text>
         </Link>
-        <Icon icon='caret-left' />
+        <Icon icon='caret-left' color='success' />
       </Pane>
       <Table>
         <Table.Head>

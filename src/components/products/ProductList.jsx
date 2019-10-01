@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Pane, Text, UnorderedList } from 'evergreen-ui'
-import api from '../../api'
 import ProductItem from './ProductItem'
+import api from '../../api'
+import { useAppHooks } from '../../context'
+import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 
 const ProductList = ({}) => {
+  const {useLoading} = useAppHooks()
+  const [loadingState, dispatchLoading] = useLoading
   const [products, setProducts] = useState([])
 
   const fetchProducts = async () => {
@@ -15,11 +19,13 @@ const ProductList = ({}) => {
     } catch (e) {
       console.log(e.message)
     }
+    dispatchLoading({ type: RESET_LOADING })
   }
 
   useEffect(() => {
+    dispatchLoading({ type: SET_LOADING, payload: {msg: 'Please wait'} })
     if (products.length === 0) fetchProducts()
-  }, [fetchProducts])
+  }, [])
 
   return (
     <Pane width='100%'>

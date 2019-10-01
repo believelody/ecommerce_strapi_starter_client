@@ -78,9 +78,9 @@ const CartItem = ({ item, index, currentIndex, setIndex }) => {
   useEffect(() => itemRef && itemTitleRef && itemContentRef && itemDiv.isExpanded ? expandDiv() : reduceDiv(), [itemDiv.isExpanded])
 
   return (
-    <Table.Row isSelectable onSelect={() => handleClick(index)} height='100%'>
+    <Table.Row isSelectable height='100%'>
       <RowStyle ref={itemRef}>
-        <div className='row-header' ref={itemTitleRef}>
+        <div className='row-header' ref={itemTitleRef} onClick={() => handleClick(index)}>
           <Pane display='flex'>
             <Table.TextCell>{`${item.product.name.substring(0, 9)}...`}</Table.TextCell>
             <Table.TextCell>{item.quantity}</Table.TextCell>
@@ -93,7 +93,7 @@ const CartItem = ({ item, index, currentIndex, setIndex }) => {
           </Pane>
         </div>
         <div className='row-content' ref={itemContentRef}>
-          <ContentCartItem item={item} />
+          <ContentCartItem item={item} currentIndex={currentIndex} />
         </div>
       </RowStyle>
     </Table.Row>

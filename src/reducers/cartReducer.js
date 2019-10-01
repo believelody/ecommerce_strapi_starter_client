@@ -3,7 +3,8 @@ export const ADD_TO_CART = 'ADD_TO_CART'
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 export const INCREMENT_QUANTITY = 'INCREMENT_QUANTITY'
 export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY'
-export const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
+export const UPDATE_COLOR = 'UPDATE_COLOR'
+export const UPDATE_SIZE = 'UPDATE_SIZE'
 export const RESET_CART = 'RESET_CART'
 
 export const QUANTITY_MAX = 21
@@ -36,12 +37,12 @@ export const cartReducer = (state, { type, payload }) => {
             }
 
         case REMOVE_FROM_CART:
-            let selectedItem = state.cart.find(item => item.product._id === payload._id)
+            let selectedItem = state.cart[payload.index]
 
             return {
                 ...state,
-                // cart: state.cart.filter(item => item.product._id !== selectedItem.product._id),
-                total: state.total - selectedItem.product.price * selectedItem.quantity
+                total: state.total - selectedItem.product.price * selectedItem.quantity,
+                cart: state.cart.filter((item, i) => i !== payload.index)
             }
 
         case INCREMENT_QUANTITY:
@@ -62,16 +63,17 @@ export const cartReducer = (state, { type, payload }) => {
                 total: state.total - itemToDecrement.product.price
             }
 
-        case UPDATE_QUANTITY:
-            let itemToUpdate = state.cart[payload.index]
-            console.log(payload.quantity)
-            console.log(itemToUpdate['quantity'])
-            itemToUpdate['quantity'] += payload.quantity
-            console.log(itemToUpdate.quantity)
-            return {
-                ...state,
-                total: state.total + itemToUpdate.product.price * payload.quantity
-            }
+        case UPDATE_COLOR:
+            let itemColor = state.cart[payload.index]
+            itemColor['color'] = payload.color
+
+            return { ...state }
+
+        case UPDATE_SIZE:
+            let itemSize = state.cart[payload.index]
+            itemSize['size'] = payload.size
+
+            return { ...state }
 
         default:
             return state
