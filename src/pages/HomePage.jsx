@@ -8,7 +8,7 @@ const bg = `
 
 const HomePage = () => {
   return (
-    <Pane background={bg} height='100%'>
+    <Pane background={bg} minHeight='98vh'>
       <ProductList />
     </Pane>
   )

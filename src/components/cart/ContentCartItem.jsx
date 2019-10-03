@@ -7,12 +7,11 @@ import { ADD_TO_CART, IMPORT_CART_FROM_LOCALSTORAGE, DECREMENT_QUANTITY, INCREME
 import { OPEN_MODAL } from '../../reducers/modalReducer'
 import {setCart, deleteCart} from '../../utils/cart.utils'
 import isMobile from '../../utils/isMobile.utils'
+import {arrayColor, arraySize} from '../../utils/product.utils'
 
 const ContentCartItem = ({ item, currentIndex }) => {
-  const COLORS = item.product.colors
-    .map((color, index) => ({label: color.name, value: index}))
-  const SIZES = item.product.sizes
-    .map((size, index) => ({label: size.name, value: index}))
+  const COLORS = arrayColor(item.product.colors)
+  const SIZES = arraySize(item.product.sizes)
 
   const { useCart, useModal } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
@@ -69,14 +68,14 @@ const ContentCartItem = ({ item, currentIndex }) => {
     }
   }
 
-  const noMoreItem = (color, size) => {
-    let variant = color.skus.find(skuColor => size.skus.find(skuSize => skuSize._id === skuColor._id))
-    return variant && variant.unit === 0
-  }
-
-  const checkItemInCart = (cart, product) => {
-    return cart.findIndex(item => item.product._id === product._id && item.color._id === product.colors[selectedColor]._id && item.size._id === product.sizes[selectedSize]._id)
-  }
+  // const noMoreItem = (color, size) => {
+  //   let variant = color.skus.find(skuColor => size.skus.find(skuSize => skuSize._id === skuColor._id))
+  //   return variant && variant.unit === 0
+  // }
+  //
+  // const checkItemInCart = (cart, product) => {
+  //   return cart.findIndex(item => item.product._id === product._id && item.color._id === product.colors[selectedColor]._id && item.size._id === product.sizes[selectedSize]._id)
+  // }
 
   const handleColor = value => {
     let updatedCart = cart
@@ -115,9 +114,9 @@ const ContentCartItem = ({ item, currentIndex }) => {
       <ProductOptions
         width='auto'
         product={item.product}
-        quantity={quantity}
-        selectedColor={selectedColor}
-        selectedSize={selectedSize}
+        qt={quantity}
+        color={selectedColor}
+        size={selectedSize}
         colors={COLORS}
         sizes={SIZES}
         decreaseQuantity={decreaseQuantity}

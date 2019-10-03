@@ -30,7 +30,7 @@ export const getProductsQuery = () => `
 
 export const getProductQuery = id => `
   query {
-    product(id: '${id}') {
+    product(id: "${id}") {
       _id,
       name,
       description,

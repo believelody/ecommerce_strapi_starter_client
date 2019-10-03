@@ -14,7 +14,6 @@ const Desktop = () => {
         alignItems="start"
         padding={0}
         margin={0}
-        height='98vh'
       >
         <Sidenav />
         <Main />
