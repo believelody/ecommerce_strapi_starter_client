@@ -5,11 +5,13 @@ import CartItem from './CartItem'
 import Label from '../label/Label'
 import { useAppHooks } from '../../context'
 import { IMPORT_CART_FROM_LOCALSTORAGE, RESET_CART } from '../../reducers/cartReducer'
-import { deleteCart } from '../../utils/cart.utils'
+import { OPEN_MODAL } from '../../reducers/modalReducer'
+import { deleteCart, getCart } from '../../utils/cart.utils'
 
 const CartList = () => {
-  const { useCart } = useAppHooks()
+  const { useCart, useModal } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
+  const [modalState, dispatchModal] = useModal
 
   const [currentIndex, setIndex] = useState(-1)
 
@@ -17,6 +19,17 @@ const CartList = () => {
     dispatchCart({ type: RESET_CART })
     deleteCart()
   }
+
+  const openModal = () => dispatchModal({
+    type: OPEN_MODAL,
+    payload: {
+      title: 'Are you sure ?',
+      labelConfirm: 'Yes',
+      msg: 'Please confirm your action. Once done, all items in your cart will be removed',
+      status: 'danger',
+      action: emptyCart
+    }
+  })
 
   return (
     <Pane>
@@ -49,7 +62,7 @@ const CartList = () => {
         </Table.Body>
       </Table>
       <Pane>
-        <Button intent='danger' onClick={emptyCart}>Reset cart</Button>
+        <Button intent='danger' onClick={openModal}>Reset cart</Button>
       </Pane>
     </Pane>
   )

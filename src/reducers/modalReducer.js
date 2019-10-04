@@ -8,7 +8,8 @@ export const initModalState = {
     isOpened: false,
     children: null,
     status: 'none',
-    action: null
+    action: null,
+    labelConfirm: null
 }
 
 export const modalReducer = (state, { type, payload }) => {
@@ -20,7 +21,8 @@ export const modalReducer = (state, { type, payload }) => {
                 isOpened: true,
                 title: payload.title,
                 status: payload.status,
-                action: payload.action
+                action: payload.action,
+                labelConfirm: payload.labelConfirm
             }
 
         case OPEN_MODAL_CONFIRM:
@@ -40,7 +42,8 @@ export const modalReducer = (state, { type, payload }) => {
                 title: null,
                 children: null,
                 status: 'none',
-                action: null
+                action: null,
+                labelConfirm: null
             }
 
         default:

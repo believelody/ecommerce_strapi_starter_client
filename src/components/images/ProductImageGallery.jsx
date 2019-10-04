@@ -13,6 +13,11 @@ const ProductImageGallery = ({ images }) => {
 
   const items = images
     .map(image => ({
+      bulletOnClick: ({item, itemIndex, currentIndex}) => {
+        console.log(item)
+        console.log(itemIndex)
+        console.log(currentIndex)
+      },
       renderItem: () => (
         <img
           style={{
@@ -42,6 +47,12 @@ const ProductImageGallery = ({ images }) => {
         showBullets
         showPlayButton={false}
         thumbnailPosition={isMobile() ? 'top' : 'left'}
+        onThumbnailClick={
+          (event, index) => {
+            console.log(event)
+            console.log(index)
+          }
+        }
       />
     </Pane>
   )

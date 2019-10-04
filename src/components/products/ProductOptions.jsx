@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Pane, Menu, Button, InlineAlert, toaster } from 'evergreen-ui'
 import Label from '../label/Label'
 import OptionQuantity from '../options/OptionQuantity'
 import OptionColor from '../options/OptionColor'
 import OptionSize from '../options/OptionSize'
 import { useAppHooks } from '../../context'
-import { ADD_TO_CART } from '../../reducers/cartReducer'
-import {setCart} from '../../utils/cart.utils'
+import { ADD_TO_CART, UPDATE_QUANTITY } from '../../reducers/cartReducer'
+import {setCart, getCart} from '../../utils/cart.utils'
 
-const ProductOptions = ({product, width, withCartButton = false, qt = 0, color = 0, size = 0, decreaseQuantity, increaseQuantity = null, colors, sizes, handleColor = null, handleSize = null}) => {
+const ProductOptions = ({product, width, withCartButton = false, qt = 0, color = 0, size = 0, decreaseQuantity = null, increaseQuantity = null, colors, sizes, handleColor = null, handleSize = null, currentIndex}) => {
   const { useCart } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
 
-  const [quantity, setQuantity] = useState(qt)
+  const [quantity, setQuantity] = useState(0)
   const [selectedColor, setColor] = useState(color)
   const [selectedSize, setSize] = useState(size)
   const [errors, setErrors] = useState(null)
@@ -47,23 +47,22 @@ const ProductOptions = ({product, width, withCartButton = false, qt = 0, color =
     else if (noMoreItem(product.colors[selectedColor], product.sizes[selectedSize])) {
       setErrors({...errors, nomore: 'You cannot add this item in your cart'})
     }
-    else if (cart.length > 0) {
+    else if (cart.length > 0 && checkItemInCart(cart, product) > -1) {
       let itemIndex = checkItemInCart(cart, product)
-      if (itemIndex > -1) {
-        let updatedCart = cart
-        updatedCart[itemIndex].quantity += quantity
-        setCart(updatedCart)
-        toaster.success(`You successfully updated ${product.name}'s quantity`)
-      }
+      let updatedCart = cart
+      updatedCart[itemIndex].quantity += quantity
+      setCart(updatedCart)
+      dispatchCart({ type: UPDATE_QUANTITY, payload: {index: itemIndex, quantity: updatedCart[itemIndex].quantity} })
+      toaster.success(`You successfully updated ${product.name}'s quantity`)
     }
     else {
       setErrors(null)
       const newItem = {product, quantity, color: product.colors[selectedColor], size: product.sizes[selectedSize]}
       setCart([newItem, ...cart])
+      dispatchCart({ type: ADD_TO_CART, payload: {item: newItem}})
       toaster.success(`You successfully added ${product.name} in your cart`, {
         description: `Item: ${product.name} x ${quantity} - Color: ${product.colors[selectedColor].name} - Size: ${product.sizes[selectedSize].name}`
       })
-      dispatchCart({ type: ADD_TO_CART, payload: {item: newItem}})
     }
   }
 
@@ -92,23 +91,23 @@ const ProductOptions = ({product, width, withCartButton = false, qt = 0, color =
       <Menu>
         <Menu.Item>
           <OptionQuantity
-            quantity={quantity}
-            decrease={decreaseQuantity ? decreaseQuantity : _decreaseQuantity}
-            increase={increaseQuantity ? increaseQuantity : _increaseQuantity}
+            quantity={withCartButton ? quantity : qt}
+            decrease={!withCartButton ? decreaseQuantity : _decreaseQuantity}
+            increase={!withCartButton ? increaseQuantity : _increaseQuantity}
           />
         </Menu.Item>
         <Menu.Item>
           <OptionColor
             colors={colors}
-            value={selectedColor}
-            handleValue={handleColor ? handleColor : _handleColor}
+            value={withCartButton ? selectedColor : color}
+            handleValue={!withCartButton ? handleColor : _handleColor}
           />
         </Menu.Item>
         <Menu.Item>
           <OptionSize
             sizes={sizes}
-            value={selectedSize}
-            handleValue={handleSize ? handleSize : _handleSize}
+            value={withCartButton ? selectedSize : size}
+            handleValue={!withCartButton ? handleSize : _handleSize}
           />
         </Menu.Item>
         {
