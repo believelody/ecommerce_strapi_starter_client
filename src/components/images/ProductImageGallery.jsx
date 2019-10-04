@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pane } from 'evergreen-ui'
+import { Pane, IconButton } from 'evergreen-ui'
 import ImageGallery from 'react-image-gallery'
 import { apiUrl } from '../../api'
 import isMobile from '../../utils/isMobile.utils'
@@ -7,8 +7,9 @@ import isMobile from '../../utils/isMobile.utils'
 const ProductImageGallery = ({ images }) => {
   let WIDTH = isMobile() ? 300 : 430
   let HEIGHT = isMobile() ? 430 : 300
-  let IMG_WIDTH = isMobile() ? WIDTH : WIDTH - 80
-  let IMG_HEIGHT = isMobile() ? HEIGHT - 80 : HEIGHT
+  let THUMB_SIZE = isMobile() ? 40 : 80
+  let IMG_WIDTH = isMobile() ? WIDTH : WIDTH - THUMB_SIZE
+  let IMG_HEIGHT = isMobile() ? HEIGHT - THUMB_SIZE : HEIGHT
 
   const items = images
     .map(image => ({
@@ -25,8 +26,8 @@ const ProductImageGallery = ({ images }) => {
       renderThumbInner: () => (
         <img
           style={{
-            width: 80,
-            height: 80,
+            width: THUMB_SIZE,
+            height: THUMB_SIZE,
             objectFit: 'contain'
           }}
           src={`${apiUrl}${image.url}`}
@@ -40,8 +41,6 @@ const ProductImageGallery = ({ images }) => {
         items={items}
         showBullets
         showPlayButton={false}
-        showFullscreenButton={false}
-        useBrowserFullscreen={false}
         thumbnailPosition={isMobile() ? 'top' : 'left'}
       />
     </Pane>

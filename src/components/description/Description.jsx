@@ -1,10 +1,10 @@
 import React from 'react'
-import { Text, Pane } from 'evergreen-ui'
+import { Paragraph, Pane } from 'evergreen-ui'
 import isMobile from '../../utils/isMobile.utils'
 
-const Description = ({ name }) => (
+const Description = ({ text }) => (
   <Pane>
-    <Text size={isMobile() ? 300 : 400}>{name}</Text>
+    <Paragraph>{text}</Paragraph>
   </Pane>
 )
 
