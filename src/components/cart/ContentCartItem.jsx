@@ -111,7 +111,7 @@ const ContentCartItem = ({ item, currentIndex }) => {
   return (
     <Pane>
       <ProductOptions
-        width='auto'
+        width='100%'
         product={item.product}
         qt={ITEM_QUANTITY}
         color={INDEX_ITEM_COLOR}

@@ -8,9 +8,8 @@ import devices from '../../utils/devices.utils'
 const RowStyle = styled.div`
   height: 30px;
   width: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  overflow: hidden;
+  border-bottom: ${props => props.borderBottom ? '1px solid rgba(0, 0, 0, 0.2)' : 'none'};
+  overflow: ${props => props.activateScroll ? 'auto' : 'hidden'};
   transition: all 300ms ease-in-out;
 
   & .row-header {
@@ -26,7 +25,10 @@ const RowStyle = styled.div`
 
   & .row-content {
     font-size: 0.85em;
-    margin-left: 20px;
+    padding: 10px;
+    height: auto;
+    position: relative;
+    overflow-y: visible;
   }
 
   @media ${devices.desktop} {
@@ -38,7 +40,7 @@ const RowStyle = styled.div`
   }
 `
 
-const Accordion = ({ header, content, index, currentIndex, setIndex }) => {
+const Accordion = ({ header, content, index, currentIndex, setIndex, borderBottom, scrollAuto = false, predefinedHeight = 0 }) => {
   const itemRef = useRef()
   const itemTitleRef = useRef()
   const itemContentRef = useRef()
@@ -49,9 +51,11 @@ const Accordion = ({ header, content, index, currentIndex, setIndex }) => {
   })
 
   const expandDiv = () => {
+    let contentHeight = predefinedHeight > 0 ? predefinedHeight : itemContentRef.current.getBoundingClientRect().height
+    console.log(contentHeight)
     if (itemDiv.isExpanded && currentIndex === itemDiv.id) {
       itemRef.current.style.height = `${itemTitleRef.current.getBoundingClientRect()
-        .height + itemContentRef.current.getBoundingClientRect().height}px`
+        .height + contentHeight}px`
       // iconRef.current.style.transform = "rotate3d(0, 0, 0, 450deg)"
     }
   }
@@ -77,7 +81,7 @@ const Accordion = ({ header, content, index, currentIndex, setIndex }) => {
   useEffect(() => itemRef && itemTitleRef && itemContentRef && itemDiv.isExpanded ? expandDiv() : reduceDiv(), [itemDiv.isExpanded])
 
   return (
-    <RowStyle ref={itemRef}>
+    <RowStyle ref={itemRef} borderBottom={borderBottom} activateScroll={scrollAuto && itemDiv.isExpanded}>
       <AccordionHeader titleRef={itemTitleRef} handleClick={() => handleClick(index)}>
         {header}
       </AccordionHeader>

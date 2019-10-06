@@ -1,10 +1,16 @@
 export const PAYMENT_SUCCEED = 'PAYMENT_SUCCEED'
 export const PAYMENT_FAILED = 'PAYMENT_FAILED'
 export const CANCEL_PAYMENT = 'CANCEL_PAYMENT'
+export const SHIPPING_ADDRESS = 'SHIPPING_ADDRESS'
+export const BILLING_ADDRESS = 'BILLING_ADDRESS'
 export const RESET_ERRORS = 'RESET_ERRORS'
 
 export const initCheckoutState = {
     isPaymentSucceed: false,
+    shippingAddress: null,
+    billingAddress: null,
+    isSame: false,
+    shippingMethod: null,
     errors: null
 }
 
@@ -15,6 +21,25 @@ export const checkoutReducer = (state, { type, payload }) => {
                 ...state,
                 errors: null
             }
+
+        case SHIPPING_ADDRESS:
+          return {
+            ...state,
+            shippingAddress: payload.shippingAddress
+          }
+
+        case SHIPPING_ADDRESS:
+          return {
+            ...state,
+            billingAddress: payload.billingAddress
+          }
+
+        case IS_SAME:
+          return {
+            ...state,
+            isSame: true,
+            billingAddress: state.shippingAddress
+          }
 
         case PAYMENT_FAILED:
             let key, value

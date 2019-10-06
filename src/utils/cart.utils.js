@@ -6,6 +6,5 @@ export const setCart = cart => {
 }
 
 export const deleteCart = () => {
-  // console.log('delete cart')
   localStorage.removeItem(STRAPI_CART)
 }

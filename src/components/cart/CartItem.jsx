@@ -1,10 +1,9 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import { Pane, Table, Icon, Text } from 'evergreen-ui'
 import Accordion from '../accordions/Accordion'
 import ContentCartItem from './ContentCartItem'
 
 const CartItem = ({ item, index, currentIndex, setIndex }) => {
-  const itemIconArrow = useRef()
 
   return (
     <Table.Row isSelectable height='100%'>

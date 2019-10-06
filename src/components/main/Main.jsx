@@ -6,6 +6,7 @@ import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
 import PasswordForgottenPage from '../../pages/PasswordForgottenPage'
 import ProductDetailPage from '../../pages/ProductDetailPage'
+import CheckoutPage from '../../pages/CheckoutPage'
 
 const Main = ({}) => {
   return (
@@ -14,6 +15,7 @@ const Main = ({}) => {
         <Switch>
           <Route path='/' exact component={HomePage} />
           <Route path='/products/:id' exact component={ProductDetailPage} />
+          <Route path='/checkout' exact component={CheckoutPage} />
           <Route path='/login' exact component={LoginPage} />
           <Route path='/register' exact component={RegisterPage} />
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />

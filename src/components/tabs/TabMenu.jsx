@@ -3,7 +3,7 @@ import { Pane, Tablist, Paragraph } from 'evergreen-ui'
 import HomeTab from './HomeTab'
 import CartTab from './CartTab'
 import EmptyCart from '../cart/EmptyCart'
-import CartList from '../cart/CartList'
+import CartSidenav from '../cart/CartSidenav'
 import { useAppHooks } from '../../context'
 
 const TabMenu = () => {
@@ -38,7 +38,7 @@ const TabMenu = () => {
         aria-hidden={index !== 1}
         display={index === 1 ? 'block' : 'none'}
       >
-        { cart.length > 0 ? <CartList /> : <EmptyCart /> }
+        { cart.length > 0 ? <CartSidenav /> : <EmptyCart /> }
       </Pane>
     </Pane>
   )
