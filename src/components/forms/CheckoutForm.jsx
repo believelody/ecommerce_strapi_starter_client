@@ -39,9 +39,15 @@ const CheckoutForm = () => {
         <ShippingMethodCheckout index={2} currentIndex={currentIndex} setIndex={setIndex} />
         <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
       </Pane>
-      <Button appearance='primary' intent='success' marginTop={20}>
+      {/*<Button appearance='primary' intent='success' marginTop={20}>
         <Label name={`Buy ${total} $`} />
-      </Button>
+      </Button>*/}
+      <button
+        className="snipcart-add-item"
+        data-item-id="2"
+      >
+        <Label name={`Buy ${total} $`} />
+      </button>
     </Card>
   )
 }

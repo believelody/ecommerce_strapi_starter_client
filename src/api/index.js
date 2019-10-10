@@ -8,7 +8,7 @@ import order from './order'
 import category from './category'
 import tag from './tag'
 
-export const apiUrl = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL : 'http://localhost:1337'
+export const apiUrl = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL : 'https://localhost:1337'
 export const strapi = new Strapi(apiUrl)
 
 export const query = obj => strapi.request('POST', '/graphql', { data: obj })

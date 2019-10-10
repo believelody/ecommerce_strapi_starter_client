@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Pane } from 'evergreen-ui'
+import { Pane, Checkbox, Button } from 'evergreen-ui'
 import Accordion from '../accordions/Accordion'
 import FieldComponent from '../fields/FieldComponent'
 import { useAppHooks } from '../../context'
+import { IS_SAME, SHIPPING_ADDRESS } from '../../reducers/checkoutReducer'
 
 const ShippingAddressForm = () => {
   const { useCheckout } = useAppHooks()
-  const [{errors}, dispatchCheckout] = useCheckout
+  const [{isSame, shippingAddress}, dispatchCheckout] = useCheckout
 
   const [address1, setAddress1] = useState(null)
   const [address2, setAddress2] = useState(null)
   const [zip, setZip] = useState(null)
   const [city, setCity] = useState(null)
+  const [checked, setChecked] = useState(isSame)
+  const [shippingAddressErrors, setErrors] = useState(null)
 
   const handleAddress1 = e => setAddress1(e.target.value)
   const handleAddress2 = e => setAddress2(e.target.value)
@@ -20,17 +23,43 @@ const ShippingAddressForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    if (!address1) {
+      setErrors(prevErrors => ({...prevErrors, address1: `You need to fill address field`}))
+    }
+    else if (!zip) {
+      setErrors(prevErrors => ({...prevErrors, zip: `You need to fill zip field`}))
+    }
+    else if (!city) {
+      setErrors(prevErrors => ({...prevErrors, city: `You need to fill city field`}))
+    }
+    else {
+      dispatchCheckout({
+        type: SHIPPING_ADDRESS,
+        payload: {
+          shippingAddress: {address1, address2, zip, city}
+        }
+      })
+      if (checked) {
+        dispatchCheckout({ type: IS_SAME })
+      }
+    }
   }
 
   return (
     <Pane>
       <form onSubmit={handleSubmit}>
+        <Checkbox
+          label='Also use as billing address?'
+          checked={checked}
+          onChange={e => setChecked(e.target.checked)}
+          marginBottom={20}
+        />
         <FieldComponent
           label='Address 1 *'
           name='address1'
           placeholder='Ex: 123 rue de la route'
           handleChange={handleAddress1}
-          errors={errors && errors.address1}
+          errors={shippingAddressErrors && shippingAddressErrors.address1}
         />
         <FieldComponent
           label='Address 2'
@@ -38,22 +67,27 @@ const ShippingAddressForm = () => {
           hint='This field is optional'
           placeholder='Ex: Résidence Sylvestre Appart 123'
           handleChange={handleAddress2}
-          errors={errors && errors.address2}
         />
         <FieldComponent
           label='Zip code *'
           name='zip'
           placeholder='Enter your zip code'
           handleChange={handleZip}
-          errors={errors && errors.zip}
+          errors={shippingAddressErrors && shippingAddressErrors.zip}
         />
         <FieldComponent
           label='City'
           name='city'
           placeholder='Enter your city here'
           handleChange={handleCity}
-          errors={errors && errors.city}
+          errors={shippingAddressErrors && shippingAddressErrors.city}
         />
+        <Button
+          appearance={shippingAddress ? 'primary' : 'default'}
+          intent={shippingAddress ? 'success' : 'none'}
+        >
+          {shippingAddress ? 'Thank you!' : 'Set Shipping Address'}
+        </Button>
       </form>
     </Pane>
   )

@@ -4,6 +4,7 @@ import Label from '../label/Label'
 import OptionQuantity from '../options/OptionQuantity'
 import OptionColor from '../options/OptionColor'
 import OptionSize from '../options/OptionSize'
+import { apiUrl } from '../../api'
 import { useAppHooks } from '../../context'
 import { ADD_TO_CART, UPDATE_QUANTITY } from '../../reducers/cartReducer'
 import {setCart, getCart} from '../../utils/cart.utils'
@@ -123,7 +124,17 @@ const ProductOptions = ({product, width, withCartButton = false, qt = 0, color =
           withCartButton &&
           <Menu.Item paddingY={24}>
             <Pane display='flex' justifyContent='center'>
-              <Button appearance='primary' intent='success' onClick={handleBuyItem}>Add to Cart</Button>
+              {/*<Button appearance='primary' intent='success' onClick={handleBuyItem}>Add to Cart</Button>*/}
+              <button
+                className="snipcart-add-item"
+                data-item-id={product._id}
+                data-item-name={product.name}
+                data-item-price={product.price}
+                data-item-url={`${apiUrl}/products/${product._id}`}
+                data-item-description={product.description}
+              >
+                <Label name='Add to Cart' />
+              </button>
             </Pane>
           </Menu.Item>
         }

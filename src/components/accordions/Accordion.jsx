@@ -52,7 +52,6 @@ const Accordion = ({ header, content, index, currentIndex, setIndex, borderBotto
 
   const expandDiv = () => {
     let contentHeight = predefinedHeight > 0 ? predefinedHeight : itemContentRef.current.getBoundingClientRect().height
-    console.log(contentHeight)
     if (itemDiv.isExpanded && currentIndex === itemDiv.id) {
       itemRef.current.style.height = `${itemTitleRef.current.getBoundingClientRect()
         .height + contentHeight}px`
