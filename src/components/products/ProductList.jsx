@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Pane, Text, UnorderedList } from 'evergreen-ui'
 import ProductItem from './ProductItem'
-import api from '../../api'
+import api, { apiUrl } from '../../api'
 import { useAppHooks } from '../../context'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 
@@ -23,6 +23,7 @@ const ProductList = ({}) => {
   }
 
   useEffect(() => {
+    console.log(apiUrl)
     dispatchLoading({ type: SET_LOADING, payload: {msg: 'Please wait'} })
     if (products.length === 0) fetchProducts()
   }, [])

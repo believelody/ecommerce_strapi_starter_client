@@ -28,7 +28,7 @@ export const cartReducer = (state, { type, payload }) => {
             return {
                 ...state,
                 cart: [payload.item, ...state.cart],
-                total: state.total + payload.item.product.price
+                total: state.total + payload.item.product.price * payload.item.quantity
             }
 
         case RESET_CART:

@@ -6,14 +6,16 @@ import { AppProvider } from './context'
 import seo from './utils/seo.utils'
 import './index.css'
 
-ReactDOM.render(
-  <AppProvider>
-    <Helmet
-      title={seo.title}
-      meta={seo.meta}
-      link={seo.link}
-    />
-    <App />
-  </AppProvider>,
-  document.getElementById('root')
-)
+document.addEventListener('snipcart.ready', () => {
+  ReactDOM.render(
+    <AppProvider>
+      <Helmet
+        title={seo.title}
+        meta={seo.meta}
+        link={seo.link}
+      />
+      <App />
+    </AppProvider>,
+    document.getElementById('root')
+  )
+})
