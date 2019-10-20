@@ -26,8 +26,6 @@ export const authReducer = (state, { type, payload }) => {
             })
             return {
                 ...state,
-                user: null,
-                isConnected: false,
                 errors: { ...state.errors, [key]: value}
             }
 

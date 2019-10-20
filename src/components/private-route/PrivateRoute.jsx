@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useAppHooks } from '../../context'
+import { SUCCESS_AUTH } from '../../reducers/authReducer'
 import { getToken } from '../../utils/token.utils'
+import { getUser } from '../../utils/user.utils'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { useAuth } = useAppHooks
-  const [authState, dispatchAuth] = useAuth
+  const { useAuth } = useAppHooks()
+  const [{isConnected}, dispatchAuth] = useAuth
 
   useEffect(() => {
     if (getToken() && getUser()) {
@@ -14,7 +16,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   }, [getToken])
 
   return (
-    getToken() ?
+    isConnected ?
     <Route
       {...rest}
       render={
@@ -25,3 +27,5 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Redirect to='/login' />
   )
 }
+
+export default PrivateRoute

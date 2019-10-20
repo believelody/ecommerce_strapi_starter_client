@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
+import randomstring from 'randomstring'
 import { Pane, Card, Text, Button, Alert } from 'evergreen-ui'
 import InputComponent from '../inputs/InputComponent'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
 import AuthConfirm from '../auth-confirm/AuthConfirm'
+import api from '../../api'
 import { useAppHooks } from '../../context'
 import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERROR } from '../../reducers/authReducer'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
+import { SET_TOAST } from '../../reducers/toastReducer'
 import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
 
 const RegisterForm = () => {
   const { useAuth, useLoading, useToast } = useAppHooks()
-  const [{errors}, dispatchAuth] = useAuth
+  const [{errors, isConnected}, dispatchAuth] = useAuth
   const [{loading}, dispatchLoading] = useLoading
   const [toastState, dispatchToast] = useToast
 
@@ -55,31 +58,52 @@ const RegisterForm = () => {
     if (password !== confirmPassword) {
       dispatchAuth({ type: ERROR_AUTH, payload: {noMatch: 'Password and password confirm must be same'} })
     }
-    setVerification(true)
-    // dispatchLoading({ type: SET_LOADING })
-    // try {
-    //   const res = await api.user.register(email, password)
-    //   dispatchAuth({
-    //       type: SUCCESS_AUTH,
-    //       payload: {
-    //           user: { _id: res.user._id, name: res.user.username, email: res.user.email }
-    //       }
-    //   })
-    //   setToken(res.jwt)
-    //   setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
-    //   dispatchToast({ type: SET_TOAST, payload: { msg: `Welcome ${res.user.username}` } })
-    //   setEmail('')
-    //   setPassword('')
-    //   setVerification(true)
-    // } catch (e) {
-    //   dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
-    // }
-    // dispatchLoading({ type: RESET_LOADING })
+    dispatchLoading({ type: SET_LOADING })
+    try {
+      const res = await api.user.register(username, email, password)
+
+      let code = randomstring.generate({
+        length: 8,
+        charset: 'alphanumeric'
+      })
+      await api.profile.createProfile(res.user._id, res.user.username, code, false)
+      dispatchAuth({
+          type: SUCCESS_AUTH,
+          payload: {
+              user: { _id: res.user._id, username: res.user.username, email: res.user.email }
+          }
+      })
+      setToken(res.jwt)
+      setUser({ _id: res.user._id, username: res.user.username, email: res.user.email })
+      setEmail('')
+      setPassword('')
+
+      await api.user.confirmEmail({
+        to: res.user.email,
+        subject: `Confirm your email`,
+        text: `Welcome ${res.user.username}, please confirm your email with this code: ${code}. Copy and paste it your register form. Enjoy your shopping in our store.`,
+        html: `<p>
+          Welcome ${res.user.username}, please confirm your email with this code: <b>${code}</b>. Copy and paste it your register form. Enjoy your shopping in our store.
+        </p>`
+      })
+      dispatchToast({ type: SET_TOAST, payload: { msg: `Hello ${res.user.username}, we just send you a confirm email.` } })
+    } catch (e) {
+      console.log(e.message)
+      dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
+    }
+    dispatchLoading({ type: RESET_LOADING })
   }
 
-  useEffect(() => {}, [errors])
+  useEffect(() => {
+    dispatchLoading({ type: SET_LOADING })
+
+    if (isConnected && verification) {
+      dispatchLoading({ type: RESET_LOADING })
+    }
+  }, [verification])
 
   return (
+    !verification ?
     <Card
       display='flex'
       alignItems='center'
@@ -93,14 +117,14 @@ const RegisterForm = () => {
       </Pane>
       <Pane textAlign='center' marginY={20}>
         {
-          !verification &&
+          !isConnected &&
           <form onSubmit={handleSubmit}>
             <FieldComponent
               label={<Label name='Username *' />}
               name='username'
               placeholder='enter a username here'
-              handleChange={handleEmail}
-              error={errors && errors.email}
+              handleChange={handleUsername}
+              error={errors && errors.username}
             />
             <FieldComponent
               label={<Label name='Email *' />}
@@ -147,14 +171,15 @@ const RegisterForm = () => {
           </form>
         }
         {
-          verification &&
+          isConnected &&
           <AuthConfirm setVerification={setVerification} />
         }
       </Pane>
       <NavLink to='/login'>
         <Button appearance='minimal'>Already an account? Connect here!</Button>
       </NavLink>
-    </Card>
+    </Card> :
+    <Redirect to='/profile' />
   )
 }
 

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Pane } from 'evergreen-ui'
 import AuthConfirmForm from '../forms/AuthConfirmForm'
 

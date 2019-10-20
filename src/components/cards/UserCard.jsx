@@ -26,10 +26,10 @@ const UserCard = () => {
         justifyContent='center'
         cursor='pointer'
       >
-        <Avatar isSolid name='User Name' src={user ? '' : null} size={100} />
+        <Avatar isSolid name={user.username} src={user ? '' : null} size={100} />
         <Label
-          handleClick={() => history.push('/profile')}
-          name='User Name'
+          link='/profile'
+          name={user.username}
           borderBottom
           paddingBottom={5}
         />

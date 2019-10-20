@@ -13,6 +13,7 @@ const ProductList = ({}) => {
   const fetchProducts = async () => {
     try {
       const {data} = await api.product.getProducts()
+      console.log(data)
       if (data.products.length > 0) {
         setProducts(data.products)
       }
