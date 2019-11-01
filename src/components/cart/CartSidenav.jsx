@@ -41,12 +41,12 @@ const CartSidenav = () => {
     }
   })
 
-  const openModalWithChildren = e => dispatchModal({
-    type: OPEN_MODAL_CHILDREN,
-    payload: {
-      children: <LoginForm />
-    }
-  })
+  // const openModalWithChildren = e => dispatchModal({
+  //   type: OPEN_MODAL_CHILDREN,
+  //   payload: {
+  //     children: <LoginForm />
+  //   }
+  // })
 
   const openSnipcart = async e => {
     try {

@@ -10,7 +10,6 @@ export const initToastState = {
 export const toastReducer = (state, { type, payload }) => {
     switch (type) {
         case SET_TOAST:
-          console.log(payload.msg)
             return {
                 ...state,
                 msg: payload.msg,

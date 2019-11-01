@@ -11,6 +11,7 @@ import tag from './tag'
 import { getToken } from '../utils/token.utils'
 
 export const apiUrl = process.env.NODE_ENV === 'production' ? process.env.SERVER_URL : 'http://localhost:1337'
+export const snipcartUrl = 'https://app.snipcart.com/api'
 export const strapi = new Strapi(apiUrl)
 
 export const query = obj => strapi.request('POST', '/graphql', { data: obj }, {"Authorization": `Bearer ${getToken()}`})
