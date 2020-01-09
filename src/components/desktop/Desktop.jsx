@@ -4,6 +4,7 @@ import { Pane, Text } from 'evergreen-ui'
 import Sidenav from '../sidenav/Sidenav'
 import Main from '../main/Main'
 import Loading from '../loading/Loading'
+import FilterButton from '../filter/FilterButton'
 
 const Desktop = () => {
   return (
@@ -18,6 +19,7 @@ const Desktop = () => {
         <Sidenav />
         <Main />
         <Loading />
+        <FilterButton />
       </Pane>
     </BrowserRouter>
   )
