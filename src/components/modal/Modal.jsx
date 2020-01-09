@@ -1,19 +1,15 @@
 import React from 'react'
-import { Pane, Text, Dialog, Button } from 'evergreen-ui'
+import { Pane, Dialog } from 'evergreen-ui'
 import { useAppHooks } from '../../context'
-import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { CLOSE_MODAL } from '../../reducers/modalReducer'
 
 const Modal = () => {
-  const { useModal, useLoading } = useAppHooks()
+  const { useModal } = useAppHooks()
   const [{isOpened, title, msg, status, action, labelConfirm}, dispatchModal] = useModal
-  const [loadingState, dispatchLoading] = useLoading
 
-  const closeModal = () => {
-    dispatchLoading({ type: SET_LOADING })
-    action()
+  const closeModal = async () => {
     dispatchModal({ type: CLOSE_MODAL })
-    dispatchLoading({ type: RESET_LOADING })
+    await action()
   }
 
   return (

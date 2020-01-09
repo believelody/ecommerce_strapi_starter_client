@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { Pane, Text, Button, Table, Icon } from 'evergreen-ui'
 import CartList from './CartList'
-import LoginForm from '../forms/LoginForm'
 import Label from '../label/Label'
 import { useAppHooks } from '../../context'
-import { IMPORT_CART_FROM_LOCALSTORAGE, RESET_CART } from '../../reducers/cartReducer'
-import { OPEN_MODAL, OPEN_MODAL_CHILDREN } from '../../reducers/modalReducer'
+import { RESET_CART } from '../../reducers/cartReducer'
+import { OPEN_MODAL } from '../../reducers/modalReducer'
 import { snipcartCountItems, snipcartClearItems, snipcartShowModal, snipcartAddItem, snipcartBillingAddress, snipcartShippingAddress, snipcartLogoutUser } from '../../snipcart'
-import { deleteCart, getCart } from '../../utils/cart.utils'
+import { deleteCart } from '../../utils/cart.utils'
+import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 
 const CartSidenav = () => {
-  const { useAuth, useCart, useModal, history } = useAppHooks()
+  const { useAuth, useCart, useModal, useLoading } = useAppHooks()
   const [{isConnected}, dispatchAuth] = useAuth
   const [{total, cart}, dispatchCart] = useCart
   const [modalState, dispatchModal] = useModal
+  const [loadingState, dispatchLoading] = useLoading
 
   const emptyCart = async e => {
     try {
+      dispatchLoading({ type: SET_LOADING, payload: {msg: "please wait..."} })
       await snipcartClearItems()
       await snipcartShippingAddress({shippingSameAsBilling: false})
       await snipcartBillingAddress({shippingSameAsBilling: false})
       await snipcartLogoutUser()
       dispatchCart({ type: RESET_CART })
       deleteCart()
+      dispatchLoading({ type: RESET_LOADING })
     }
     catch (e) {
       console.log(e)
@@ -41,13 +44,6 @@ const CartSidenav = () => {
     }
   })
 
-  // const openModalWithChildren = e => dispatchModal({
-  //   type: OPEN_MODAL_CHILDREN,
-  //   payload: {
-  //     children: <LoginForm />
-  //   }
-  // })
-
   const openSnipcart = async e => {
     try {
       if (isConnected) {
@@ -62,19 +58,6 @@ const CartSidenav = () => {
       console.log(e)
     }
   }
-
-  // useEffect(() => {
-  //   const fetchSnipcart = async () => {
-  //     try {
-  //       console.log(await snipcartGet())
-  //       console.log(await snipcartClearItems())
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-  //
-  //   fetchSnipcart()
-  // }, [])
 
   return (
     <Pane>

@@ -94,14 +94,6 @@ const RegisterForm = () => {
     dispatchLoading({ type: RESET_LOADING })
   }
 
-  useEffect(() => {
-    dispatchLoading({ type: SET_LOADING })
-
-    if (isConnected && verification) {
-      dispatchLoading({ type: RESET_LOADING })
-    }
-  }, [verification])
-
   return (
     !verification ?
     <Card

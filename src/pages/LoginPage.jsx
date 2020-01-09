@@ -15,9 +15,9 @@ const LoginPage = () => {
   useEffect(() => {
     dispatchLoading({ type: SET_LOADING })
     if (isConnected) {
-      dispatchLoading({ type: RESET_LOADING })
       setLoading(isConnected)
     }
+    dispatchLoading({ type: RESET_LOADING })
   }, [isConnected])
 
   return (

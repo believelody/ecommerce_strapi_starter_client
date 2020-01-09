@@ -8,6 +8,8 @@ const Loading = ({}) => {
   const { useLoading } = useAppHooks()
   const [{loading, msg}, dispatchLoading] = useLoading
 
+  console.log(loading)
+
   return (
     loading &&
     <Pane

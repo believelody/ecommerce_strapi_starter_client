@@ -13,7 +13,6 @@ const ProductList = ({}) => {
   const fetchProducts = async () => {
     try {
       const {data} = await api.product.getProducts()
-      console.log(data)
       if (data.products.length > 0) {
         setProducts(data.products)
       }
@@ -24,7 +23,6 @@ const ProductList = ({}) => {
   }
 
   useEffect(() => {
-    console.log(apiUrl)
     dispatchLoading({ type: SET_LOADING, payload: {msg: 'Please wait'} })
     if (products.length === 0) fetchProducts()
   }, [])
