@@ -20,10 +20,10 @@ const CartSidenav = () => {
   const emptyCart = async e => {
     try {
       dispatchLoading({ type: SET_LOADING, payload: {msg: "please wait..."} })
-      await snipcartClearItems()
-      await snipcartShippingAddress({shippingSameAsBilling: false})
-      await snipcartBillingAddress({shippingSameAsBilling: false})
-      await snipcartLogoutUser()
+      // await snipcartClearItems()
+      // await snipcartShippingAddress({shippingSameAsBilling: false})
+      // await snipcartBillingAddress({shippingSameAsBilling: false})
+      // await snipcartLogoutUser()
       dispatchCart({ type: RESET_CART })
       deleteCart()
       dispatchLoading({ type: RESET_LOADING })
@@ -72,7 +72,7 @@ const CartSidenav = () => {
       >
         <Icon icon='caret-right' color='success' />
         {
-          !isConnected ?
+          isConnected ?
           <Link to='/login'>
             <Text
               color='green'
@@ -81,7 +81,14 @@ const CartSidenav = () => {
               Checkout
             </Text>
           </Link> :
-          'Checkout'
+          <Link to='/checkout'>
+            <Text
+              color='green'
+              size={500}
+            >
+              Checkout
+            </Text>
+          </Link>
         }
         <Icon icon='caret-left' color='success' />
       </Pane>

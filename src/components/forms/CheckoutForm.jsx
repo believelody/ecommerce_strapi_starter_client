@@ -73,7 +73,7 @@ const CheckoutForm = () => {
 
   return (
     <Card
-      minWidth={!isMobile() ? 500 : 300}
+      minWidth={!isMobile() ? 700 : 300}
       maxWidth={isMobile() ? 300 : 700}
       padding={20}
       display='flex'
@@ -92,15 +92,9 @@ const CheckoutForm = () => {
         <ShippingMethodCheckout index={2} currentIndex={currentIndex} setIndex={setIndex} />
         <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
       </Pane>
-      {/*<Button appearance='primary' intent='success' marginTop={20}>
+      <Button appearance='primary' intent='success' marginTop={20}>
         <Label name={`Buy ${total} $`} />
-      </Button>*/}
-      <button
-        className="snipcart-add-item"
-        data-item-id="2"
-      >
-        <Label name={`Buy ${total} $`} />
-      </button>
+      </Button>
     </Card>
   )
 }

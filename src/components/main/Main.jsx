@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { Pane, Text } from 'evergreen-ui'
 import PrivateRoute from '../private-route/PrivateRoute'
 import HomePage from '../../pages/HomePage'
+import CheckoutPage from '../../pages/CheckoutPage'
 import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
 import PasswordForgottenPage from '../../pages/PasswordForgottenPage'
@@ -17,6 +18,7 @@ const Main = ({}) => {
           <Route path='/' exact component={HomePage} />
           <PrivateRoute path='/profile' exact component={ProfilePage} />
           <Route path='/products/:id' exact component={ProductDetailPage} />
+          <Route path='/checkout' exact component={CheckoutPage} />
           <Route path='/login' exact component={LoginPage} />
           <Route path='/register' exact component={RegisterPage} />
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />
