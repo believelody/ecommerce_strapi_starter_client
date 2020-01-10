@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { OPEN_SIDE_SHEET } from '../../reducers/sideSheetReducer'
 import { Paragraph } from 'evergreen-ui/commonjs/typography'
 import { useAppHooks } from '../../context'
+import FilterContent from './FilterContent'
 
 const FilterButtonStyle = styled.span`
     position: fixed;
@@ -32,9 +33,7 @@ const FilterButton = () => {
                                 alignItems="start"
                                 justifyContent="start"
                             >
-                                <Paragraph>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos impedit odit incidunt reprehenderit, ab nisi sapiente esse voluptates quasi officiis ipsam at enim suscipit molestiae officia ex quidem exercitationem velit eaque, eligendi illum repellendus in. Cumque ipsa maxime officia quod. Aspernatur vel dignissimos dolore aliquam, velit debitis asperiores omnis obcaecati.
-                            </Paragraph>
+                                <FilterContent />
                             </Card>
                         )
                     }

@@ -5,7 +5,7 @@ import Sidenav from '../sidenav/Sidenav'
 import Main from '../main/Main'
 import Loading from '../loading/Loading'
 import FilterButton from '../filter/FilterButton'
-import FilterProductSideSheet from '../side-sheet/FilterProductSideSheet'
+import SideSheetNav from '../side-sheet/SideSheetNav'
 
 const Desktop = () => {
   return (
@@ -21,7 +21,7 @@ const Desktop = () => {
         <Main />
         <Loading />
         <FilterButton />
-        <FilterProductSideSheet />
+        <SideSheetNav />
       </Pane>
     </BrowserRouter>
   )

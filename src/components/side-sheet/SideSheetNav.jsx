@@ -5,7 +5,7 @@ import { CLOSE_SIDE_SHEET } from '../../reducers/sideSheetReducer'
 import TitleSideSheet from './TitleSideSheet'
 import ContentSideSheet from './ContentSideSheet'
 
-const FilterProductSideSheet = () => {
+const SideSheetNav = () => {
     const {useSideSheet} = useAppHooks()
     const [{isShowed, title, description, content}, dispatchSideSheet] = useSideSheet
 
@@ -18,6 +18,7 @@ const FilterProductSideSheet = () => {
                 flex: 1,
                 flexDirection: 'column'
             }}
+            width={400}
         >
             <TitleSideSheet title={title} description={description} />
             <ContentSideSheet content={content} />
@@ -25,4 +26,4 @@ const FilterProductSideSheet = () => {
     )
 }
 
-export default FilterProductSideSheet
+export default SideSheetNav
