@@ -4,7 +4,7 @@ import { Pane, Alert } from 'evergreen-ui'
 const InfoAlert = ({ msg }) => {
   return (
     <Pane marginBottom={10}>
-      <Alert title={msg} intent='info' />
+      <Alert title={msg} appearance='info' />
     </Pane>
   )
 }

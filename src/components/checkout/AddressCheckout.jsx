@@ -4,9 +4,15 @@ import Accordion from '../accordions/Accordion'
 import ShippingAddressForm from '../forms/ShippingAddressForm'
 import BillingAddressForm from '../forms/BillingAddressForm'
 import Label from '../label/Label'
+import { useAppHooks } from '../../context'
+import ShippingAddress from '../addresses/ShippingAddress'
+import BillingAddress from '../addresses/BillingAddress'
 
 const AddressForm = () => {
+  const { useProfile } = useAppHooks()
+  const [{ profile }, dispatchProfile] = useProfile
   const [currentIndex, setIndex] = useState(-1)
+  const [sameAsShipping, setSameAsShipping] = useState(false)
 
   return (
     <Pane>
@@ -16,18 +22,27 @@ const AddressForm = () => {
           currentIndex={currentIndex}
           setIndex={setIndex}
           header={<Text>Shipping Address</Text>}
-          content={<ShippingAddressForm />}
+          content={
+            <ShippingAddress
+              profile={profile}
+              setSameAsShipping={setSameAsShipping}
+              sameAsShipping={sameAsShipping}
+            />
+          }
         />
       </Pane>
-      <Pane border>
-        <Accordion
-          index={1}
-          currentIndex={currentIndex}
-          setIndex={setIndex}
-          header={<Text>Billing Address</Text>}
-          content={<BillingAddressForm />}
-        />
-      </Pane>
+      {
+        !sameAsShipping &&
+        <Pane border>
+          <Accordion
+            index={1}
+            currentIndex={currentIndex}
+            setIndex={setIndex}
+            header={<Text>Billing Address</Text>}
+            content={<BillingAddress profile={profile} />}
+          />
+        </Pane>
+      }
     </Pane>
   )
 }

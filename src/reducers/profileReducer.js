@@ -3,12 +3,12 @@ export const ERROR_PROFILE = 'ERROR_PROFILE'
 export const RESET_ERROR = 'RESET_ERROR'
 export const DELETE_PROFILE = 'DELETE_PROFILE'
 
-export const initAuthState = {
+export const initProfileState = {
   profile: null,
   errors: null
 }
 
-export const authReducer = (state, { type, payload }) => {
+export const profileReducer = (state, { type, payload }) => {
     switch (type) {
         case GET_PROFILE:
             return {
