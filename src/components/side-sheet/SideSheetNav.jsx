@@ -7,7 +7,7 @@ import ContentSideSheet from './ContentSideSheet'
 
 const SideSheetNav = () => {
     const {useSideSheet} = useAppHooks()
-    const [{isShowed, title, description, content}, dispatchSideSheet] = useSideSheet
+    const [{isShowed, title, description, content, width}, dispatchSideSheet] = useSideSheet
 
     return (
         <SideSheet
@@ -18,7 +18,7 @@ const SideSheetNav = () => {
                 flex: 1,
                 flexDirection: 'column'
             }}
-            width={400}
+            width={width}
         >
             <TitleSideSheet title={title} description={description} />
             <ContentSideSheet content={content} />

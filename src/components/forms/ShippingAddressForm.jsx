@@ -76,7 +76,7 @@ const ShippingAddressForm = () => {
           errors={shippingAddressErrors && shippingAddressErrors.zip}
         />
         <FieldComponent
-          label='City'
+          label='City *'
           name='city'
           placeholder='Enter your city here'
           handleChange={handleCity}

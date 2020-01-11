@@ -8,6 +8,7 @@ export const initSideSheetState = {
     isShowed: false,
     content: null,
     action: null,
+    width: 400
 }
 
 export const sideSheetReducer = (state, { type, payload }) => {
@@ -18,7 +19,8 @@ export const sideSheetReducer = (state, { type, payload }) => {
                 isShowed: true,
                 content: payload.content,
                 title: payload.title,
-                description: payload.description
+                description: payload.description,
+                width: payload.width || state.width
             }
 
         case OPEN_SIDE_SHEET_CONFIRM:
@@ -37,7 +39,8 @@ export const sideSheetReducer = (state, { type, payload }) => {
                 title: null,
                 content: null,
                 action: null,
-                description: null
+                description: null,
+                width: 400
             }
 
         default:

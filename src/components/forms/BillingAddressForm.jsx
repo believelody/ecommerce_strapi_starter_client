@@ -84,7 +84,7 @@ const BillingAddressForm = () => {
           errors={billingAddressErrors && billingAddressErrors.zip}
         />
         <FieldComponent
-          label='City'
+          label='City *'
           name='city'
           placeholder='Enter your city here'
           handleChange={handleCity}
