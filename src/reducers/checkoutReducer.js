@@ -4,6 +4,7 @@ export const CANCEL_PAYMENT = 'CANCEL_PAYMENT'
 export const SHIPPING_ADDRESS = 'SHIPPING_ADDRESS'
 export const BILLING_ADDRESS = 'BILLING_ADDRESS'
 export const IS_SAME = 'IS_SAME'
+export const IS_NOT_SAME = 'IS_NOT_SAME'
 export const RESET_ERRORS = 'RESET_ERRORS'
 
 export const initCheckoutState = {
@@ -40,6 +41,13 @@ export const checkoutReducer = (state, { type, payload }) => {
             ...state,
             isSame: true,
             billingAddress: state.shippingAddress
+          }
+
+        case IS_NOT_SAME:
+          return {
+            ...state,
+            isSame: false,
+            billingAddress: null
           }
 
         case PAYMENT_FAILED:

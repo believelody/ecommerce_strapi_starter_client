@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Pane, Button, Card, Paragraph, Strong } from 'evergreen-ui'
 import BillingAddressForm from '../forms/BillingAddressForm'
 import { useAppHooks } from '../../context'
 import { OPEN_SIDE_SHEET } from '../../reducers/sideSheetReducer'
 import AddressContent from './AddressContent'
+import { BILLING_ADDRESS } from '../../reducers/checkoutReducer'
 
 const BillingAddress = ({ profile }) => {
-    const { useSideSheet } = useAppHooks()
+    const { useSideSheet, useCheckout } = useAppHooks()
     const [sideSheetState, dispatchSideSheet] = useSideSheet
+    const [{ billingAddress, isSameAsShipping }, dispatchCheckout] = useCheckout
 
     const addNewAddress = e => {
         dispatchSideSheet({
@@ -56,24 +58,36 @@ const BillingAddress = ({ profile }) => {
         })
     }
 
+    useEffect(() => {
+        if (profile && profile.billingAddress) {
+            dispatchCheckout({
+                type: BILLING_ADDRESS,
+                payload: {
+                    billingAddress: profile.billingAddress
+                }
+            })
+        }
+    }, [profile])
+
     return (
+        !isSameAsShipping &&
         <Pane>
             {
-                !profile &&
+                billingAddress &&
                 <Pane>
                     <Button float='right' onClick={changeAddress}>
                         Change billing address
                     </Button>
                     <Card background='tealTint' padding={8}>
-                        {/* <Paragraph>{profile.billingAddress.address}</Paragraph>
-                        <Paragraph>{profile.billingAddress.address2}</Paragraph>
-                        <Paragraph>{profile.billingAddress.zip}</Paragraph>
-                        <Paragraph>{profile.billingAddress.city}</Paragraph> */}
+                        {billingAddress.address1 && <Paragraph>{billingAddress.address1}</Paragraph>}
+                        {billingAddress.address2 && <Paragraph>{billingAddress.address2}</Paragraph>}
+                        {billingAddress.zip && <Paragraph>{billingAddress.zip}</Paragraph>}
+                        {billingAddress.city && <Paragraph>{billingAddress.city}</Paragraph>}
                     </Card>
                 </Pane>
             }
             {
-                profile &&
+                !billingAddress &&
                 <Card textAlign='center' background='tint2' paddingY={16}>
                     <Paragraph>
                         You don't have any address.{' '}

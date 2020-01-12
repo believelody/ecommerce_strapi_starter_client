@@ -9,10 +9,10 @@ import ShippingAddress from '../addresses/ShippingAddress'
 import BillingAddress from '../addresses/BillingAddress'
 
 const AddressForm = () => {
-  const { useProfile } = useAppHooks()
+  const { useProfile, useCheckout } = useAppHooks()
   const [{ profile }, dispatchProfile] = useProfile
+  const [{ isSame }, dispatchCheckout] = useCheckout
   const [currentIndex, setIndex] = useState(-1)
-  const [sameAsShipping, setSameAsShipping] = useState(false)
 
   return (
     <Pane>
@@ -21,24 +21,18 @@ const AddressForm = () => {
           index={0}
           currentIndex={currentIndex}
           setIndex={setIndex}
-          header={<Text>Shipping Address</Text>}
-          content={
-            <ShippingAddress
-              profile={profile}
-              setSameAsShipping={setSameAsShipping}
-              sameAsShipping={sameAsShipping}
-            />
-          }
+          header={<Text marginLeft={8}>Shipping Address</Text>}
+          content={<ShippingAddress profile={profile} />}
         />
       </Pane>
       {
-        !sameAsShipping &&
+        !isSame &&
         <Pane border>
           <Accordion
             index={1}
             currentIndex={currentIndex}
             setIndex={setIndex}
-            header={<Text>Billing Address</Text>}
+            header={<Text marginLeft={8}>Billing Address</Text>}
             content={<BillingAddress profile={profile} />}
           />
         </Pane>

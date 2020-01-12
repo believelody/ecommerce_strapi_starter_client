@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Pane, Button } from 'evergreen-ui'
-import Accordion from '../accordions/Accordion'
 import FieldComponent from '../fields/FieldComponent'
 import { useAppHooks } from '../../context'
 import { BILLING_ADDRESS } from '../../reducers/checkoutReducer'
 
 const BillingAddressForm = () => {
   const { useCheckout } = useAppHooks()
-  const [{isSame, billingAddress}, dispatchCheckout] = useCheckout
+  const [{billingAddress}, dispatchCheckout] = useCheckout
 
   const [address1, setAddress1] = useState(null)
   const [address2, setAddress2] = useState(null)
   const [zip, setZip] = useState(null)
   const [city, setCity] = useState(null)
   const [billingAddressErrors, setErrors] = useState(null)
+  const [isSubmitted, setSubmit] = useState(false)
 
   const handleAddress1 = e => setAddress1(e.target.value)
   const handleAddress2 = e => setAddress2(e.target.value)
@@ -38,23 +38,24 @@ const BillingAddressForm = () => {
           billingAddress: {address1, address2, zip, city}
         }
       })
+      setSubmit(true)
     }
   }
 
-  useEffect(() => {
-    if (isSame) {
-      setAddress1(billingAddress.address1)
-      setAddress2(billingAddress.address2)
-      setZip(billingAddress.zip)
-      setCity(billingAddress.city)
-    }
-    else {
-      setAddress1(null)
-      setAddress2(null)
-      setZip(null)
-      setCity(null)
-    }
-  }, [isSame])
+  // useEffect(() => {
+  //   if (isSame) {
+  //     setAddress1(billingAddress.address1)
+  //     setAddress2(billingAddress.address2)
+  //     setZip(billingAddress.zip)
+  //     setCity(billingAddress.city)
+  //   }
+  //   else {
+  //     setAddress1(null)
+  //     setAddress2(null)
+  //     setZip(null)
+  //     setCity(null)
+  //   }
+  // }, [isSame])
 
   return (
     <Pane>
@@ -91,7 +92,7 @@ const BillingAddressForm = () => {
           value={city || ''}
           errors={billingAddressErrors && billingAddressErrors.city}
         />
-        <Button disabled={isSame}>Set Billing Address</Button>
+        <Button disabled={isSubmitted}>{isSubmitted ? 'Thank you !' : 'Set Billing Address'}</Button>
       </form>
     </Pane>
   )

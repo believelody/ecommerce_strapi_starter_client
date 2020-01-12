@@ -54,10 +54,10 @@ const CheckoutForm = () => {
   useEffect(() => {
     const resetAll = async() => {
       try {
-        await snipcartClearItems()
-        await snipcartShippingAddress(null)
-        await snipcartBillingAddress(null)
-        await snipcartLogoutUser()
+        // await snipcartClearItems()
+        // await snipcartShippingAddress(null)
+        // await snipcartBillingAddress(null)
+        // await snipcartLogoutUser()
         dispatchCart({ type: RESET_CART })
         deleteCart()
       }

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Pane, Checkbox, Button } from 'evergreen-ui'
-import Accordion from '../accordions/Accordion'
 import FieldComponent from '../fields/FieldComponent'
 import { useAppHooks } from '../../context'
 import { IS_SAME, SHIPPING_ADDRESS } from '../../reducers/checkoutReducer'
 
-const ShippingAddressForm = () => {
+const ShippingAddressForm = ({ profile }) => {
   const { useCheckout } = useAppHooks()
-  const [{isSame, shippingAddress}, dispatchCheckout] = useCheckout
+  const [{shippingAddress}, dispatchCheckout] = useCheckout
 
   const [address1, setAddress1] = useState(null)
   const [address2, setAddress2] = useState(null)
   const [zip, setZip] = useState(null)
   const [city, setCity] = useState(null)
-  const [checked, setChecked] = useState(isSame)
+  const [checked, setChecked] = useState(false)
   const [shippingAddressErrors, setErrors] = useState(null)
+  const [isSubmitted, setSubmit] = useState(false)
 
   const handleAddress1 = e => setAddress1(e.target.value)
   const handleAddress2 = e => setAddress2(e.target.value)
@@ -42,6 +42,7 @@ const ShippingAddressForm = () => {
       if (checked) {
         dispatchCheckout({ type: IS_SAME })
       }
+      setSubmit(true)
     }
   }
 
@@ -83,10 +84,11 @@ const ShippingAddressForm = () => {
           errors={shippingAddressErrors && shippingAddressErrors.city}
         />
         <Button
-          appearance={shippingAddress ? 'primary' : 'default'}
-          intent={shippingAddress ? 'success' : 'none'}
+          appearance='primary'
+          intent='success'
+          disabled={isSubmitted}
         >
-          {shippingAddress ? 'Thank you!' : 'Set Shipping Address'}
+          {isSubmitted ? 'Thank you!' : 'Set Shipping Address'}
         </Button>
       </form>
     </Pane>
