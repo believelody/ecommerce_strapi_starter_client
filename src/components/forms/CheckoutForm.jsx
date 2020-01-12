@@ -93,7 +93,7 @@ const CheckoutForm = () => {
         <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
       </Pane>
       <Button appearance='primary' intent='success' marginTop={20}>
-        <Label name={`Buy ${total} $`} />
+        <Label name={`Buy ${total.toFixed(2)} $`} />
       </Button>
     </Card>
   )

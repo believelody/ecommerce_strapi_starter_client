@@ -49,6 +49,7 @@ export const cartReducer = (state, { type, payload }) => {
         case INCREMENT_QUANTITY:
             let itemToIncrement = state.cart[payload.index]
             itemToIncrement['quantity'] += 1
+            console.log(state.total + itemToIncrement.product.price)
 
             return {
                 ...state,
@@ -58,6 +59,7 @@ export const cartReducer = (state, { type, payload }) => {
         case DECREMENT_QUANTITY:
             let itemToDecrement = state.cart[payload.index]
             itemToDecrement['quantity'] -= 1
+            console.log(state.total - itemToDecrement.product.price)
 
             return {
                 ...state,
