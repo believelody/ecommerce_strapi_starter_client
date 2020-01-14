@@ -69,39 +69,32 @@ const ShippingAddress = ({ profile }) => {
     }, [profile])
 
     return (
-        <Pane>
-            {
-                shippingAddress &&
-                <Pane>
-                    <Checkbox
-                        label='Also use as billing address?'
-                        checked={isSame}
-                        onChange={e => dispatchCheckout({ type: isSame ? IS_NOT_SAME : IS_SAME })}
-                        marginBottom={20}
-                    />
-                    <Button float='right' onClick={changeAddress}>
-                        Change shipping address
-                    </Button>
-                    <Card background='tealTint' padding={8}>
-                        {shippingAddress.address1 && <Paragraph>{shippingAddress.address1}</Paragraph>}
-                        {shippingAddress.address2 && <Paragraph>{shippingAddress.address2}</Paragraph>}
-                        {shippingAddress.zip && <Paragraph>{shippingAddress.zip}</Paragraph>}
-                        {shippingAddress.city && <Paragraph>{shippingAddress.city}</Paragraph>}
-                    </Card>
-                </Pane>
-            }
-            {
-                !shippingAddress &&
-                <Card textAlign='center' background='tint2' paddingY={16}>
-                    <Paragraph>
-                        You don't have any address.{' '}
-                    <Strong onClick={addNewAddress} cursor="pointer">
-                            Add one here
-                        </Strong>
-                    </Paragraph>
-                </Card>
-            }
-        </Pane>
+        shippingAddress ?
+        <Pane padding={8}>
+            <Checkbox
+                label='Also use as billing address?'
+                checked={isSame}
+                onChange={e => dispatchCheckout({ type: isSame ? IS_NOT_SAME : IS_SAME })}
+                marginBottom={20}
+            />
+            <Button float='right' onClick={changeAddress}>
+                Change shipping address
+            </Button>
+            <Card background='tealTint' padding={8}>
+                {shippingAddress.address1 && <Paragraph>{shippingAddress.address1}</Paragraph>}
+                {shippingAddress.address2 && <Paragraph>{shippingAddress.address2}</Paragraph>}
+                {shippingAddress.zip && <Paragraph>{shippingAddress.zip}</Paragraph>}
+                {shippingAddress.city && <Paragraph>{shippingAddress.city}</Paragraph>}
+            </Card>
+        </Pane> :
+        <Card textAlign='center' background='tint2' paddingY={16}>
+            <Paragraph>
+                You don't have any address.{' '}
+            <Strong onClick={addNewAddress} cursor="pointer">
+                    Add one here
+                </Strong>
+            </Paragraph>
+        </Card>
     )
 }
 

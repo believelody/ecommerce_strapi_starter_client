@@ -3,7 +3,7 @@ import Tabs from './Tabs'
 import ShippingAddress from '../addresses/ShippingAddress'
 import BillingAddress from '../addresses/BillingAddress'
 import { useAppHooks } from '../../context'
-import { Text } from 'evergreen-ui'
+import { Text, Paragraph, Pane } from 'evergreen-ui'
 
 const AddressCheckoutTab = () => {
     const { useProfile, useCheckout } = useAppHooks()
@@ -20,7 +20,9 @@ const AddressCheckoutTab = () => {
                 },
                 {
                     content: isSame ?
-                    <Paragraph>Same as shipping address</Paragraph> :
+                    <Paragraph textAlign='center' marginY='auto' paddingY={50} height='auto' backgroundColor='teal1'>
+                        Same as shipping address
+                    </Paragraph> :
                     <BillingAddress profile={profile} />,
                     label: 'billing',
                     tab: <Text size={500}>Billing Address</Text>
