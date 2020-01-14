@@ -51,7 +51,6 @@ const AddressCheckout = ({index, currentIndex, setIndex}) => {
         header={<Label name='Fill your address' />}
         content={<AddressForm />}
         scrollAuto
-        predefinedHeight={300}
       />
     </Pane>
   )

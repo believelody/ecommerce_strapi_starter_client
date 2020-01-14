@@ -71,7 +71,7 @@ const ShippingAddress = ({ profile }) => {
     }, [profile])
 
     return (
-        <Pane>
+        <Pane height={200}>
             {
                 shippingAddress &&
                 <Pane>

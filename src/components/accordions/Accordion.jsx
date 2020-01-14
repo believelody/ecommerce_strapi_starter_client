@@ -27,8 +27,8 @@ const RowStyle = styled.div`
     font-size: 0.85em;
     padding: 10px;
     height: auto;
-    position: relative;
-    overflow-y: visible;
+    width: 100%;
+    overflow: auto;
   }
 
   @media ${devices.desktop} {
@@ -53,6 +53,7 @@ const Accordion = ({ header, content, index, currentIndex, setIndex, borderBotto
   const expandDiv = () => {
     let contentHeight = predefinedHeight > 0 ? predefinedHeight : itemContentRef.current.getBoundingClientRect().height
     if (itemDiv.isExpanded && currentIndex === itemDiv.id) {
+      console.log(contentHeight)
       itemRef.current.style.height = `${itemTitleRef.current.getBoundingClientRect()
         .height + contentHeight}px`
       // iconRef.current.style.transform = "rotate3d(0, 0, 0, 450deg)"
@@ -78,6 +79,13 @@ const Accordion = ({ header, content, index, currentIndex, setIndex, borderBotto
   }, [currentIndex])
 
   useEffect(() => itemRef && itemTitleRef && itemContentRef && itemDiv.isExpanded ? expandDiv() : reduceDiv(), [itemDiv.isExpanded])
+
+  useEffect(() => {
+    if (itemDiv.isExpanded && itemContentRef && itemContentRef.current) {
+      console.log(itemRef.current.getBoundingClientRect().height)
+      console.log(itemContentRef.current.children[0].getBoundingClientRect().height)
+    }
+  }, [itemDiv.isExpanded])
 
   return (
     <RowStyle ref={itemRef} borderBottom={borderBottom} activateScroll={scrollAuto && itemDiv.isExpanded}>
