@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Pane, Tablist, Tab } from 'evergreen-ui'
-import { useAppHooks } from '../../context'
 
 const Tabs = ({ elements }) => {
-    const [index, setIndex] = useState(1)
+    const [index, setIndex] = useState(0)
 
     const selectIndex = i => setIndex(i)
 

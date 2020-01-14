@@ -56,7 +56,6 @@ const CartCheckout = ({index, currentIndex, setIndex}) => {
           </Pane>
         }
         scrollAuto
-        predefinedHeight={500}
       />
     </Pane>
   )

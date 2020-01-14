@@ -27,7 +27,6 @@ const RowStyle = styled.div`
     font-size: 0.85em;
     padding: 10px;
     height: auto;
-    width: 100%;
     overflow: auto;
   }
 
@@ -79,13 +78,6 @@ const Accordion = ({ header, content, index, currentIndex, setIndex, borderBotto
   }, [currentIndex])
 
   useEffect(() => itemRef && itemTitleRef && itemContentRef && itemDiv.isExpanded ? expandDiv() : reduceDiv(), [itemDiv.isExpanded])
-
-  useEffect(() => {
-    if (itemDiv.isExpanded && itemContentRef && itemContentRef.current) {
-      console.log(itemRef.current.getBoundingClientRect().height)
-      console.log(itemContentRef.current.children[0].getBoundingClientRect().height)
-    }
-  }, [itemDiv.isExpanded])
 
   return (
     <RowStyle ref={itemRef} borderBottom={borderBottom} activateScroll={scrollAuto && itemDiv.isExpanded}>

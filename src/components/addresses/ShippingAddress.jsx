@@ -22,7 +22,6 @@ const ShippingAddress = ({ profile }) => {
                     <Card
                         backgroundColor="white"
                         elevation={0}
-                        minHeight={300}
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
@@ -45,7 +44,6 @@ const ShippingAddress = ({ profile }) => {
                     <Card
                         backgroundColor="white"
                         elevation={0}
-                        minHeight={450}
                         paddingBottom={16}
                     >
                         <AddressContent
@@ -71,7 +69,7 @@ const ShippingAddress = ({ profile }) => {
     }, [profile])
 
     return (
-        <Pane height={200}>
+        <Pane>
             {
                 shippingAddress &&
                 <Pane>
