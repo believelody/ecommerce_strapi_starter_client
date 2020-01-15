@@ -47,8 +47,17 @@ const ShippingAddress = ({ profile }) => {
                         paddingBottom={16}
                     >
                         <AddressContent
-                            addresses={[]}
+                            addresses={
+                                profile &&
+                                profile.addressList > 0 ?
+                                profile.addressList :
+                                shippingAddress ?
+                                [shippingAddress] :
+                                []
+                            }
                             label="Shipping"
+                            obj="shippingAddress"
+                            type={SHIPPING_ADDRESS}
                             addressForm={<ShippingAddressForm />}
                         />
                     </Card>

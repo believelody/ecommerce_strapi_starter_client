@@ -48,7 +48,14 @@ const BillingAddress = ({ profile }) => {
                         paddingBottom={16}
                     >
                         <AddressContent 
-                            addresses={[]} 
+                            addresses={
+                                profile &&
+                                    profile.addressList > 0 ?
+                                    profile.addressList :
+                                    billingAddress ?
+                                        [billingAddress] :
+                                        []
+                            }
                             label="Billing" 
                             addressForm={<BillingAddressForm />}
                         />

@@ -15,8 +15,8 @@ import isMobile from '../../utils/isMobile.utils'
 
 const CheckoutForm = () => {
   const { useCart, useCheckout, useLoading, useModal } = useAppHooks()
-  const [{total, cart}, dispatchCart] = useCart
-  const [{isPaymentSucceed, errors, shippingMethod}, dispatchCheckout] = useCheckout
+  const [{total}, dispatchCart] = useCart
+  const [{isPaymentSucceed, errors, shippingMethod, shippingAddress}, dispatchCheckout] = useCheckout
   const [{loading}, dispatchLoading] = useLoading
   const [modalState, dispatchModal] = useModal
 
@@ -70,6 +70,8 @@ const CheckoutForm = () => {
       resetAll()
     }
   }, [isPaymentSucceed])
+
+  console.log(shippingMethod)
 
   return (
     <Card

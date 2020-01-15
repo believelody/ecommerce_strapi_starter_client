@@ -21,9 +21,20 @@ const HomeDelivery = ({ currentIndex, options }) => {
 
     return (
         <Pane paddingY={8} paddingX={16}>
+
             <ShippingMethodOptions
                 options={options}
                 label="Choose a shipping method"
+                type={SHIPPING_METHOD}
+                obj="shippingMethod"
+                callback={
+                    (options, value, type, obj) => dispatchCheckout({
+                        type,
+                        payload: {
+                            [obj]: options.find(option => option.value === value)
+                        }
+                    })
+                }
             />
         </Pane>
     )

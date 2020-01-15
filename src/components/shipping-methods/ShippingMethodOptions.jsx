@@ -1,32 +1,17 @@
-import React, { useState } from 'react'
-import { Card, RadioGroup } from 'evergreen-ui'
-import { useAppHooks } from '../../context'
-import { SHIPPING_METHOD } from '../../reducers/checkoutReducer'
+import React from 'react'
+import { Card } from 'evergreen-ui'
+import Radio from '../radio/Radio'
 
-const ShippingMethodOptions = ({ options, label }) => {
-    const { useCheckout } = useAppHooks()
-    const [checkoutState, dispatchCheckout] = useCheckout
-
-    const OPTIONS = options.map(option => ({label: option.label, value: option.value}))
-    const [value, setValue] = useState(OPTIONS[0].value)
-
-    const handleValue = value => {
-        setValue(value)
-        dispatchCheckout({
-            type: SHIPPING_METHOD,
-            payload: {
-                shippingMethod: options.find(option => option.value === value)
-            }
-        })
-    }
+const ShippingMethodOptions = ({ callback, options, label, type, obj }) => {
 
     return (
         <Card display='block'>
-            <RadioGroup
+            <Radio
+                options={options}
                 label={label}
-                value={value}
-                options={OPTIONS}
-                onChange={v => handleValue(v)}
+                type={type}
+                obj={obj}
+                cb={callback}
             />
         </Card>
     )
