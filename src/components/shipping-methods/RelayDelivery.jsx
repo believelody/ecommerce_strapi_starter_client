@@ -3,11 +3,25 @@ import { Pane, Button } from 'evergreen-ui'
 import ShippingMethodOptions from './ShippingMethodOptions'
 import { useAppHooks } from '../../context'
 import { SHIPPING_METHOD } from '../../reducers/checkoutReducer'
+import { OPEN_SIDE_SHEET } from '../../reducers/sideSheetReducer'
 
 const RelayDelivery = ({ options, currentIndex }) => {
-    const { useCheckout } = useAppHooks()
+    const { useCheckout, useSideSheet } = useAppHooks()
     const [checkoutState, dispatchCheckout] = useCheckout
+    const [sideSheetState, dispatchSideSheet] = useSideSheet
 
+    const openSideSheet = e => {
+        dispatchSideSheet({
+            type: OPEN_SIDE_SHEET,
+            payload: {
+                title: 'Relay Point',
+                description: 'Pick your relay point',
+                content: (
+                    <Pane>Yes we can</Pane>
+                )
+            }
+        })
+    }
     useEffect(() => {
         if (currentIndex === 0) {
             dispatchCheckout({
@@ -21,7 +35,7 @@ const RelayDelivery = ({ options, currentIndex }) => {
     
     return (
         <Pane paddingY={8} paddingX={16}>
-            <Button>Pick a relay point</Button>
+            <Button onClick={openSideSheet}>Pick a relay point</Button>
             <ShippingMethodOptions
                 options={options}
                 label="Choose a shipping method"
