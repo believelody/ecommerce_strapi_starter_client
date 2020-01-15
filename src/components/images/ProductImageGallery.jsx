@@ -13,11 +13,6 @@ const ProductImageGallery = ({ images }) => {
 
   const items = images
     .map(image => ({
-      bulletOnClick: ({item, itemIndex, currentIndex}) => {
-        console.log(item)
-        console.log(itemIndex)
-        console.log(currentIndex)
-      },
       renderItem: () => (
         <img
           style={{

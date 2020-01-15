@@ -16,7 +16,7 @@ import isMobile from '../../utils/isMobile.utils'
 const CheckoutForm = () => {
   const { useCart, useCheckout, useLoading, useModal } = useAppHooks()
   const [{total, cart}, dispatchCart] = useCart
-  const [{isPaymentSucceed, errors}, dispatchCheckout] = useCheckout
+  const [{isPaymentSucceed, errors, shippingMethod}, dispatchCheckout] = useCheckout
   const [{loading}, dispatchLoading] = useLoading
   const [modalState, dispatchModal] = useModal
 

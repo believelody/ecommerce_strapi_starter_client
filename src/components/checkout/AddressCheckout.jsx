@@ -13,7 +13,6 @@ const AddressCheckout = ({index, currentIndex, setIndex}) => {
         setIndex={setIndex}
         header={<Label name='Fill your address' />}
         content={<AddressCheckoutTab />}
-        scrollAuto
       />
     </Pane>
   )

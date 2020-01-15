@@ -48,7 +48,7 @@ const App = () => {
   }, [getToken])
 
   return (
-    <Pane height='98vh'>
+    <Pane>
       {isMobile() ? <Mobile /> : <Desktop />}
       <Modal />
     </Pane>

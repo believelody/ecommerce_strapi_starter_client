@@ -3,6 +3,7 @@ export const PAYMENT_FAILED = 'PAYMENT_FAILED'
 export const CANCEL_PAYMENT = 'CANCEL_PAYMENT'
 export const SHIPPING_ADDRESS = 'SHIPPING_ADDRESS'
 export const BILLING_ADDRESS = 'BILLING_ADDRESS'
+export const SHIPPING_METHOD = 'SHIPPING_METHOD'
 export const IS_SAME = 'IS_SAME'
 export const IS_NOT_SAME = 'IS_NOT_SAME'
 export const RESET_ERRORS = 'RESET_ERRORS'
@@ -34,6 +35,12 @@ export const checkoutReducer = (state, { type, payload }) => {
           return {
             ...state,
             billingAddress: payload.billingAddress
+          }
+
+        case SHIPPING_METHOD:
+          return {
+            ...state,
+            shippingMethod: payload.shippingMethod
           }
 
         case IS_SAME:

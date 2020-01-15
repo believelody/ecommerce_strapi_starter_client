@@ -55,7 +55,6 @@ const CartCheckout = ({index, currentIndex, setIndex}) => {
             </Table>
           </Pane>
         }
-        scrollAuto
       />
     </Pane>
   )
