@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Pane, Text, Button } from 'evergreen-ui'
+import { Pane } from 'evergreen-ui'
 import Logo from '../logo/Logo'
 import SidenavHeader from '../header/SidenavHeader'
 import UserCard from '../cards/UserCard'
@@ -14,7 +13,7 @@ const Sidenav = ({}) => {
   const [{isConnected}, dispatchAuth] = useAuth
 
   return (
-    <Pane elevation={2} width='25%' height='98vh' margin={0} padding={0} position='relative'>
+    <Pane elevation={2} width='25%' height='100%' position='relative'>
       <aside>
         <SidenavHeader>
           <Logo name='Brand Store' size={700} />

@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { Pane, Card, Button } from 'evergreen-ui'
+import { injectStripe } from 'react-stripe-elements'
 import CartCheckout from '../checkout//CartCheckout'
 import AddressCheckout from '../checkout//AddressCheckout'
 import ShippingMethodCheckout from '../checkout//ShippingMethodCheckout'
 import PaymentCheckout from '../checkout//PaymentCheckout'
 import Label from '../label/Label'
-import { apiUrl } from '../../api'
+// import { apiUrl } from '../../api'
 import { useAppHooks } from '../../context'
 import { PAYMENT_SUCCEED, PAYMENT_FAILED } from '../../reducers/checkoutReducer'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
-import { snipcartClearItems, snipcartLogoutUser, snipcartBillingAddress, snipcartShippingAddress, snipcartStartNew } from '../../snipcart'
+// import { snipcartClearItems, snipcartLogoutUser, snipcartBillingAddress, snipcartShippingAddress, snipcartStartNew } from '../../snipcart'
 import { deleteCart } from '../../utils/cart.utils'
 import isMobile from '../../utils/isMobile.utils'
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ stripe }) => {
   const { useCart, useCheckout, useLoading, useModal } = useAppHooks()
   const [{total}, dispatchCart] = useCart
   const [{isPaymentSucceed, errors, shippingMethod, shippingAddress}, dispatchCheckout] = useCheckout
@@ -71,34 +72,42 @@ const CheckoutForm = () => {
     }
   }, [isPaymentSucceed])
 
-  console.log(shippingMethod)
-
   return (
-    <Card
-      minWidth={!isMobile() ? 700 : 300}
-      maxWidth={isMobile() ? 300 : 700}
-      padding={20}
-      display='flex'
-      alignItems='center'
-      justifyContent='center'
-      flexDirection='column'
-      border
-    >
-      <Pane
-        display='block'
+    <form onSubmit={handleSubmit}>
+      <Card
+        minWidth={!isMobile() ? 700 : 300}
+        maxWidth={isMobile() ? 300 : 700}
+        padding={20}
+        display='flex'
+        alignItems='center'
+        justifyContent='center'
+        flexDirection='column'
         elevation={2}
-        width='100%'
+        border
       >
-        <CartCheckout index={0} currentIndex={currentIndex} setIndex={setIndex} />
-        <AddressCheckout index={1} currentIndex={currentIndex} setIndex={setIndex} />
-        <ShippingMethodCheckout index={2} currentIndex={currentIndex} setIndex={setIndex} />
-        <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
-      </Pane>
-      <Button appearance='primary' intent='success' marginTop={20}>
-        <Label name={`Buy ${total.toFixed(2)} $`} />
-      </Button>
-    </Card>
+        <Pane
+          display='block'
+          width='100%'
+        >
+          <CartCheckout index={0} currentIndex={currentIndex} setIndex={setIndex} />
+          <AddressCheckout index={1} currentIndex={currentIndex} setIndex={setIndex} />
+          <ShippingMethodCheckout index={2} currentIndex={currentIndex} setIndex={setIndex} />
+          <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
+        </Pane>
+        <Button
+          id='stripe__button'
+          type='submit'
+          appearance='primary'
+          intent='success'
+          marginTop={20}
+          paddingY={24}
+          paddingX={56}
+        >
+          <Label name={`Buy ${total.toFixed(2)} $`} />
+        </Button>
+      </Card>
+    </form>
   )
 }
 
-export default CheckoutForm
+export default injectStripe(CheckoutForm)

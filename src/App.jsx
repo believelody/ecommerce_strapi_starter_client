@@ -48,7 +48,7 @@ const App = () => {
   }, [getToken])
 
   return (
-    <Pane>
+    <Pane maxHeight={window.screen.height}>
       {isMobile() ? <Mobile /> : <Desktop />}
       <Modal />
     </Pane>

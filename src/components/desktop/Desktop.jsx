@@ -11,11 +11,10 @@ const Desktop = () => {
   return (
     <BrowserRouter>
       <Pane
-        display='flex'
+        display="flex"
         justifyContent="center"
         alignItems="start"
-        padding={0}
-        margin={0}
+        height="100vh"
       >
         <Sidenav />
         <Main />
