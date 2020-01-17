@@ -4,7 +4,7 @@ import PasswordForgottenForm from '../components/forms/PasswordForgottenForm'
 
 const PasswordForgottenPage = () => {
   return (
-    <Pane height='100%' display='flex' justifyContent='center'>
+    <Pane minHeight='100vh' display='flex' justifyContent='center'>
       <PasswordForgottenForm />
     </Pane>
   )

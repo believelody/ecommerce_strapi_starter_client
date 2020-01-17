@@ -22,7 +22,7 @@ const LoginPage = () => {
 
   return (
     !loading ?
-    <Pane height='100vh' display='flex' alignItems='center' justifyContent='center'>
+    <Pane minHeight='100vh' display='flex' alignItems='center' justifyContent='center'>
       <LoginForm />
     </Pane> :
     <Redirect to='/profile' />

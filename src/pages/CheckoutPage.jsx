@@ -17,8 +17,7 @@ const CheckoutPage = () => {
     <StripeProvider apiKey={process.env.STRIPE_PUBLIC_KEY}>
       <Elements>
         <Pane
-          position='relative'
-          height='100vh'
+          minHeight='100vh'
           display='flex'
           flexDirection='column'
           alignItems='center'

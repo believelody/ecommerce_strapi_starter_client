@@ -67,34 +67,34 @@ const CartSidenav = () => {
         background='blueTint'
         alignItems='center'
         justifyContent='center'
-        onClick={openSnipcart}
-        cursor='pointer'
       >
-        <Icon icon='caret-right' color='success' />
-        {
-          isConnected ?
-          <Link to='/login'>
-            <Text
-              color='green'
-              size={500}
-            >
-              Checkout
+        <Pane cursor='pointer'>
+          <Icon icon='caret-right' color='success' />
+          {
+            isConnected ?
+              <Link to='/login'>
+                <Text
+                  color='green'
+                  size={500}
+                >
+                  Checkout
             </Text>
-          </Link> :
-          <Link to='/checkout'>
-            <Text
-              color='green'
-              size={500}
-            >
-              Checkout
+              </Link> :
+              <Link to='/checkout'>
+                <Text
+                  color='green'
+                  size={500}
+                >
+                  Checkout
             </Text>
-          </Link>
-        }
-        <Icon icon='caret-left' color='success' />
+              </Link>
+          }
+          <Icon icon='caret-left' color='success' />
+        </Pane>
       </Pane>
       <CartList />
       <Pane paddingY={16}>
-        <Label name={`Total: ${total.toFixed(2)} $`} />
+        <Label name={`Total: $ ${total.toFixed(2)}`} />
       </Pane>
       <Pane>
         <Button intent='danger' appearance='minimal' onClick={openModal}>

@@ -12,7 +12,7 @@ import ProfilePage from '../../pages/ProfilePage'
 
 const Main = ({}) => {
   return (
-    <Pane width='75%' height="100%" margin={0} padding={0}>
+    <Pane width='75%' height='100%' overflow='auto' margin={0} padding={0}>
       <main>
         <Switch>
           <Route path='/' exact component={HomePage} />

@@ -42,7 +42,7 @@ const ProductItem = ({ product }) => {
         flexDirection='column'
         background='white'
       >
-        <Pane paddingY={5} display='flex' justifyContent='space-between' borderBottom>
+        <Pane marginY={5} display='flex' justifyContent='space-between' borderBottom>
           <Pane width='70%'><Label name={product.name} /></Pane>
           <Badge color='orange' size={400} paddingBottom={20} marginRight={10}>$ {product.price}</Badge>
         </Pane>

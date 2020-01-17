@@ -15,7 +15,7 @@ const DetailAmountCheckout = () => {
                 <Text>$ {shippingMethod.price}</Text>
             </Pane>
             <Pane width={200} display='flex' justifyContent='space-between' borderBottom>
-                <Strong>Total</Strong>
+                <Strong>Total purchase</Strong>
                 <Strong>{`$ ${(total + shippingMethod.price).toFixed(2)}`}</Strong>
             </Pane>
         </Pane>

@@ -8,7 +8,7 @@ const bg = `
 
 const ProductDetailPage = ({match}) => {
   return (
-    <Pane height='100vh' background={bg} padding={12}>
+    <Pane minHeight='100vh' background={bg} padding={12}>
       <ProductDetail id={match.params.id} />
     </Pane>
   )
