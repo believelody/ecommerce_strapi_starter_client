@@ -58,16 +58,16 @@ const ProductDetail = ({ id }) => {
                   height={50}
                   overflow='hidden'
                 >
-                  <Label name={product.name} size={800} color='purpleTint' paddingY={10} />
+                  <Label name={product.name} size={600} color='purpleTint' paddingY={10} />
                   <Pane
                     width={90}
-                    background='tealTint'
+                    background='yellowTint'
                     display='flex'
                     paddingY={10}
                     alignItems='center'
                     borderLeft
                   >
-                    <Label name={`${product.price} $`} size={800} />
+                    <Label name={`${product.price} $`} size={600} />
                   </Pane>
                 </Pane>
                 <Pane

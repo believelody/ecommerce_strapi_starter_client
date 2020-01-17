@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import randomstring from 'randomstring'
-import { Pane, Card, Text, Button, Alert } from 'evergreen-ui'
-import InputComponent from '../inputs/InputComponent'
+import { Pane, Card, Button, Heading } from 'evergreen-ui'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
@@ -104,8 +103,8 @@ const RegisterForm = () => {
       elevation={2}
       width='60%'
     >
-      <Pane borderBottom width='100%' paddingY={5} textAlign='center'>
-        <Text size={500}>Create a new account</Text>
+      <Pane borderBottom width='100%' paddingY={8} textAlign='center'>
+        <Heading size={700}>Create a new account</Heading>
       </Pane>
       <Pane textAlign='center' marginY={20}>
         {

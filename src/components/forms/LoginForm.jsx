@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Pane, Card, Text, Button, Alert } from 'evergreen-ui'
+import { Pane, Card, Button, Heading } from 'evergreen-ui'
 import api from '../../api'
-import InputComponent from '../inputs/InputComponent'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
@@ -65,8 +64,8 @@ const LoginForm = () => {
       elevation={2}
       width='60%'
     >
-      <Pane borderBottom width='100%' paddingY={5} textAlign='center'>
-        <Text size={500}>Connect to your account</Text>
+      <Pane borderBottom width='100%' paddingY={8} textAlign='center'>
+        <Heading size={700}>Connect to your account</Heading>
       </Pane>
       <Pane textAlign='center' marginY={20}>
         <form onSubmit={handleSubmit}>

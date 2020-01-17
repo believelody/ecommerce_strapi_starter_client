@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { ListItem, Pane, Card, Button, Text, Badge, Popover, Position, toaster } from 'evergreen-ui'
 import Slider from 'react-animated-slider'
 import styled from 'styled-components'
@@ -56,10 +56,12 @@ const ProductItem = ({ product }) => {
             )
           }
         </Slider>
-        <Pane width='100%' height='auto' paddingBottom={5} display='flex' justifyContent='space-around'>
-          <Button width={90} appearance='primary' iconAfter='zoom'>
-            <Link to={`/products/${product._id}`}>See more</Link>
-          </Button>
+        <Pane width='100%' height='auto' padding={8} display='flex' justifyContent='space-around'>
+          <NavLink to={`/products/${product._id}`} style={{ width: '100%' }}>
+            <Button width={90} appearance='primary' iconAfter='zoom'>
+              See more
+            </Button>
+          </NavLink>
           <Popover
             position={Position.BOTTOM_LEFT}
             content={
@@ -71,8 +73,8 @@ const ProductItem = ({ product }) => {
               />
             }
           >
-            <Button width={90} appearance='primary' intent='success' iconAfter='cart'>
-              Buy Now
+            <Button width={120} appearance='primary' intent='success' iconAfter='cart'>
+              Quick Add
             </Button>
           </Popover>
         </Pane>

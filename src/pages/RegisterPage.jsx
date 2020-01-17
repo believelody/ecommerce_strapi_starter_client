@@ -4,7 +4,7 @@ import RegisterForm from '../components/forms/RegisterForm'
 
 const RegisterPage = () => {
   return (
-    <Pane height='100%' display='flex' justifyContent='center'>
+    <Pane height='100vh' display='flex' alignItems='center' justifyContent='center'>
       <RegisterForm />
     </Pane>
   )
