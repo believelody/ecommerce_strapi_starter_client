@@ -13,13 +13,13 @@ import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 // import { snipcartClearItems, snipcartLogoutUser, snipcartBillingAddress, snipcartShippingAddress, snipcartStartNew } from '../../snipcart'
 import { deleteCart } from '../../utils/cart.utils'
 import isMobile from '../../utils/isMobile.utils'
+import DetailAmountCheckout from '../checkout/DetailAmountCheckout'
 
 const CheckoutForm = ({ stripe }) => {
-  const { useCart, useCheckout, useLoading, useModal } = useAppHooks()
+  const { useCart, useCheckout, useLoading } = useAppHooks()
   const [{total}, dispatchCart] = useCart
-  const [{isPaymentSucceed, errors, shippingMethod, shippingAddress}, dispatchCheckout] = useCheckout
+  const [{isPaymentSucceed, errors, shippingMethod}, dispatchCheckout] = useCheckout
   const [{loading}, dispatchLoading] = useLoading
-  const [modalState, dispatchModal] = useModal
 
   const [currentIndex, setIndex] = useState(-1)
 
@@ -94,16 +94,16 @@ const CheckoutForm = ({ stripe }) => {
           <ShippingMethodCheckout index={2} currentIndex={currentIndex} setIndex={setIndex} />
           <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
         </Pane>
+        <DetailAmountCheckout />
         <Button
           id='stripe__button'
           type='submit'
           appearance='primary'
           intent='success'
-          marginTop={20}
           paddingY={24}
           paddingX={56}
         >
-          <Label name={`Buy ${total.toFixed(2)} $`} />
+          {shippingMethod && <Label name={`Buy $ ${(total + shippingMethod.price).toFixed(2)}`} />}
         </Button>
       </Card>
     </form>

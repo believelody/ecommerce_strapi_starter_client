@@ -24,9 +24,9 @@ const CheckoutPage = () => {
           alignItems='center'
           background='tint1'
         >
-          <Heading size={700} paddingY={32}>Here's your checkout process</Heading>
+          <Heading size={700} paddingY={24}>Here's your checkout process</Heading>
           <CheckoutForm />
-          <Pane textAlign='center'>
+          <Pane width='100%' display='flex' alignItems='center' justifyContent='space-evenly'>
             <EntrustPayment />
             <EntrustShipping />
           </Pane>
