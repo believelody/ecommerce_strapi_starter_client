@@ -4,6 +4,8 @@ import { Elements, StripeProvider } from 'react-stripe-elements';
 import CheckoutForm from '../components/forms/CheckoutForm'
 import { useAppHooks } from '../context';
 import { Redirect } from 'react-router-dom';
+import EntrustPayment from '../components/entrust/EntrustPayment';
+import EntrustShipping from '../components/entrust/EntrustShipping';
 
 
 const CheckoutPage = () => {
@@ -20,11 +22,14 @@ const CheckoutPage = () => {
           display='flex'
           flexDirection='column'
           alignItems='center'
-          paddingTop='10%'
           background='tint1'
         >
           <Heading size={700} paddingY={32}>Here's your checkout process</Heading>
           <CheckoutForm />
+          <Pane textAlign='center'>
+            <EntrustPayment />
+            <EntrustShipping />
+          </Pane>
         </Pane>
       </Elements>
     </StripeProvider>
