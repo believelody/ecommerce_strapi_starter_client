@@ -93,9 +93,11 @@ const CartSidenav = () => {
         <Icon icon='caret-left' color='success' />
       </Pane>
       <CartList />
-      <Label name={`Total: ${total.toFixed(2)} $`} />
+      <Pane paddingY={16}>
+        <Label name={`Total: ${total.toFixed(2)} $`} />
+      </Pane>
       <Pane>
-        <Button intent='danger' onClick={openModal}>
+        <Button intent='danger' appearance='minimal' onClick={openModal}>
           Reset cart
         </Button>
       </Pane>

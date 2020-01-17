@@ -19,7 +19,6 @@ const Desktop = () => {
         <Sidenav />
         <Main />
         <Loading />
-        <FilterButton />
         <SideSheetNav />
       </Pane>
     </BrowserRouter>

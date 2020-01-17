@@ -20,11 +20,11 @@ const Label = ({ name, size = 500, handleClick = null, borderBottom = false, pad
         link ?
         <Link to={link}>
           <Heading size={size}>
-            <Strong>{name}</Strong>
+            {name}
           </Heading>
         </Link> :
         <Heading size={size}>
-          <Strong>{name}</Strong>
+          {name}
         </Heading>
       }
     </Pane>

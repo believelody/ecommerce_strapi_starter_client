@@ -16,7 +16,7 @@ const Sidenav = ({}) => {
     <Pane elevation={2} width='25%' height='100%' position='relative'>
       <aside>
         <SidenavHeader>
-          <Logo name='Brand Store' size={700} />
+          <Logo name='Brand Store' size={600} />
         </SidenavHeader>
         {
           isConnected ?

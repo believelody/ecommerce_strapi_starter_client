@@ -2,10 +2,16 @@ import React from 'react'
 import { Pane, Heading } from 'evergreen-ui'
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import CheckoutForm from '../components/forms/CheckoutForm'
+import { useAppHooks } from '../context';
+import { Redirect } from 'react-router-dom';
 
 
 const CheckoutPage = () => {
+  const  { useCart } = useAppHooks()
+  const [{cart}, dispatchCart] = useCart
+
   return (
+    cart.length > 0 ?
     <StripeProvider apiKey={process.env.STRIPE_PUBLIC_KEY}>
       <Elements>
         <Pane
@@ -22,6 +28,8 @@ const CheckoutPage = () => {
         </Pane>
       </Elements>
     </StripeProvider>
+    :
+    <Redirect to='/' />
   )
 }
 
