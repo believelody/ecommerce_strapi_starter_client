@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Pane, Text } from 'evergreen-ui'
 import styled from 'styled-components'
+import Newsletter from '../forms/newsletter/Newsletter'
 
 const ListStyle = styled.ul`
   display: flex;
@@ -23,7 +24,8 @@ const ItemStyle = styled.li`
 
 const Footer = () => {
   return (
-    <Pane width='100%' background='tint2' paddingY={2} bottom={0} position='absolute'>
+    <Pane width='100%' background='tint2' bottom={0} position='absolute'>
+      <Newsletter />
       <ListStyle>
         <NavLink to='/ugc' style={{ width: "100%" }}>
           <ItemStyle>

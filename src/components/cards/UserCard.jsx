@@ -6,8 +6,8 @@ import { deleteCart } from '../../utils/cart.utils'
 import { deleteToken } from '../../utils/token.utils'
 
 const UserCard = () => {
-  const {useAuth, history} = useAppHooks()
-  const [{user, isConnected}, dispatchAuth] = useAuth
+  const {useAuth} = useAppHooks()
+  const [{user}, dispatchAuth] = useAuth
 
   const logout = () => {
     dispatchAuth({})
@@ -26,10 +26,10 @@ const UserCard = () => {
         justifyContent='center'
         cursor='pointer'
       >
-        <Avatar isSolid name={user.username} src={user ? '' : null} size={100} />
+        <Avatar isSolid name="Believe LODY" src={user ? '' : null} size={100} />
         <Label
           link='/profile'
-          name={user.username}
+          name="Believe LODY"
           borderBottom
           paddingBottom={5}
         />

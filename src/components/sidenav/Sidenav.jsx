@@ -19,7 +19,7 @@ const Sidenav = ({}) => {
           <Logo name='Brand Store' size={600} />
         </SidenavHeader>
         {
-          isConnected ?
+          !isConnected ?
           <UserCard /> :
           <OfflineUserCard />
         }
