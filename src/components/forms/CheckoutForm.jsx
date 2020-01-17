@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pane, Card, Button } from 'evergreen-ui'
+import { Pane, Card, Button, Text } from 'evergreen-ui'
 import { injectStripe } from 'react-stripe-elements'
 import CartCheckout from '../checkout//CartCheckout'
 import AddressCheckout from '../checkout//AddressCheckout'
@@ -95,16 +95,22 @@ const CheckoutForm = ({ stripe }) => {
           <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
         </Pane>
         <DetailAmountCheckout />
-        <Button
-          id='stripe__button'
-          type='submit'
-          appearance='primary'
-          intent='success'
-          paddingY={24}
-          paddingX={56}
-        >
-          {shippingMethod && <Label name={`Buy $ ${(total + shippingMethod.price).toFixed(2)}`} />}
-        </Button>
+        <Pane display='flex' flexDirection='column' alignItems='center'>
+          <Button
+            id='stripe__button'
+            type='submit'
+            appearance='primary'
+            intent='success'
+            paddingY={24}
+            paddingX={56}
+          >
+            {shippingMethod && <Label name={`Buy $ ${(total + shippingMethod.price).toFixed(2)}`} />}
+          </Button>
+          <Text paddingY={8}>Or</Text>
+          <Button appearance='primary' intent='warning' color='blue'>
+            PayPal Checkout
+          </Button>
+        </Pane>
       </Card>
     </form>
   )
