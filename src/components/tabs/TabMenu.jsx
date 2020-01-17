@@ -6,6 +6,7 @@ import EmptyCart from '../cart/EmptyCart'
 import CartSidenav from '../cart/CartSidenav'
 import { useAppHooks } from '../../context'
 import Tabs from './Tabs'
+import HomeMenu from '../menu/HomeMenu'
 
 const TabMenu = () => {
   const { useCart } = useAppHooks()
@@ -15,7 +16,7 @@ const TabMenu = () => {
     <Tabs
       elements={[
         {
-          content: <Paragraph>Home</Paragraph>,
+          content: <HomeMenu />,
           label: 'home',
           tab: <HomeTab />
         },
