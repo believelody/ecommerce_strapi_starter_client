@@ -13,8 +13,22 @@ const Sidenav = ({}) => {
   const [{isConnected}, dispatchAuth] = useAuth
 
   return (
-    <Pane elevation={2} width='25%' height='100%' position='relative'>
-      <aside>
+    <Pane
+      elevation={2}
+      width='25%'
+      height='100vh'
+      display='flex'
+      flexDirection='column'
+      overflow='auto'
+      position='relative'
+    >
+      <aside
+        style={{
+          display: 'block',
+          height: '100%',
+          overflow: 'auto'
+        }}
+      >
         <SidenavHeader>
           <Logo name='Brand Store' size={600} />
         </SidenavHeader>
@@ -24,8 +38,8 @@ const Sidenav = ({}) => {
           <OfflineUserCard />
         }
         <TabMenu />
-        <Footer />
       </aside>
+      <Footer />
     </Pane>
   )
 }

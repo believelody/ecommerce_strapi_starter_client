@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Pane, Text } from 'evergreen-ui'
 import styled from 'styled-components'
-import Newsletter from '../forms/newsletter/Newsletter'
+import Newsletter from '../newsletter/Newsletter'
 
 const ListStyle = styled.ul`
   display: flex;
@@ -18,13 +18,14 @@ const ListStyle = styled.ul`
 const ItemStyle = styled.li`
   margin: 0;
   padding: 4px 16px;
-  border-left: 3px solid rgba(0, 0, 0, 0.15);
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
   text-align: center;
 `
 
-const Footer = () => {
+const Footer = ({}) => {
+
   return (
-    <Pane width='100%' background='tint2' bottom={0} position='absolute'>
+    <Pane width='100%' maxHeight={110} background='tint2' bottom={0}>
       <Newsletter />
       <ListStyle>
         <NavLink to='/ugc' style={{ width: "100%" }}>

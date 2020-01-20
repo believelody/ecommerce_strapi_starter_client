@@ -11,7 +11,7 @@ const Tabs = ({ elements, getCurrentIndexFromChild = null }) => {
 
     return (
         <Pane marginTop={10} elevation={1}>
-            <Pane borderBottom with='100%'>
+            <Pane borderBottom width='100%'>
                 <Tablist paddingY={5} display='flex'>
                     {
                         elements.map(({tab, label}, i) => (

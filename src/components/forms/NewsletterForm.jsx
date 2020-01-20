@@ -12,7 +12,7 @@ const FormStyle = styled.form`
 `
 
 const NewsletterForm = () => {
-    const [email, setEmail] = useState(null)
+    const [email, setEmail] = useState('')
     const [error, setError] = useState(null)
     const [isSubmitted, setIsSubmit] = useState(false)
 

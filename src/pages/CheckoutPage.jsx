@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pane, Heading } from 'evergreen-ui'
+import { Pane, Heading, Paragraph } from 'evergreen-ui'
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import CheckoutForm from '../components/forms/CheckoutForm'
 import { useAppHooks } from '../context';
@@ -23,7 +23,12 @@ const CheckoutPage = () => {
           alignItems='center'
           background='tint1'
         >
-          <Heading size={700} paddingY={24}>Here's your checkout process</Heading>
+            <Pane paddingY={24} textAlign='center'>
+              <Heading size={700}>Here's your checkout process</Heading>
+              <Paragraph>
+                Make your choice by clicking on a title line and fill/read information needed.
+              </Paragraph>
+            </Pane>
           <CheckoutForm />
           <Pane width='100%' display='flex' alignItems='center' justifyContent='space-evenly'>
             <EntrustPayment />

@@ -66,7 +66,7 @@ const CartSidenav = () => {
         display='flex'
         background='blueTint'
         alignItems='center'
-        justifyContent='center'
+        justifyContent='center'        
       >
         <Pane cursor='pointer'>
           <Icon icon='caret-right' color='success' />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pane, Table } from 'evergreen-ui'
+import { Pane, Table, Icon, Strong } from 'evergreen-ui'
 import Accordion from '../accordions/Accordion'
 import Label from '../label/Label'
 import { useAppHooks } from '../../context'
@@ -19,7 +19,13 @@ const CartCheckout = ({index, currentIndex, setIndex}) => {
         index={index}
         currentIndex={currentIndex}
         setIndex={setIndex}
-        header={<Label name='Your items' />}
+        header={
+          <Pane textAlign='center'>
+            {index === currentIndex && <Icon icon='caret-right' />}
+            <Strong size={600}>Your cart</Strong>
+            {index === currentIndex && <Icon icon='caret-left' />}
+          </Pane>
+        }
         content={
           <Pane>
             <InfoAlert msg='Update your checkout products by modifying your cart 👍' />

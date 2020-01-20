@@ -1,6 +1,6 @@
 import React from 'react'
 import { Pane } from 'evergreen-ui'
-import NewsletterForm from '../NewsletterForm'
+import NewsletterForm from '../forms/NewsletterForm'
 
 const Newsletter = () => {
     return (

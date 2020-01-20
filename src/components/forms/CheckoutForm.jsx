@@ -21,7 +21,7 @@ const CheckoutForm = ({ stripe }) => {
   const [{isPaymentSucceed, errors, shippingMethod}, dispatchCheckout] = useCheckout
   const [{loading}, dispatchLoading] = useLoading
 
-  const [currentIndex, setIndex] = useState(-1)
+  const [currentIndex, setIndex] = useState(0)
 
   const handleSubmit = async e => {
     dispatchLoading({ type: SET_LOADING, payload: {msg: 'Please wait, we are processing payment'}})

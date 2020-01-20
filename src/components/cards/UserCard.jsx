@@ -30,12 +30,8 @@ const UserCard = () => {
         <Label
           link='/profile'
           name="Believe LODY"
-          borderBottom
           paddingBottom={5}
         />
-        <Pane paddingTop={10}>
-          <Button intent='danger' onClick={logout}>Logout</Button>
-        </Pane>
       </Card>
     </Pane>
   )
