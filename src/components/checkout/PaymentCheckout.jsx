@@ -1,7 +1,6 @@
 import React from 'react'
-import { Pane } from 'evergreen-ui'
+import { Pane, Icon, Strong } from 'evergreen-ui'
 import Accordion from '../accordions/Accordion'
-import Label from '../label/Label'
 import PaymentForm from '../forms/PaymentForm'
 
 const PaymentCheckout = ({index, currentIndex, setIndex}) => {
@@ -11,7 +10,13 @@ const PaymentCheckout = ({index, currentIndex, setIndex}) => {
         index={index}
         currentIndex={currentIndex}
         setIndex={setIndex}
-        header={<Label name='Payment Method' />}
+        header={
+          <Pane textAlign='center'>
+            {index === currentIndex && <Icon icon='caret-right' />}
+            <Strong size={index === currentIndex ? 600 : 500}>Payment Method</Strong>
+            {index === currentIndex && <Icon icon='caret-left' />}
+          </Pane>
+        }
         content={<PaymentForm />}
       />
     </Pane>

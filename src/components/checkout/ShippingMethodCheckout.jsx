@@ -1,7 +1,6 @@
 import React from 'react'
-import { Pane } from 'evergreen-ui'
+import { Pane, Icon, Strong } from 'evergreen-ui'
 import Accordion from '../accordions/Accordion'
-import Label from '../label/Label'
 import ShippingMethodsTab from '../tabs/ShippingMethodsTab'
 
 const ShippingMethodCheckout = ({index, currentIndex, setIndex}) => {
@@ -15,7 +14,13 @@ const ShippingMethodCheckout = ({index, currentIndex, setIndex}) => {
         index={index}
         currentIndex={currentIndex}
         setIndex={setIndex}
-        header={<Label name='Select a shipping method' />}
+        header={
+          <Pane textAlign='center'>
+            {index === currentIndex && <Icon icon='caret-right' />}
+            <Strong size={index === currentIndex ? 600 : 500}>Select a shipping method</Strong>
+            {index === currentIndex && <Icon icon='caret-left' />}
+          </Pane>
+        }
         content={<ShippingMethodsTab />}
       />
     </Pane>
