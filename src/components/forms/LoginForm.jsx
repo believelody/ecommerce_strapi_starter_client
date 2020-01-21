@@ -67,31 +67,29 @@ const LoginForm = () => {
       <Pane borderBottom width='100%' paddingY={8} textAlign='center'>
         <Heading size={700}>Connect to your account</Heading>
       </Pane>
-      <Pane textAlign='center' marginY={20}>
-        <form onSubmit={handleSubmit}>
-          <FieldComponent
-            label={<Label name='Email *' />}
-            name='email'
-            type='email'
-            placeholder='ex: username@mail.com'
-            handleChange={handleEmail}
-            error={errors && errors.email}
-          />
-          <FieldComponent
-            label={<Label name='Password *' />}
-            name='password'
-            type='password'
-            placeholder='enter your password here'
-            hint='It must contain at least 6 characters, 1 numerical'
-            handleChange={handlePassword}
-            error={errors && errors.password}
-          />
-          {
-            errors && errors.authFailed &&
-            <ErrorAlert label='authFailed' errors={errors} />
-          }
-          <Button appearance='primary'>Login</Button>
-        </form>
+      <Pane textAlign='center' marginY={20} is='form' onSubmit={handleSubmit}>
+        <FieldComponent
+          label={<Label name='Email *' />}
+          name='email'
+          type='email'
+          placeholder='ex: username@mail.com'
+          handleChange={handleEmail}
+          error={errors && errors.email}
+        />
+        <FieldComponent
+          label={<Label name='Password *' />}
+          name='password'
+          type='password'
+          placeholder='enter your password here'
+          hint='It must contain at least 6 characters, 1 numerical'
+          handleChange={handlePassword}
+          error={errors && errors.password}
+        />
+        {
+          errors && errors.authFailed &&
+          <ErrorAlert label='authFailed' errors={errors} />
+        }
+        <Button appearance='primary'>Login</Button>
       </Pane>
       <NavLink to='/register'>
         <Button appearance='minimal' intent='success'>No account? Register here!</Button>
