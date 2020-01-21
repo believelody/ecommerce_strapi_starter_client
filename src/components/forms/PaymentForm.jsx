@@ -4,7 +4,7 @@ import StripeCheckout from '../stripe/StripeCheckout'
 
 const PaymentForm = () => {
     return (
-        <Pane paddingY={8} paddingX={16}>
+        <Pane padding={16} margin={16} border='muted' background='tealTint'>
             <StripeCheckout />
         </Pane>
     )

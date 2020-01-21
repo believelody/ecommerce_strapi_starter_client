@@ -14,6 +14,7 @@ import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { deleteCart } from '../../utils/cart.utils'
 import isMobile from '../../utils/isMobile.utils'
 import DetailAmountCheckout from '../checkout/DetailAmountCheckout'
+import PromoCode from '../promo/PromoCode'
 
 const CheckoutForm = ({ stripe }) => {
   const { useCart, useCheckout, useLoading } = useAppHooks()
@@ -94,8 +95,9 @@ const CheckoutForm = ({ stripe }) => {
           <ShippingMethodCheckout index={2} currentIndex={currentIndex} setIndex={setIndex} />
           <PaymentCheckout index={3} currentIndex={currentIndex} setIndex={setIndex} />
         </Pane>
+        <PromoCode />
         <DetailAmountCheckout />
-        <Pane display='flex' flexDirection='column' alignItems='center'>
+        <Pane display='flex' flexWrap='wrap' alignItems='center'>
           <Button
             id='stripe__button'
             type='submit'
@@ -106,7 +108,7 @@ const CheckoutForm = ({ stripe }) => {
           >
             {shippingMethod && <Label name={`Buy $ ${(total + shippingMethod.price).toFixed(2)}`} />}
           </Button>
-          <Text paddingY={8}>Or</Text>
+          <Text paddingY={8} paddingX={16}>Or</Text>
           <Button appearance='primary' intent='warning' color='blue'>
             PayPal Checkout
           </Button>
