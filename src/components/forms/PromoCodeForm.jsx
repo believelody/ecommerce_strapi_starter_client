@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import FieldComponent from '../fields/FieldComponent'
 import { Button, Pane, Text } from 'evergreen-ui'
 import styled from 'styled-components'
+import { useAppHooks } from '../../context'
+import promoCodeMock from '../../mock/promoCode.mock'
+import { PROMO_CODE } from '../../reducers/checkoutReducer'
 
 const FormStyle = styled.form`
     height: 100%;
@@ -12,9 +15,12 @@ const FormStyle = styled.form`
 `
 
 const PromoCodeForm = () => {
+    const { useCheckout } = useAppHooks()
+    const [checkoutState, dispatchCheckout] = useCheckout
+
     const [code, setCode] = useState('')
     const [error, setError] = useState(null)
-    const [isSubmitted, setIsSubmit] = useState(false)
+    const [success, setSuccess] = useState(false)
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -22,11 +28,22 @@ const PromoCodeForm = () => {
             setError('Promo code field cannot be empty.')
         }
         else {
-            setIsSubmit(true)
+            if (promoCodeMock.find(p => code === p.code)) {
+                dispatchCheckout({
+                    type: PROMO_CODE,
+                    payload: {
+                        promo: promoCodeMock.find(p => code === p.code)
+                    }
+                })
+                setSuccess(true)
+            }
+            else {
+                setError('Sorry, this promo code doesn\'t exist.')
+            }
         }
     }
 
-    return !isSubmitted ?
+    return !success ?
         <FormStyle onSubmit={handleSubmit}>
             <Pane width='70%' paddingLeft={8}>
                 <FieldComponent

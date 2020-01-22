@@ -15,12 +15,13 @@ import { deleteCart } from '../../utils/cart.utils'
 import isMobile from '../../utils/isMobile.utils'
 import DetailAmountCheckout from '../checkout/DetailAmountCheckout'
 import PromoCode from '../promo/PromoCode'
+import { APPLY_PROMO_CODE } from '../../reducers/cartReducer'
 
 const CheckoutForm = ({ stripe }) => {
   const { useCart, useCheckout, useLoading } = useAppHooks()
   const [{total}, dispatchCart] = useCart
-  const [{isPaymentSucceed, errors, shippingMethod}, dispatchCheckout] = useCheckout
-  const [{loading}, dispatchLoading] = useLoading
+  const [{isPaymentSucceed, errors, shippingMethod, promo}, dispatchCheckout] = useCheckout
+  const [loadingState, dispatchLoading] = useLoading
 
   const [currentIndex, setIndex] = useState(0)
 
@@ -72,6 +73,19 @@ const CheckoutForm = ({ stripe }) => {
       resetAll()
     }
   }, [isPaymentSucceed])
+
+  useEffect(() => {
+    if (promo) {
+      dispatchCart({
+        type: APPLY_PROMO_CODE,
+        payload: {
+          total: promo.discount(total)
+        }
+      })
+    }
+  }, [promo])
+
+  console.log(total)
 
   return (
     <form onSubmit={handleSubmit}>

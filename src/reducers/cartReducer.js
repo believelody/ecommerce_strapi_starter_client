@@ -7,6 +7,7 @@ export const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 export const UPDATE_COLOR = 'UPDATE_COLOR'
 export const UPDATE_SIZE = 'UPDATE_SIZE'
 export const RESET_CART = 'RESET_CART'
+export const APPLY_PROMO_CODE = 'APPLY_PROMO_CODE'
 
 export const QUANTITY_MAX = 21
 
@@ -83,6 +84,12 @@ export const cartReducer = (state, { type, payload }) => {
             itemSize['size'] = payload.size
 
             return { ...state }
+
+        case APPLY_PROMO_CODE:
+            return {
+                ...state,
+                total: payload.total
+            }
 
         default:
             return state

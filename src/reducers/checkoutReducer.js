@@ -7,6 +7,7 @@ export const SHIPPING_METHOD = 'SHIPPING_METHOD'
 export const IS_SAME = 'IS_SAME'
 export const IS_NOT_SAME = 'IS_NOT_SAME'
 export const RESET_ERRORS = 'RESET_ERRORS'
+export const PROMO_CODE = 'PROMO_CODE'
 
 export const initCheckoutState = {
     isPaymentSucceed: false,
@@ -14,7 +15,8 @@ export const initCheckoutState = {
     billingAddress: null,
     isSame: false,
     shippingMethod: null,
-    errors: null
+    errors: null,
+    promo: null
 }
 
 export const checkoutReducer = (state, { type, payload }) => {
@@ -84,7 +86,13 @@ export const checkoutReducer = (state, { type, payload }) => {
                 errors: null
             }
 
-        default:
-            return state
+      case PROMO_CODE:
+        return {
+          ...state,
+          promo: payload.promo,
+        }
+
+      default:
+          return state
     }
 }
