@@ -3,7 +3,7 @@ import { Pane } from 'evergreen-ui'
 
 const EntrustShipping = () => {
     return (
-        <Pane height={120} width='auto' marginTop={8}>
+        <Pane height={120} width='auto' marginTop={4}>
             <img
                 src='shipping_carrier.png'
                 alt='shipping-entrust'

@@ -5,7 +5,11 @@ import PaymentForm from '../forms/PaymentForm'
 
 const PaymentCheckout = ({index, currentIndex, setIndex}) => {
   return (
-    <Pane border>
+    <Pane
+      width='100%'
+      height='100%'
+      border
+    >
       <Accordion
         index={index}
         currentIndex={currentIndex}

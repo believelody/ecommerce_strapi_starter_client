@@ -3,7 +3,7 @@ import { Pane } from 'evergreen-ui'
 
 const EntrustPayment = () => {
     return (
-        <Pane height={50} width='auto' marginTop={32}>
+        <Pane height={50} width='auto' marginTop={16}>
             <img
                 src='payment_gateway.png'
                 alt='payment-entrust'

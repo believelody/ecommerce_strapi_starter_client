@@ -6,11 +6,14 @@ import { useAppHooks } from '../context';
 import { Redirect } from 'react-router-dom';
 import EntrustPayment from '../components/entrust/EntrustPayment';
 import EntrustShipping from '../components/entrust/EntrustShipping';
+import PaymentSucceedCard from '../components/payment/PaymentSucceedCard';
+import CheckoutCard from '../components/checkout/CheckoutCard';
 
 
 const CheckoutPage = () => {
-  const  { useCart } = useAppHooks()
+  const  { useCart, useCheckout } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
+  const [{isPaymentSucceed}, dispatchCheckout] = useCheckout
 
   return (
     cart.length > 0 ?
@@ -21,16 +24,21 @@ const CheckoutPage = () => {
           display='flex'
           flexDirection='column'
           alignItems='center'
+          justifyContent='center'
           background='tint1'
+          position='relative'
         >
-            <Pane paddingY={24} textAlign='center'>
-              <Heading size={700}>Here's your checkout process</Heading>
-              <Paragraph>
-                Make your choice by clicking on a title line and fill/read information needed.
-              </Paragraph>
-            </Pane>
-          <CheckoutForm />
-          <Pane width='100%' display='flex' alignItems='center' justifyContent='space-evenly'>
+          {
+            isPaymentSucceed ? <PaymentSucceedCard /> : <CheckoutCard />
+          }
+          <Pane
+            width='100%'
+            bottom={8}
+            display='flex'
+            alignItems='center'
+            justifyContent='space-evenly'
+            position='relative'
+          >
             <EntrustPayment />
             <EntrustShipping />
           </Pane>
