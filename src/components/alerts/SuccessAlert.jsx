@@ -1,10 +1,15 @@
 import React from 'react'
 import { Pane, Alert } from 'evergreen-ui'
 
-const SuccessAlert = ({ msg }) => {
+const SuccessAlert = ({ msg, hasTrim, appearance }) => {
   return (
     <Pane marginBottom={10}>
-      <Alert title={msg} intent='success' />
+      <Alert
+        title={msg}
+        intent='success'
+        hasTrim={hasTrim}
+        appearance={appearance}
+      />
     </Pane>
   )
 }

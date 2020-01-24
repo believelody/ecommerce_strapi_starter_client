@@ -1,10 +1,15 @@
 import React from 'react'
 import { Pane, Alert } from 'evergreen-ui'
 
-const ErrorAlert = ({ label, errors }) => {
+const ErrorAlert = ({ label, errors, hasTrim, appearance }) => {
   return (
-    <Pane marginBottom={10}>
-      <Alert title={errors[label]} intent='danger' />
+    <Pane marginBottom={8}>
+      <Alert
+        title={errors[label]}
+        intent='danger'
+        hasTrim={hasTrim}
+        appearance={appearance}
+      />
     </Pane>
   )
 }

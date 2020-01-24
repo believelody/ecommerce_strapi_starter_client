@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import randomstring from 'randomstring'
-import { Pane, Card, Button, Heading } from 'evergreen-ui'
+import { Pane, Card, Button, Heading, toaster } from 'evergreen-ui'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
@@ -13,6 +13,7 @@ import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { SET_TOAST } from '../../reducers/toastReducer'
 import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
+import verifyEmailTemplate from '../../utils/verifyEmailTemplate'
 
 const RegisterForm = () => {
   const { useAuth, useLoading, useToast } = useAppHooks()
@@ -77,15 +78,15 @@ const RegisterForm = () => {
       setEmail('')
       setPassword('')
 
-      await api.user.confirmEmail({
-        to: res.user.email,
-        subject: `Confirm your email`,
-        text: `Welcome ${res.user.username}, please confirm your email with this code: ${code}. Copy and paste it your register form. Enjoy your shopping in our store.`,
-        html: `<p>
-          Welcome ${res.user.username}, please confirm your email with this code: <b>${code}</b>. Copy and paste it your register form. Enjoy your shopping in our store.
+      await verifyEmailTemplate(
+        res.user.email,
+        `Confirm your email`,
+        `Welcome ${res.user.name}, please confirm your email with this code: ${code}. Copy and paste it the verify form. Enjoy your shopping in our store.`,
+        `<p>
+          Welcome ${res.user.name}, please confirm your email with this code: <b>${code}</b>. Copy and paste it the verify form. Enjoy your shopping in our store.
         </p>`
-      })
-      dispatchToast({ type: SET_TOAST, payload: { msg: `Hello ${res.user.username}, we just send you a confirm email.` } })
+      )
+      toaster.notify(`Hello ${res.user.username}, we just send you a confirm email.`)
     } catch (e) {
       console.log(e.message)
       dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
@@ -161,10 +162,10 @@ const RegisterForm = () => {
             <Button appearance='primary' intent='success'>Register</Button>
           </form>
         }
-        {
+        {/*
           isConnected &&
           <AuthConfirm setVerification={setVerification} />
-        }
+        */}
       </Pane>
       <NavLink to='/login'>
         <Button appearance='minimal'>Already an account? Connect here!</Button>

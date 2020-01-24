@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Pane, Button } from 'evergreen-ui'
+import { Pane, Button, toaster } from 'evergreen-ui'
 import ErrorAlert from '../alerts/ErrorAlert'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
@@ -8,7 +8,7 @@ import { useAppHooks } from '../../context'
 import { ERROR_AUTH } from '../../reducers/authReducer'
 import { SET_TOAST } from '../../reducers/toastReducer'
 
-const AuthConfirmForm = ({ setVerification }) => {
+const AuthConfirmForm = ({ handleClose }) => {
   const { useAuth, useToast } = useAppHooks()
   const [{user, errors}, dispatchAuth] = useAuth
   const [toastState, dispatchToast] = useToast
@@ -28,13 +28,14 @@ const AuthConfirmForm = ({ setVerification }) => {
       try {
         const {data} = await api.profile.verifyCode(code)
         console.log(data)
-        if (data.profiles.length === 1) {
-          dispatchToast({ type: SET_TOAST, payload: {msg: `Well done ${user.username}, your email is confirmed. Have fun in our store`} })
-          setConfirm(true)
-        }
-        else {
-          dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: 'Sorry this code is incorrect. Please try again'} })
-        }
+        // if (code === '586') {
+        //   toaster.notify(`Well done ${user.name}, your email is confirmed. Have fun in our store`)
+        //   setConfirm(true)
+        //   handleClose()
+        // }
+        // else {
+        //   dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: 'Sorry this code is incorrect. Please try again'} })
+        // }
       } catch (e) {
         dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: e.message} })
       }
@@ -52,27 +53,29 @@ const AuthConfirmForm = ({ setVerification }) => {
       }
     }
 
-    checkEmailConfirmedStatus()
-
-    if (confirm) {
-      setVerification(true)
-    }
+    // checkEmailConfirmedStatus()
   }, [confirm])
 
   return (
-    <Pane display='block' minWidth={300} maxWidth={500} marginX='auto'>
-      <Pane display='block' is='form' onSubmit={handleSubmit}>
-        <FieldComponent
-          label={<Label name='Verification code *' />}
-          description='Please enter the verification code we sent you in your mail box'
-          name='code'
-          placeholder='enter your verification code here'
-          handleChange={handleCode}
-          error={errors && errors.code}
-        />
-        { errors && errors.verification_failed && <ErrorAlert label='verification_failed' errors={errors} /> }
-        <Button appearance='primary'>Verify</Button>
-      </Pane>
+    <Pane display='block' is='form' onSubmit={handleSubmit}>
+      <FieldComponent
+        label={<Label name='Verification code *' />}
+        description='Please enter the verification code we sent you in your mail box'
+        name='code'
+        placeholder='enter your verification code here'
+        handleChange={handleCode}
+        error={errors && errors.code}
+      />
+      { 
+        errors && errors.verification_failed && 
+        <ErrorAlert
+          label='verification_failed'
+          errors={errors}
+          appearance='card'
+          height={30}
+        /> 
+      }
+      <Button appearance='primary'>Verify</Button>
     </Pane>
   )
 }

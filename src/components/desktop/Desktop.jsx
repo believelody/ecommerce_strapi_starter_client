@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { Pane, Text } from 'evergreen-ui'
+import { Pane } from 'evergreen-ui'
 import Sidenav from '../sidenav/Sidenav'
 import Main from '../main/Main'
 import Loading from '../loading/Loading'
-import FilterButton from '../filter/FilterButton'
 import SideSheetNav from '../side-sheet/SideSheetNav'
+import Dialog from '../dialog/Dialog'
 
 const Desktop = () => {
   return (
@@ -20,6 +20,7 @@ const Desktop = () => {
         <Main />
         <Loading />
         <SideSheetNav />
+        <Dialog />
       </Pane>
     </BrowserRouter>
   )

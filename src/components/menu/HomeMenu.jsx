@@ -33,7 +33,7 @@ const HomeMenu = () => {
                     </Menu.Item>
                 </NavLink>
                 <Menu.Divider />
-                <NavLink to='/categories/products' style={{ width: '100%' }}>
+                <NavLink to='/products' style={{ width: '100%' }}>
                     <Menu.Item paddingY={24}>
                         <Pane
                             display='flex'

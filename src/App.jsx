@@ -45,7 +45,7 @@ const App = () => {
       dispatchAuth({ type: SUCCESS_AUTH, payload: {user: getUser()} })
     }
     dispatchLoading({ type: RESET_LOADING })
-  }, [getToken])
+  }, [getToken, getUser])
 
   return (
     <Pane maxHeight={window.screen.height}>

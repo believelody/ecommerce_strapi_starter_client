@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Pane, Card, Button, Heading } from 'evergreen-ui'
+import { Pane, Card, Button, Heading, toaster } from 'evergreen-ui'
 import api from '../../api'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
@@ -43,7 +43,8 @@ const LoginForm = () => {
       })
       setToken(res.jwt)
       setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
-      dispatchToast({ type: SET_TOAST, payload: { msg: `Welcome ${res.user.username}` } })
+      // dispatchToast({ type: SET_TOAST, payload: { msg: `Welcome ${res.user.username}` } })
+      toaster.notify(`Welcome ${res.user.username}`)
       setEmail('')
       setPassword('')
       history.push('/profile')

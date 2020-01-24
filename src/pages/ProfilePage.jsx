@@ -1,16 +1,28 @@
-import React from 'react'
-import { Pane } from 'evergreen-ui'
+import React, { useEffect, useState } from 'react'
+import { Pane, Code, Text } from 'evergreen-ui'
 import AuthConfirmForm from '../components/forms/AuthConfirmForm'
 import isMobile from '../utils/isMobile.utils'
+import { OPEN_DIALOG } from '../reducers/dialogReducer'
+import { useAppHooks } from '../context'
+import Verify from '../components/verify/Verify'
 
 const ProfilePage = () => {
+  const { useDialog } = useAppHooks()
+  const [dialogState, dispatchDialog] = useDialog
+
+  useEffect(() => {
+    dispatchDialog({
+      type: OPEN_DIALOG,
+      payload: {
+        children: Verify
+      }
+    })
+  }, [])
+
   return (
     <Pane
-      minHeight='98vh'
+      height='100vh'
     >
-      <Pane border paddingY={5} marginX={isMobile () ? 0 : '20%'} width='auto'>
-        <AuthConfirmForm />
-      </Pane>
     </Pane>
   )
 }
