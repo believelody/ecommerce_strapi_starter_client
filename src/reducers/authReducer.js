@@ -1,6 +1,6 @@
 export const SUCCESS_AUTH = 'SUCCESS_AUTH'
 export const ERROR_AUTH = 'ERROR_AUTH'
-export const RESET_ERROR = 'RESET_ERROR'
+export const RESET_ERRORS = 'RESET_ERRORS'
 export const LOG_OUT = 'LOG_OUT'
 
 export const initAuthState = {
@@ -29,7 +29,7 @@ export const authReducer = (state, { type, payload }) => {
                 errors: { ...state.errors, [key]: value}
             }
 
-        case RESET_ERROR:
+        case RESET_ERRORS:
             return {
                 ...state,
                 errors: null

@@ -8,7 +8,7 @@ import ErrorAlert from '../alerts/ErrorAlert'
 import AuthConfirm from '../auth-confirm/AuthConfirm'
 import api from '../../api'
 import { useAppHooks } from '../../context'
-import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERROR } from '../../reducers/authReducer'
+import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERRORS } from '../../reducers/authReducer'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { SET_TOAST } from '../../reducers/toastReducer'
 import { setToken } from '../../utils/token.utils'
@@ -26,7 +26,6 @@ const RegisterForm = () => {
   const [confirmEmail, setConfirmEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [verification, setVerification] = useState(false)
 
   const handleUsername = e => setUsername(e.target.value)
   const handleEmail = e => setEmail(e.target.value)
@@ -66,24 +65,24 @@ const RegisterForm = () => {
         length: 8,
         charset: 'alphanumeric'
       })
-      await api.profile.createProfile(res.user._id, res.user.username, code, false)
+      await api.profile.createProfile(res.user._id, res.user.username, code)
       dispatchAuth({
           type: SUCCESS_AUTH,
           payload: {
-              user: { _id: res.user._id, username: res.user.username, email: res.user.email }
+              user: { _id: res.user._id, name: res.user.username, email: res.user.email }
           }
       })
       setToken(res.jwt)
-      setUser({ _id: res.user._id, username: res.user.username, email: res.user.email })
+      setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
       setEmail('')
       setPassword('')
 
       await verifyEmailTemplate(
         res.user.email,
         `Confirm your email`,
-        `Welcome ${res.user.name}, please confirm your email with this code: ${code}. Copy and paste it the verify form. Enjoy your shopping in our store.`,
+        `Welcome ${res.user.username}, please confirm your email with this code: ${code}. Copy and paste it the verify form. Enjoy your shopping in our store.`,
         `<p>
-          Welcome ${res.user.name}, please confirm your email with this code: <b>${code}</b>. Copy and paste it the verify form. Enjoy your shopping in our store.
+          Welcome ${res.user.username}, please confirm your email with this code: <b>${code}</b>. Copy and paste it the verify form. Enjoy your shopping in our store.
         </p>`
       )
       toaster.notify(`Hello ${res.user.username}, we just send you a confirm email.`)
@@ -94,8 +93,14 @@ const RegisterForm = () => {
     dispatchLoading({ type: RESET_LOADING })
   }
 
+  useEffect(() => {
+    if (errors) {
+      dispatchAuth({ type: RESET_ERRORS })
+    }
+  }, [])
+
   return (
-    !verification ?
+    !isConnected ?
     <Card
       display='flex'
       alignItems='center'
@@ -108,8 +113,6 @@ const RegisterForm = () => {
         <Heading size={700}>Create a new account</Heading>
       </Pane>
       <Pane textAlign='center' marginY={20}>
-        {
-          !isConnected &&
           <form onSubmit={handleSubmit}>
             <FieldComponent
               label={<Label name='Username *' />}
@@ -161,11 +164,6 @@ const RegisterForm = () => {
             }
             <Button appearance='primary' intent='success'>Register</Button>
           </form>
-        }
-        {/*
-          isConnected &&
-          <AuthConfirm setVerification={setVerification} />
-        */}
       </Pane>
       <NavLink to='/login'>
         <Button appearance='minimal'>Already an account? Connect here!</Button>

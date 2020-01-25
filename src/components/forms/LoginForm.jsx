@@ -6,7 +6,7 @@ import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
 import { useAppHooks } from '../../context'
-import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERROR } from '../../reducers/authReducer'
+import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERRORS } from '../../reducers/authReducer'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
@@ -54,7 +54,11 @@ const LoginForm = () => {
     dispatchLoading({ type: RESET_LOADING })
   }
 
-  useEffect(() => {}, [errors])
+  useEffect(() => {
+    if (errors) {
+      dispatchAuth({ type: RESET_ERRORS })
+    }
+  }, [])
 
   return (
     <Card
