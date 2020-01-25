@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Pane, Text } from 'evergreen-ui'
 import AuthConfirmForm from '../forms/AuthConfirmForm'
 import { useAppHooks } from '../../context'
-import verifyEmailTemplate from '../../utils/verifyEmailTemplate'
+import verifyEmailTemplate from '../../utils/verifyEmailTemplate.utils'
+import { generateVerifyCode } from '../../utils/verifyCode.utils'
 
 const Verify = ({ handleClose }) => {
     const { useAuth } = useAppHooks()
@@ -12,12 +13,13 @@ const Verify = ({ handleClose }) => {
 
     const resendEmail = async e => {
         try {
+            let code = generateVerifyCode()
             await verifyEmailTemplate(
                 user.email,
                 'Please confirm your email',
-                `Welcome ${user.name}, please confirm your email with this code: 586. Copy and paste it the verify form. Enjoy your shopping in our store.`,
+                `Welcome ${user.name}, please confirm your email with this code: ${code}. Copy and paste it the verify form. Enjoy your shopping in our store.`,
                 `<p>
-                Welcome ${user.name}, please confirm your email with this code: <b>586</b>. Copy and paste it the verify form. Enjoy your shopping in our store.
+                Welcome ${user.name}, please confirm your email with this code: <b>${code}</b>. Copy and paste it the verify form. Enjoy your shopping in our store.
                 </p>`
             )
             SetIsEmailSent(true)

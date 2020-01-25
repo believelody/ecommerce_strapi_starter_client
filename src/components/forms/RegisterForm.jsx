@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
-import randomstring from 'randomstring'
 import { Pane, Card, Button, Heading, toaster } from 'evergreen-ui'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
-import AuthConfirm from '../auth-confirm/AuthConfirm'
 import api from '../../api'
 import { useAppHooks } from '../../context'
 import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERRORS } from '../../reducers/authReducer'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
-import { SET_TOAST } from '../../reducers/toastReducer'
 import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
-import verifyEmailTemplate from '../../utils/verifyEmailTemplate'
+import verifyEmailTemplate from '../../utils/verifyEmailTemplate.utils'
+import { generateVerifyCode } from '../../utils/verifyCode.utils'
 
 const RegisterForm = () => {
-  const { useAuth, useLoading, useToast } = useAppHooks()
+  const { useAuth, useLoading } = useAppHooks()
   const [{errors, isConnected}, dispatchAuth] = useAuth
   const [{loading}, dispatchLoading] = useLoading
-  const [toastState, dispatchToast] = useToast
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -61,10 +58,7 @@ const RegisterForm = () => {
     try {
       const res = await api.user.register(username, email, password)
 
-      let code = randomstring.generate({
-        length: 8,
-        charset: 'alphanumeric'
-      })
+      let code = generateVerifyCode()
       await api.profile.createProfile(res.user._id, res.user.username, code)
       dispatchAuth({
           type: SUCCESS_AUTH,

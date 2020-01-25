@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import { Pane, Card, Button, Heading, toaster } from 'evergreen-ui'
 import api from '../../api'
 import FieldComponent from '../fields/FieldComponent'
@@ -12,8 +12,8 @@ import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
 
 const LoginForm = () => {
-  const { useAuth, useLoading, useToast, history } = useAppHooks()
-  const [{errors}, dispatchAuth] = useAuth
+  const { useAuth, useLoading, useToast } = useAppHooks()
+  const [{errors, isConnected}, dispatchAuth] = useAuth
   const [{loading}, dispatchLoading] = useLoading
   const [toastState, dispatchToast] = useToast
 
@@ -25,7 +25,7 @@ const LoginForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    dispatchAuth({ type: RESET_ERROR })
+    dispatchAuth({ type: RESET_ERRORS })
     if (!email) {
       dispatchAuth({ type: ERROR_AUTH, payload: {email: 'Email is required'}})
     }
@@ -43,11 +43,10 @@ const LoginForm = () => {
       })
       setToken(res.jwt)
       setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
-      // dispatchToast({ type: SET_TOAST, payload: { msg: `Welcome ${res.user.username}` } })
       toaster.notify(`Welcome ${res.user.username}`)
       setEmail('')
       setPassword('')
-      history.push('/profile')
+      // history.push('/profile')
     } catch (e) {
       dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
     }
@@ -61,6 +60,7 @@ const LoginForm = () => {
   }, [])
 
   return (
+    !isConnected ?
     <Card
       display='flex'
       alignItems='center'
@@ -103,6 +103,8 @@ const LoginForm = () => {
         <Button appearance='minimal' intent='warning'>Password forgotten? Click here!</Button>
       </NavLink>
     </Card>
+    :
+    <Redirect to='/profile' />
   )
 }
 

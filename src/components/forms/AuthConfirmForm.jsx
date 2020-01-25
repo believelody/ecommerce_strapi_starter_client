@@ -6,7 +6,6 @@ import Label from '../label/Label'
 import api from '../../api'
 import { useAppHooks } from '../../context'
 import { ERROR_AUTH } from '../../reducers/authReducer'
-import { SET_TOAST } from '../../reducers/toastReducer'
 
 const AuthConfirmForm = ({ handleClose }) => {
   const { useAuth, useToast } = useAppHooks()
@@ -27,15 +26,14 @@ const AuthConfirmForm = ({ handleClose }) => {
     else {
       try {
         const {data} = await api.profile.verifyCode(code)
-        console.log(data)
-        // if (code === '586') {
-        //   toaster.notify(`Well done ${user.name}, your email is confirmed. Have fun in our store`)
-        //   setConfirm(true)
-        //   handleClose()
-        // }
-        // else {
-        //   dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: 'Sorry this code is incorrect. Please try again'} })
-        // }
+        if (data.profiles[0]) {
+          toaster.notify(`Well done ${user.name}, your email is confirmed. Have fun in our store`)
+          setConfirm(true)
+          handleClose()
+        }
+        else {
+          dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: 'Sorry this code is incorrect. Please try again'} })
+        }
       } catch (e) {
         dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: e.message} })
       }

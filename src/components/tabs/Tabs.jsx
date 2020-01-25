@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Pane, Tablist, Tab } from 'evergreen-ui'
 
-const Tabs = ({ elements, getCurrentIndexFromChild = null }) => {
+const Tabs = ({ elements, getCurrentIndexFromChild = null, marginTop = 10 }) => {
     const [index, setIndex] = useState(0)
 
     const selectIndex = i => {
@@ -10,7 +10,7 @@ const Tabs = ({ elements, getCurrentIndexFromChild = null }) => {
     }
 
     return (
-        <Pane marginTop={10} elevation={1}>
+        <Pane marginTop={marginTop} elevation={1}>
             <Pane borderBottom width='100%'>
                 <Tablist paddingY={5} display='flex'>
                     {
