@@ -12,14 +12,14 @@ import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 
 const CartSidenav = () => {
   const { useAuth, useCart, useModal, useLoading } = useAppHooks()
-  const [{isConnected}, dispatchAuth] = useAuth
-  const [{total, cart}, dispatchCart] = useCart
+  const [{ isConnected }, dispatchAuth] = useAuth
+  const [{ total, cart }, dispatchCart] = useCart
   const [modalState, dispatchModal] = useModal
   const [loadingState, dispatchLoading] = useLoading
 
   const emptyCart = async e => {
     try {
-      dispatchLoading({ type: SET_LOADING, payload: {msg: "please wait..."} })
+      dispatchLoading({ type: SET_LOADING, payload: { msg: "please wait..." } })
       // await snipcartClearItems()
       // await snipcartShippingAddress({shippingSameAsBilling: false})
       // await snipcartBillingAddress({shippingSameAsBilling: false})
@@ -54,7 +54,7 @@ const CartSidenav = () => {
         await snipcartShowModal()
       }
     }
-    catch(e) {
+    catch (e) {
       console.log(e)
     }
   }
@@ -66,28 +66,28 @@ const CartSidenav = () => {
         display='flex'
         background='blueTint'
         alignItems='center'
-        justifyContent='center'        
+        justifyContent='center'
       >
         <Pane cursor='pointer'>
           <Icon icon='caret-right' color='success' />
           {
-            isConnected ?
-              <Link to='/login'>
-                <Text
-                  color='green'
-                  size={500}
-                >
-                  Checkout
-            </Text>
-              </Link> :
-              <Link to='/checkout'>
-                <Text
-                  color='green'
-                  size={500}
-                >
-                  Checkout
-            </Text>
-              </Link>
+            !isConnected ?
+            <Link to='/login'>
+              <Text
+                color='green'
+                size={500}
+              >
+                Checkout
+              </Text>
+            </Link> :
+            <Link to='/checkout'>
+              <Text
+                color='green'
+                size={500}
+              >
+                Checkout
+              </Text>
+            </Link>
           }
           <Icon icon='caret-left' color='success' />
         </Pane>

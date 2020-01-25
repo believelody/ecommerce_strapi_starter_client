@@ -16,12 +16,12 @@ const Main = ({}) => {
       <main>
         <Switch>
           <Route path='/' exact component={HomePage} />
-          <PrivateRoute path='/profile' exact component={ProfilePage} />
           <Route path='/products/:id' exact component={ProductDetailPage} />
           <Route path='/checkout' exact component={CheckoutPage} />
           <Route path='/login' exact component={LoginPage} />
           <Route path='/register' exact component={RegisterPage} />
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />
+          <PrivateRoute path='/profile' exact component={ProfilePage} />
         </Switch>
       </main>
     </Pane>

@@ -1,7 +1,6 @@
 import React from 'react'
-import { Pane, Heading, Paragraph } from 'evergreen-ui'
+import { Pane } from 'evergreen-ui'
 import { Elements, StripeProvider } from 'react-stripe-elements';
-import CheckoutForm from '../components/forms/CheckoutForm'
 import { useAppHooks } from '../context';
 import { Redirect } from 'react-router-dom';
 import EntrustPayment from '../components/entrust/EntrustPayment';

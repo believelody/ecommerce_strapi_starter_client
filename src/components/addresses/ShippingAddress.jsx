@@ -99,7 +99,7 @@ const ShippingAddress = ({ profile }) => {
         <Card textAlign='center' background='tint2' paddingY={16}>
             <Paragraph>
                 You don't have any address.{' '}
-            <Strong onClick={addNewAddress} cursor="pointer">
+                <Strong onClick={addNewAddress} cursor="pointer">
                     Add one here
                 </Strong>
             </Paragraph>

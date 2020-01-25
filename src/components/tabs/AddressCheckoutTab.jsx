@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Tabs from './Tabs'
 import ShippingAddress from '../addresses/ShippingAddress'
 import BillingAddress from '../addresses/BillingAddress'
 import { useAppHooks } from '../../context'
-import { Text, Paragraph, Pane } from 'evergreen-ui'
+import { Text, Paragraph } from 'evergreen-ui'
 
 const AddressCheckoutTab = () => {
     const { useProfile, useCheckout } = useAppHooks()

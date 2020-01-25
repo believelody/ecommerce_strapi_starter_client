@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Pane } from 'evergreen-ui'
 import Radio from '../radio/Radio'
 
-const AddressesList = ({ addresses, dispatchCheckout, obj, type }) => {
+const AddressesList = ({ addresses, selectAddress, obj, type }) => {
     return (
         addresses.length > 0 ?
         <Pane padding={8}>
@@ -20,7 +20,7 @@ const AddressesList = ({ addresses, dispatchCheckout, obj, type }) => {
                     }))
                 }
                 label="Choose your address"
-                methodFromParent={dispatchCheckout}
+                cb={selectAddress}
                 type={type}
                 obj={obj}
             />

@@ -42,8 +42,8 @@ const CheckoutForm = ({ stripe }) => {
           //   'url': `${apiUrl}/products/${item.product._id}`
         // })))
         setIsPaying(false)
-        lalala
-        // dispatchCheckout({ type: PAYMENT_SUCCEED })
+        // lalala
+        dispatchCheckout({ type: PAYMENT_SUCCEED })
       }
       catch (e) {
         dispatchCheckout({ type: PAYMENT_FAILED, payload: {payment_failed: 'Error in payment'} })

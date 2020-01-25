@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Pane, Card, Button, Heading, toaster } from 'evergreen-ui'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
@@ -15,7 +15,7 @@ import { generateVerifyCode } from '../../utils/verifyCode.utils'
 
 const RegisterForm = () => {
   const { useAuth, useLoading } = useAppHooks()
-  const [{errors, isConnected}, dispatchAuth] = useAuth
+  const [{errors}, dispatchAuth] = useAuth
   const [{loading}, dispatchLoading] = useLoading
 
   const [username, setUsername] = useState('')
@@ -94,7 +94,6 @@ const RegisterForm = () => {
   }, [])
 
   return (
-    !isConnected ?
     <Card
       display='flex'
       alignItems='center'
@@ -162,8 +161,7 @@ const RegisterForm = () => {
       <NavLink to='/login'>
         <Button appearance='minimal'>Already an account? Connect here!</Button>
       </NavLink>
-    </Card> :
-    <Redirect to='/profile' />
+    </Card>
   )
 }
 

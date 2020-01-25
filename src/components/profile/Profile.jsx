@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
-import { Pane, Heading, Paragraph } from 'evergreen-ui'
+import { Pane, Heading, Paragraph, Button } from 'evergreen-ui'
 import Verify from '../verify/Verify'
 import { useAppHooks } from '../../context'
 import { OPEN_DIALOG, CLOSE_DIALOG } from '../../reducers/dialogReducer'
 import { LOG_OUT } from '../../reducers/authReducer'
 import ProfileTabs from './ProfileTabs'
+import { deleteUser } from '../../utils/user.utils'
+import { deleteToken } from '../../utils/token.utils'
 
 const Profile = () => {
     const { useAuth, useDialog } = useAppHooks()
@@ -16,7 +18,7 @@ const Profile = () => {
         deleteUser()
         deleteToken()
         if (isShowed) {
-            dispatchAuth({ type: CLOSE_DIALOG })
+            dispatchDialog({ type: CLOSE_DIALOG })
         }
     }
 
@@ -28,6 +30,8 @@ const Profile = () => {
             }
         })
     }, [])
+
+    console.log(isShowed)
     
     return (
         <Pane height='100%' display='flex' flexDirection='column'>
@@ -35,6 +39,7 @@ const Profile = () => {
                 <Heading size={700}>Hi <em>{user.name}</em></Heading>
                 <Paragraph>
                     Here you will find all informations about you and your orders.
+                    <Button onClick={handleClick}>Logout</Button>
                 </Paragraph>
             </Pane>
             <ProfileTabs />

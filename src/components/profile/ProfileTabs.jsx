@@ -1,8 +1,10 @@
 import React from 'react'
 import { Pane, Text } from 'evergreen-ui'
+import ProfileAddresses from './ProfileAddresses'
 import Tabs from '../tabs/Tabs'
 
 const ProfileTabs = () => {
+
     return (
         <Pane flex='1 1 auto' background='tint1'>
             <Tabs
@@ -10,7 +12,7 @@ const ProfileTabs = () => {
                 elements={[
                     {
                         content: (
-                            <Pane height='auto'>
+                            <Pane>
                                 <Text>Order Tab</Text>
                             </Pane>
                         ),
@@ -18,7 +20,11 @@ const ProfileTabs = () => {
                         tab: <Text size={500}>My Orders</Text>
                     },
                     {
-                        content: <Text>Address Tab</Text>,
+                        content: (
+                            <Pane marginX='5%'>
+                                <ProfileAddresses />
+                            </Pane>
+                        ),
                         label: 'addresses',
                         tab: <Text size={500}>My Addresses</Text>
                     },

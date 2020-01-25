@@ -27,7 +27,7 @@ const AddressContent = ({ addresses, addressForm, label, obj, type }) => {
                             addresses={addresses}
                             type={type}
                             obj={obj}
-                            dispatchCheckout={
+                            selectAddress={
                                 (options, value, type, obj) => dispatchCheckout({
                                     type,
                                     payload: {

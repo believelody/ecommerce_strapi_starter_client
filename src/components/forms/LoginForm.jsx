@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Pane, Card, Button, Heading, toaster } from 'evergreen-ui'
 import api from '../../api'
 import FieldComponent from '../fields/FieldComponent'
@@ -13,9 +13,8 @@ import { setUser } from '../../utils/user.utils'
 
 const LoginForm = () => {
   const { useAuth, useLoading, useToast } = useAppHooks()
-  const [{errors, isConnected}, dispatchAuth] = useAuth
+  const [{errors}, dispatchAuth] = useAuth
   const [{loading}, dispatchLoading] = useLoading
-  const [toastState, dispatchToast] = useToast
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -60,7 +59,6 @@ const LoginForm = () => {
   }, [])
 
   return (
-    !isConnected ?
     <Card
       display='flex'
       alignItems='center'
@@ -103,8 +101,6 @@ const LoginForm = () => {
         <Button appearance='minimal' intent='warning'>Password forgotten? Click here!</Button>
       </NavLink>
     </Card>
-    :
-    <Redirect to='/profile' />
   )
 }
 
