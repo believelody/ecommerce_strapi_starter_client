@@ -15,12 +15,15 @@ import { getToken } from './utils/token.utils'
 import { getUser } from './utils/user.utils'
 import 'react-animated-slider/build/horizontal.css'
 import "react-image-gallery/styles/css/image-gallery.css"
+import addressesMock from './mock/addresses.mock'
+import { SHIPPING_ADDRESS, IS_SAME } from './reducers/checkoutReducer'
 
 const App = () => {
-  const { useCart, useAuth, useLoading } = useAppHooks()
+  const { useCart, useAuth, useLoading, useCheckout } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
   const [{isConnected}, dispatchAuth] = useAuth
   const [loadingState, dispatchLoading] = useLoading
+  const [checkoutState, dispatchCheckout] = useCheckout
 
   useEffect(() => {
     if (getCart()) {
@@ -46,6 +49,16 @@ const App = () => {
     }
     dispatchLoading({ type: RESET_LOADING })
   }, [getToken, getUser])
+
+  useEffect(() => {
+    dispatchCheckout({
+      type: SHIPPING_ADDRESS,
+      payload: {
+        shippingAddress: addressesMock[0]
+      }
+    })
+    dispatchCheckout({ type: IS_SAME })
+  }, [])
 
   return (
     <Pane maxHeight={window.screen.height}>

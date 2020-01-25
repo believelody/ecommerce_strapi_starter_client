@@ -30,8 +30,6 @@ const Profile = () => {
             }
         })
     }, [])
-
-    console.log(isShowed)
     
     return (
         <Pane height='100%' display='flex' flexDirection='column'>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AddressesList from '../addresses/AddressesList'
 import { useAppHooks } from '../../context'
 import addressesMock from '../../mock/addresses.mock'
@@ -9,11 +9,11 @@ const ProfileAddresses = () => {
     const { useCheckout } = useAppHooks()
     const [checkoutState, dispatchCheckout] = useCheckout
 
-    const selectAddress = (options, value, type, key) => {
+    const selectAddress = (options, value, type, obj) => {
         dispatchCheckout({
             type,
             payload: {
-                [key]: options.find(option => option.value === value)
+                [obj]: options.find(option => option.value === value).related
             }
         })
         dispatchCheckout({ type: IS_SAME })

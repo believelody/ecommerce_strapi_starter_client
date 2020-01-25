@@ -49,7 +49,7 @@ const ShippingAddress = ({ profile }) => {
                         <AddressContent
                             addresses={
                                 profile &&
-                                profile.addressList > 0 ?
+                                profile.addressList.length > 0 ?
                                 profile.addressList :
                                 shippingAddress ?
                                 [shippingAddress] :
@@ -89,7 +89,7 @@ const ShippingAddress = ({ profile }) => {
             <Button float='right' onClick={changeAddress}>
                 Change shipping address
             </Button>
-            <Card background='tealTint' padding={8}>
+            <Card background='tealTint' padding={8} textAlign='left'>
                 {shippingAddress.address1 && <Paragraph>{shippingAddress.address1}</Paragraph>}
                 {shippingAddress.address2 && <Paragraph>{shippingAddress.address2}</Paragraph>}
                 {shippingAddress.zip && <Paragraph>{shippingAddress.zip}</Paragraph>}
