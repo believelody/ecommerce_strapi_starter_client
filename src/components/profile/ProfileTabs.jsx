@@ -2,6 +2,7 @@ import React from 'react'
 import { Pane, Text } from 'evergreen-ui'
 import ProfileAddresses from './ProfileAddresses'
 import Tabs from '../tabs/Tabs'
+import ProfileAboutMe from './ProfileAboutMe'
 
 const ProfileTabs = () => {
 
@@ -29,7 +30,7 @@ const ProfileTabs = () => {
                         tab: <Text size={500}>My Addresses</Text>
                     },
                     {
-                        content: <Text>Profile Tab</Text>,
+                        content: <ProfileAboutMe />,
                         label: 'profile',
                         tab: <Text size={500}>About Me</Text>
                     },

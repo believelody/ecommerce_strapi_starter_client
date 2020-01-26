@@ -94,7 +94,7 @@ const CheckoutForm = ({ stripe }) => {
       <Card
         minWidth={!isMobile() ? 700 : 300}
         maxWidth={isMobile() ? 300 : 700}
-        padding={20}
+        padding={16}
         display='flex'
         alignItems='center'
         justifyContent='center'

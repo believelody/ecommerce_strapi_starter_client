@@ -20,10 +20,14 @@ export const register = (name, email, password) => strapi.register(name, email, 
 export const login = (email, password) => strapi.login(email, password)
 export const create = (path, data) => strapi.createEntry(path, data)
 export const send = obj => strapi.request('POST', '/email', {data: obj})
+export const upload = (file, path, refId, ref, source, field) => axios.put(`${apiUrl}upload?files=${path}/${file}&refId=${refId}&ref=${ref}&source=${source}&field=${field}`)
 export const get = (path, query) => axios.get(`${apiUrl}/${path}?user=${query}`, {
   "Authorization": `Bearer ${getToken()}`
 })
 export const post = (path, data, query) => axios.post(`${apiUrl}/${path}${query}`, data, {
+  "Authorization": `Bearer ${getToken()}`
+})
+export const put = (path, data, id) => axios.put(`${apiUrl}/${path}/${id}`, data, {
   "Authorization": `Bearer ${getToken()}`
 })
 

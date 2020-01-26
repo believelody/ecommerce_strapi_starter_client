@@ -32,7 +32,7 @@ const CheckoutPage = () => {
           }
           <Pane
             width='100%'
-            bottom={8}
+            bottom={12}
             display='flex'
             alignItems='center'
             justifyContent='space-evenly'

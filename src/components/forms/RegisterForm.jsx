@@ -32,7 +32,7 @@ const RegisterForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    dispatchAuth({ type: RESET_ERROR })
+    dispatchAuth({ type: RESET_ERRORS })
     if (!username) {
       dispatchAuth({ type: ERROR_AUTH, payload: {username: 'Username is required'}})
     }

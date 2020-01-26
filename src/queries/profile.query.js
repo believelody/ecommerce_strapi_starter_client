@@ -20,7 +20,7 @@ export const getProfileQuery = id => `
     profiles(where: {user: "${id}"}) {
       _id,
       username,
-      fistname,
+      firstname,
       lastname,
       birthday,
       emailConfirm,
