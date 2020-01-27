@@ -2,14 +2,13 @@ import React from 'react'
 import { FilePicker, Card } from 'evergreen-ui'
 import Image from '../image/Image'
 
-const ProfileImage = ({ image, setImage }) => {
+const ProfileImage = ({ image, setImage, profileId }) => {
 
     const handleChange = async files => {
         let oFReader = new FileReader()
         oFReader.readAsDataURL(files[0])
         oFReader.onload = function (oFREvent) {
-            console.log(oFREvent)
-            setImage({ url: oFREvent.target.result, name: files[0].name})
+            setImage({ url: oFREvent.target.result, name: files[0].name, file: files[0]})
         }
         // dispatchLoading({ type: SET_LOADING })
         // try {
@@ -30,15 +29,17 @@ const ProfileImage = ({ image, setImage }) => {
             justifyContent='center'
             width={300}
             height='auto'
-            borderRight
         >
             <Image src={image.url} alt={image.name} />
             <FilePicker
                 width='100%'
                 onChange={handleChange}
                 placeholder="Change your profile photo"
-                name='image'
+                name='files'
             />
+            <input type="hidden" name="ref" value={`profile`} />
+            <input type="hidden" name="refId" value={`${profileId}`} />
+            <input type="hidden" name="field" value={`image`} />
         </Card>
     )
 }

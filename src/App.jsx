@@ -25,7 +25,19 @@ const App = () => {
   const [{user}, dispatchAuth] = useAuth
   const [loadingState, dispatchLoading] = useLoading
   const [checkoutState, dispatchCheckout] = useCheckout
-  const [{profile}, dispatchProfile] = useProfile
+  const [{ profile }, dispatchProfile] = useProfile
+  
+  const getProfileByUser = async id => {
+    try {
+      const { data } = await api.profile.getProfileByUser(id)
+      dispatchProfile({
+        type: GET_PROFILE,
+        payload: { profile: data.profiles[0] }
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   useEffect(() => {
     if (getCart()) {
@@ -51,18 +63,6 @@ const App = () => {
     }
     dispatchLoading({ type: RESET_LOADING })
   }, [getToken, getUser])
-
-  const getProfileByUser = async id => {
-    try {
-      const { data } = await api.profile.getProfileByUser(id)
-      dispatchProfile({
-        type: GET_PROFILE,
-        payload: { profile: data.profiles[0] }
-      })
-    } catch (e) {
-      console.log(e)
-    }
-  }
 
   useEffect(() => {
     if (user) {

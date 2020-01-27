@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Pane, Card, Button, toaster } from 'evergreen-ui'
 import { useAppHooks } from '../../context'
 import ProfileImage from './ProfileImage'
@@ -12,8 +12,21 @@ const ProfileAboutMe = () => {
     const [{ profile, errors }, dispatchProfile] = useProfile
     const [loadingState, dispatchLoading] = useLoading
 
+    const formRef = useRef(null)
+
     const [image, setImage] = useState(null)
     const [names, setNames] = useState({username: ''})
+
+    const uploadFile = async formElement => {
+        try {
+            if (formElement) {
+                const res = await api.profile.changeImage(formElement)
+                console.log(res)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -32,17 +45,20 @@ const ProfileAboutMe = () => {
         else {
             dispatchLoading({ type: SET_LOADING })
             try {
-                const {data} = await api.profile.updateNames(profile._id, {
-                    username: names.username,
-                    firstname: names.firstname,
-                    lastname: names.lastname
-                })
-                dispatchProfile({
-                    type: UPDATE_PROFILE,
-                    payload: {
-                        profile: data.updateProfile.profile
-                    }
-                })
+                let formId = e.target.id
+                // const {data} = await api.profile.updateNames(profile._id, {
+                //     username: names.username,
+                //     firstname: names.firstname,
+                //     lastname: names.lastname
+                // })
+                await uploadFile(document.getElementById(formId))
+                
+                // dispatchProfile({
+                //     type: UPDATE_PROFILE,
+                //     payload: {
+                //         profile: data.updateProfile.profile
+                //     }
+                // })
                 toaster.success('Your profile has been successfully updated')
             } catch (e) {
                 console.log(e)
@@ -64,13 +80,12 @@ const ProfileAboutMe = () => {
     
     return (
         profile &&
-        <Pane is='form' onSubmit={handleSubmit} display='block'>
+        <Pane is='form' id='about-me-form' onSubmit={handleSubmit} display='block'>
             <Button
                 appearance='primary'
                 intent='success'
                 marginY={8}
                 marginLeft={8}
-                paddingY={16}
                 paddingX={32}
                 size={600}
             >
@@ -85,7 +100,7 @@ const ProfileAboutMe = () => {
                 width='100%'
                 border
             >
-                <ProfileImage image={image} setImage={setImage} />
+                <ProfileImage image={image} setImage={setImage} profileId={profile._id} />
                 <ProfileNames names={names} setNames={setNames} errors={errors} />
             </Pane>
         </Pane>

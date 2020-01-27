@@ -7,6 +7,6 @@ export default {
   getProfileByUser: id => privateQuery({ query: getProfileByUserQuery(id) }),
   getEmailConfirmStatusByUser: id => privateQuery({ query: getEmailConfirmQuery(id) }),
   verifyCode: code => privateQuery({ query: checkCodeQuery(code) }),
-  changeImage: (_id, image) => upload(image, 'profile/image', _id, 'profile', 'users-permissions', 'image'),
+  changeImage: formElement => upload(formElement),
   updateNames: (_id, data) => privateQuery({ query: updateNamesMutation(_id, data)})
 }
