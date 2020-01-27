@@ -1,19 +1,54 @@
 import React, { useState, useEffect } from 'react'
-import { Pane, Card, Button } from 'evergreen-ui'
+import { Pane, Card, Button, toaster } from 'evergreen-ui'
 import { useAppHooks } from '../../context'
 import ProfileImage from './ProfileImage'
 import ProfileNames from './ProfileNames'
-import { apiUrl } from '../../api'
+import api, { apiUrl } from '../../api'
+import { ERROR_PROFILE, UPDATE_PROFILE } from '../../reducers/profileReducer'
+import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 
 const ProfileAboutMe = () => {
-    const { useProfile } = useAppHooks()
+    const { useProfile, useLoading } = useAppHooks()
     const [{ profile, errors }, dispatchProfile] = useProfile
+    const [loadingState, dispatchLoading] = useLoading
 
     const [image, setImage] = useState(null)
     const [names, setNames] = useState({username: ''})
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
+        if (!names.firstname) {
+            dispatchProfile({
+                type: ERROR_PROFILE,
+                payload: { firstname: 'Firstname field cannot be empty' }
+            })
+        }
+        else if (!names.lastname) {
+            dispatchProfile({
+                type: ERROR_PROFILE,
+                payload: { lastname: 'Lastname field cannot be empty' }
+            })
+        }
+        else {
+            dispatchLoading({ type: SET_LOADING })
+            try {
+                const {data} = await api.profile.updateNames(profile._id, {
+                    username: names.username,
+                    firstname: names.firstname,
+                    lastname: names.lastname
+                })
+                dispatchProfile({
+                    type: UPDATE_PROFILE,
+                    payload: {
+                        profile: data.updateProfile.profile
+                    }
+                })
+                toaster.success('Your profile has been successfully updated')
+            } catch (e) {
+                console.log(e)
+            }
+            dispatchLoading({ type: RESET_LOADING })
+        }
     }
 
     useEffect(() => {

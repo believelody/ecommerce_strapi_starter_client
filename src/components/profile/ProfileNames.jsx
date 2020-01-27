@@ -1,11 +1,10 @@
 import React from 'react'
-import { Card } from 'evergreen-ui'
+import { Card, Heading } from 'evergreen-ui'
 import FieldComponent from '../fields/FieldComponent'
 
 const ProfileNames = ({ names, setNames, errors }) => {
     const handleNames = e => {
-        // console.log(e)
-        setNames({ [e.target.name]: e.target.value })
+        setNames({ ...names, [e.target.name]: e.target.value })
     }
 
     return (
@@ -18,6 +17,9 @@ const ProfileNames = ({ names, setNames, errors }) => {
             border
             marginX={8}
         >
+            <Heading marginBottom={16}>
+                Please provide a firstname and a lastname since username is unique.
+            </Heading>
             <FieldComponent
                 name='username'
                 label='Username *'

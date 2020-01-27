@@ -1,4 +1,5 @@
 export const GET_PROFILE = 'GET_PROFILE'
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const ERROR_PROFILE = 'ERROR_PROFILE'
 export const RESET_ERROR = 'RESET_ERROR'
 export const DELETE_PROFILE = 'DELETE_PROFILE'
@@ -11,6 +12,12 @@ export const initProfileState = {
 export const profileReducer = (state, { type, payload }) => {
     switch (type) {
         case GET_PROFILE:
+            return {
+                ...state,
+                profile: payload.profile,
+            }
+
+        case UPDATE_PROFILE:
             return {
                 ...state,
                 profile: payload.profile,

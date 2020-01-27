@@ -1,14 +1,19 @@
-export const changeProfileImage = (_id, img) => `
+export const updateNamesMutation = (_id, data) => `
     mutation {
         updateProfile(input: {
             where: {
                 id: "${_id}"
             },
             data: {
-                birthday: "25/12/2000"
+                username: "${data.username}",
+                firstname: "${data.firstname}",
+                lastname: "${data.lastname}"
             }
         }){
             profile {
+                username
+                firstname
+                lastname,
                 image {
                     url
                     name

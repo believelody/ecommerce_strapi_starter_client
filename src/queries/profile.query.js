@@ -15,7 +15,7 @@ export const checkCodeQuery = code => `
   }
 `
 
-export const getProfileQuery = id => `
+export const getProfileByUserQuery = id => `
   query {
     profiles(where: {user: "${id}"}) {
       _id,

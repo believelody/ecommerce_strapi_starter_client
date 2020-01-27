@@ -25,7 +25,7 @@ const App = () => {
   const [{user}, dispatchAuth] = useAuth
   const [loadingState, dispatchLoading] = useLoading
   const [checkoutState, dispatchCheckout] = useCheckout
-  const [profileState, dispatchProfile] = useProfile
+  const [{profile}, dispatchProfile] = useProfile
 
   useEffect(() => {
     if (getCart()) {
@@ -52,21 +52,21 @@ const App = () => {
     dispatchLoading({ type: RESET_LOADING })
   }, [getToken, getUser])
 
-  useEffect(() => {
-    const getProfile = async id => {
-      try {
-        const {data} = await api.profile.getProfileByUser(id)
-        dispatchProfile({
-          type: GET_PROFILE,
-          payload: {profile: data.profiles[0]}
-        })
-      } catch (e) {
-        console.log(e)
-      }
+  const getProfileByUser = async id => {
+    try {
+      const { data } = await api.profile.getProfileByUser(id)
+      dispatchProfile({
+        type: GET_PROFILE,
+        payload: { profile: data.profiles[0] }
+      })
+    } catch (e) {
+      console.log(e)
     }
+  }
 
+  useEffect(() => {
     if (user) {
-      getProfile(user._id)
+      getProfileByUser(user._id)
     }
   }, [user])
 
