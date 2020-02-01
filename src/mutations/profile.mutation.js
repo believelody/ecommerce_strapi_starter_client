@@ -1,3 +1,21 @@
+export const confirmVerificationMutation = (_id) => `
+    mutation {
+        updateProfile(input: {
+            where: {
+                id: "${_id}"
+            },
+            data: {
+                code: "",
+                emailConfirm: true
+            }
+        }){
+            profile {
+                emailConfirm
+            }
+        }
+    }
+`
+
 export const updateInfoMutation = (_id, data) => `
     mutation {
         updateProfile(input: {

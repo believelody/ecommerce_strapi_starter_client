@@ -9,9 +9,10 @@ import { deleteUser } from '../../utils/user.utils'
 import { deleteToken } from '../../utils/token.utils'
 
 const Profile = () => {
-    const { useAuth, useDialog } = useAppHooks()
+    const { useAuth, useDialog, useProfile } = useAppHooks()
     const [{user}, dispatchAuth] = useAuth
     const [{ isShowed }, dispatchDialog] = useDialog
+    const [{profile}, dispatchProfile] = useProfile
 
     const handleClick = e => {
         dispatchAuth({ type: LOG_OUT })
@@ -23,13 +24,15 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        dispatchDialog({
-            type: OPEN_DIALOG,
-            payload: {
-                children: Verify
-            }
-        })
-    }, [])
+        if (profile && !profile.emailConfirm) {
+            dispatchDialog({
+                type: OPEN_DIALOG,
+                payload: {
+                    children: Verify
+                }
+            })
+        }
+    }, [profile])
     
     return (
         <Pane height='100%' display='flex' flexDirection='column'>

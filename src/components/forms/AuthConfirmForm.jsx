@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Pane, Button, toaster } from 'evergreen-ui'
+import React, { useState } from 'react'
+import { Pane, Button, toaster, Paragraph } from 'evergreen-ui'
 import ErrorAlert from '../alerts/ErrorAlert'
 import FieldComponent from '../fields/FieldComponent'
 import Label from '../label/Label'
@@ -8,13 +8,11 @@ import { useAppHooks } from '../../context'
 import { ERROR_AUTH } from '../../reducers/authReducer'
 
 const AuthConfirmForm = ({ handleClose }) => {
-  const { useAuth, useToast } = useAppHooks()
+  const { useAuth } = useAppHooks()
   const [{user, errors}, dispatchAuth] = useAuth
-  const [toastState, dispatchToast] = useToast
 
   const [code, setCode] = useState('')
-  const [profileId, setProfileId] = useState('')
-  const [confirm, setConfirm] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleCode = e => setCode(e.target.value)
 
@@ -24,11 +22,12 @@ const AuthConfirmForm = ({ handleClose }) => {
       dispatchAuth({ type: ERROR_AUTH, payload: {code: 'This field is required'} })
     }
     else {
+      setIsSubmitted(true)
       try {
         const {data} = await api.profile.verifyCode(code)
         if (data.profiles[0]) {
+          await api.profile.confirmEmail(data.profiles[0]._id)
           toaster.notify(`Well done ${user.name}, your email is confirmed. Have fun in our store`)
-          setConfirm(true)
           handleClose()
         }
         else {
@@ -40,21 +39,8 @@ const AuthConfirmForm = ({ handleClose }) => {
     }
   }
 
-  useEffect(() => {
-    const checkEmailConfirmedStatus = async () => {
-      try {
-        let {data} = await api.profile.getEmailConfirmStatusByUser(user._id)
-        setProfileId(data.profiles[0]._id)
-        setConfirm(data.profiles[0].emailConfirm)
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    // checkEmailConfirmedStatus()
-  }, [confirm])
-
   return (
+    !isSubmitted ?
     <Pane display='block' is='form' onSubmit={handleSubmit}>
       <FieldComponent
         label={<Label name='Verification code *' />}
@@ -74,6 +60,12 @@ const AuthConfirmForm = ({ handleClose }) => {
         /> 
       }
       <Button appearance='primary'>Verify</Button>
+    </Pane>
+    :
+    <Pane>
+      <Paragraph>
+        Please wait, we are verifying your email...⏱️
+      </Paragraph>
     </Pane>
   )
 }
