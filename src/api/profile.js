@@ -1,6 +1,6 @@
-import { create, query, privateQuery, put, upload } from './'
-import { getProfileQuery, getEmailConfirmQuery, checkCodeQuery, getProfileByUserQuery } from '../queries/profile.query'
-import { changeProfileImage, updateNamesMutation } from '../mutations/profile.mutation'
+import { create, privateQuery, upload } from './'
+import { getEmailConfirmQuery, checkCodeQuery, getProfileByUserQuery } from '../queries/profile.query'
+import { updateInfoMutation } from '../mutations/profile.mutation'
 
 export default {
   createProfile: (user, username, code) => create('profiles', { username, user, code, emailConfirm: false }),
@@ -8,5 +8,5 @@ export default {
   getEmailConfirmStatusByUser: id => privateQuery({ query: getEmailConfirmQuery(id) }),
   verifyCode: code => privateQuery({ query: checkCodeQuery(code) }),
   changeImage: formElement => upload(formElement),
-  updateNames: (_id, data) => privateQuery({ query: updateNamesMutation(_id, data)})
+  updateInfo: (_id, data) => privateQuery({ query: updateInfoMutation(_id, data)})
 }

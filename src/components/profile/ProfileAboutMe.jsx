@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Pane, Button, toaster } from 'evergreen-ui'
-import { useAppHooks } from '../../context'
+import moment from 'moment'
 import ProfileImage from './ProfileImage'
-import ProfileNames from './ProfileNames'
-import api, { apiUrl } from '../../api'
-import { ERROR_PROFILE, UPDATE_PROFILE } from '../../reducers/profileReducer'
-import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
+import ProfileInfo from './ProfileInfo'
 import ErrorAlert from '../alerts/ErrorAlert'
+import api, { apiUrl } from '../../api'
+import { useAppHooks } from '../../context'
+import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
+import { ERROR_PROFILE, UPDATE_PROFILE, RESET_PROFILE_ERRORS } from '../../reducers/profileReducer'
 
 const ProfileAboutMe = () => {
     const { useProfile, useLoading } = useAppHooks()
@@ -14,7 +15,7 @@ const ProfileAboutMe = () => {
     const [loadingState, dispatchLoading] = useLoading
 
     const [image, setImage] = useState(null)
-    const [names, setNames] = useState({username: ''})
+    const [info, setInfo] = useState({username: ''})
 
     const uploadFile = async formElement => {
         try {
@@ -28,16 +29,22 @@ const ProfileAboutMe = () => {
 
     const handleSubmit = async e => {
         e.preventDefault()
-        if (!names.firstname) {
+        if (!info.firstname) {
             dispatchProfile({
                 type: ERROR_PROFILE,
                 payload: { firstname: 'Firstname field cannot be empty' }
             })
         }
-        else if (!names.lastname) {
+        else if (!info.lastname) {
             dispatchProfile({
                 type: ERROR_PROFILE,
                 payload: { lastname: 'Lastname field cannot be empty' }
+            })
+        }
+        else if (moment().year() - moment(info.birthday).year() < 18) {
+            dispatchProfile({
+                type: ERROR_PROFILE,
+                payload: { birthday: 'You must have 18 years old or more' }
             })
         }
         else {
@@ -47,10 +54,11 @@ const ProfileAboutMe = () => {
                     let formId = e.target.id
                     await uploadFile(document.getElementById(formId))
                 }
-                const {data} = await api.profile.updateNames(profile._id, {
-                    username: names.username,
-                    firstname: names.firstname,
-                    lastname: names.lastname
+                const { data } = await api.profile.updateInfo(profile._id, {
+                    username: info.username,
+                    firstname: info.firstname,
+                    lastname: info.lastname,
+                    birthday: new Date(info.birthday)
                 })
                 dispatchProfile({
                     type: UPDATE_PROFILE,
@@ -59,6 +67,7 @@ const ProfileAboutMe = () => {
                     }
                 })
                 toaster.success('Your profile has been successfully updated')
+                dispatchProfile({ type: RESET_PROFILE_ERRORS })
             } catch (e) {
                 console.log(e)
                 dispatchProfile({
@@ -75,10 +84,11 @@ const ProfileAboutMe = () => {
     useEffect(() => {
         if (profile) {
             setImage({ url: `${apiUrl}${profile.image.url}`, name: profile.image.name })
-            setNames({
+            setInfo({
                 username: profile.username,
                 firstname: profile.firstname || '',
                 lastname: profile.lastname || '',
+                birthday: moment(profile.birthday).format('YYYY-MM-DD') || ''
             })
         }
     }, [profile])
@@ -117,7 +127,7 @@ const ProfileAboutMe = () => {
                 border
             >
                 <ProfileImage image={image} setImage={setImage} profileId={profile._id} />
-                <ProfileNames names={names} setNames={setNames} errors={errors} />
+                <ProfileInfo info={info} setInfo={setInfo} errors={errors} />
             </Pane>
         </Pane>
     )

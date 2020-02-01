@@ -1,7 +1,7 @@
 export const GET_PROFILE = 'GET_PROFILE'
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const ERROR_PROFILE = 'ERROR_PROFILE'
-export const RESET_ERROR = 'RESET_ERROR'
+export const RESET_PROFILE_ERRORS = 'RESET_PROFILE_ERRORS'
 export const DELETE_PROFILE = 'DELETE_PROFILE'
 
 export const initProfileState = {
@@ -35,7 +35,7 @@ export const profileReducer = (state, { type, payload }) => {
                 errors: { ...state.errors, [key]: value}
             }
 
-        case RESET_ERROR:
+        case RESET_PROFILE_ERRORS:
             return {
                 ...state,
                 errors: null

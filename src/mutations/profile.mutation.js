@@ -1,4 +1,4 @@
-export const updateNamesMutation = (_id, data) => `
+export const updateInfoMutation = (_id, data) => `
     mutation {
         updateProfile(input: {
             where: {
@@ -7,13 +7,15 @@ export const updateNamesMutation = (_id, data) => `
             data: {
                 username: "${data.username}",
                 firstname: "${data.firstname}",
-                lastname: "${data.lastname}"
+                lastname: "${data.lastname}",
+                birthday: "${data.birthday}"
             }
         }){
             profile {
                 username
                 firstname
-                lastname,
+                lastname
+                birthday
                 image {
                     url
                     name
