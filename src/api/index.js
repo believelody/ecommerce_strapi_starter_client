@@ -26,17 +26,7 @@ export const create = (path, data) => strapi.createEntry(path, data)
 
 export const send = obj => strapi.request('POST', '/email', {data: obj})
 
-export const upload = async (formElement) => {
-  console.log(formElement)
-  // formElement.addEventListener('submit', e => {
-    // e.preventDefault();
-    // const request = new XMLHttpRequest();
-    // request.open('PUT', '/upload');
-    // request.send(new FormData(formElement));
-    return await strapi.upload(new FormData(formElement))
-  // });
-  // axios.put(`${apiUrl}upload?files=${path}/${file}&refId=${refId}&ref=${ref}&source=${source}&field=${field}`)
-}
+export const upload = async (formElement) => await strapi.upload(new FormData(formElement))
 
 export const get = (path, query) => axios.get(`${apiUrl}/${path}?user=${query}`, {
   "Authorization": `Bearer ${getToken()}`

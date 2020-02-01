@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Pane, Card, Button, toaster } from 'evergreen-ui'
+import React, { useState, useEffect } from 'react'
+import { Pane, Button, toaster } from 'evergreen-ui'
 import { useAppHooks } from '../../context'
 import ProfileImage from './ProfileImage'
 import ProfileNames from './ProfileNames'
 import api, { apiUrl } from '../../api'
 import { ERROR_PROFILE, UPDATE_PROFILE } from '../../reducers/profileReducer'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
+import ErrorAlert from '../alerts/ErrorAlert'
 
 const ProfileAboutMe = () => {
     const { useProfile, useLoading } = useAppHooks()
     const [{ profile, errors }, dispatchProfile] = useProfile
     const [loadingState, dispatchLoading] = useLoading
-
-    const formRef = useRef(null)
 
     const [image, setImage] = useState(null)
     const [names, setNames] = useState({username: ''})
@@ -20,8 +19,7 @@ const ProfileAboutMe = () => {
     const uploadFile = async formElement => {
         try {
             if (formElement) {
-                const res = await api.profile.changeImage(formElement)
-                console.log(res)
+                await api.profile.changeImage(formElement)
             }
         } catch (e) {
             console.log(e)
@@ -43,25 +41,32 @@ const ProfileAboutMe = () => {
             })
         }
         else {
-            dispatchLoading({ type: SET_LOADING })
+            dispatchLoading({ type: SET_LOADING, payload: {msg: 'Saving your changes'} })
             try {
-                let formId = e.target.id
-                // const {data} = await api.profile.updateNames(profile._id, {
-                //     username: names.username,
-                //     firstname: names.firstname,
-                //     lastname: names.lastname
-                // })
-                await uploadFile(document.getElementById(formId))
-                
-                // dispatchProfile({
-                //     type: UPDATE_PROFILE,
-                //     payload: {
-                //         profile: data.updateProfile.profile
-                //     }
-                // })
+                if (image) {
+                    let formId = e.target.id
+                    await uploadFile(document.getElementById(formId))
+                }
+                const {data} = await api.profile.updateNames(profile._id, {
+                    username: names.username,
+                    firstname: names.firstname,
+                    lastname: names.lastname
+                })
+                dispatchProfile({
+                    type: UPDATE_PROFILE,
+                    payload: {
+                        profile: data.updateProfile.profile
+                    }
+                })
                 toaster.success('Your profile has been successfully updated')
             } catch (e) {
                 console.log(e)
+                dispatchProfile({
+                    type: ERROR_PROFILE,
+                    payload: {
+                        submit_failed: 'An error has occured'
+                    }
+                })
             }
             dispatchLoading({ type: RESET_LOADING })
         }
@@ -81,16 +86,27 @@ const ProfileAboutMe = () => {
     return (
         profile &&
         <Pane is='form' id='about-me-form' onSubmit={handleSubmit} display='block'>
-            <Button
-                appearance='primary'
-                intent='success'
-                marginY={8}
-                marginLeft={8}
-                paddingX={32}
-                size={600}
-            >
-                Save
-            </Button>
+            <Pane display='flex'>
+                <Button
+                    appearance='primary'
+                    intent='success'
+                    marginY={8}
+                    marginLeft={8}
+                    paddingX={32}
+                    size={600}
+                >
+                    Save
+                </Button>
+                {
+                    errors && errors.submit_failed &&
+                    <ErrorAlert
+                        label='submit_failed'
+                        errors={errors || ''}
+                        hasTrim
+                        appearance='minimal'
+                    />
+                }
+            </Pane>
             <Pane
                 display='flex'
                 flexWrap='wrap'
