@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import FieldComponent from '../fields/FieldComponent'
 import { Button, Pane, Text } from 'evergreen-ui'
 import styled from 'styled-components'
+import { useAppHooks } from '../../context'
+import api from '../../api'
+import { ERROR_PROFILE, RESET_PROFILE_ERRORS } from '../../reducers/profileReducer'
+import verifyEmailTemplateUtils from '../../utils/verifyEmailTemplate.utils'
 
 const FormStyle = styled.form`
     height: 100%;
@@ -12,17 +16,46 @@ const FormStyle = styled.form`
 `
 
 const NewsletterForm = () => {
+    const {useProfile} = useAppHooks()
+    const [{profile, errors}, dispatchProfile] = useProfile
+
     const [email, setEmail] = useState('')
-    const [error, setError] = useState(null)
     const [isSubmitted, setIsSubmit] = useState(false)
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
         if (!email) {
-            setError('Email field cannot be empty.')
+            dispatchProfile({
+                type: ERROR_PROFILE,
+                payload: {
+                    email: 'Email field cannot be empty.'
+                }
+            })
         }
         else {
-            setIsSubmit(true)
+            try {
+                await verifyEmailTemplateUtils(
+                    email,
+                    `Thanks for your subscription`,
+                    `Hi there, we are glad to see you among our subscriber. Please stay tuned and enjoy your shopping in our store.`,
+                    `<p>
+                        Hi there, we are glad to see you among our subscriber. Please stay tuned and enjoy your shopping in our store.
+                    </p>`
+                )
+                if (profile) {
+                    await api.profile.subscribeNewsletter(profile._id)
+                }
+                setIsSubmit(true)
+                dispatchProfile({ type: RESET_PROFILE_ERRORS })
+            } catch (e) {
+                console.log(e)
+                dispatchProfile({
+                    type: ERROR_PROFILE,
+                    payload: {
+                        subscribe_failed: 'Oops, an error has occured'
+                    }
+                })
+            }
         }
     }
 
@@ -36,7 +69,7 @@ const NewsletterForm = () => {
                 placeholder='john@doe.com'
                 value={email}
                 handleChange={e => setEmail(e.target.value)}
-                error={error}
+                error={errors && (errors.email || errors.subscribe_failed)}
             />
         </Pane>
         <Pane width='30%'>

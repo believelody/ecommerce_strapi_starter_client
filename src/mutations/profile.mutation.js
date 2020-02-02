@@ -1,3 +1,20 @@
+export const subscribeNewsletterMutation = _id => `
+    mutation {
+        updateProfile(input: {
+            where: {
+                id: "${_id}"
+            },
+            data: {
+                isSubscribed: true
+            }
+        }){
+            profile {
+                isSubscribed
+            }
+        }
+    }
+`
+
 export const confirmVerificationMutation = (_id) => `
     mutation {
         updateProfile(input: {

@@ -83,7 +83,9 @@ const ProfileAboutMe = () => {
 
     useEffect(() => {
         if (profile) {
-            setImage({ url: `${apiUrl}${profile.image.url}`, name: profile.image.name })
+            if (profile.image) {
+                setImage({ url: `${apiUrl}${profile.image.url}`, name: profile.image.name })
+            }
             setInfo({
                 username: profile.username,
                 firstname: profile.firstname || '',

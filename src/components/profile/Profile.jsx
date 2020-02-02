@@ -3,10 +3,11 @@ import { Pane, Heading, Paragraph, Button } from 'evergreen-ui'
 import Verify from '../verify/Verify'
 import { useAppHooks } from '../../context'
 import { OPEN_DIALOG, CLOSE_DIALOG } from '../../reducers/dialogReducer'
-import { LOG_OUT } from '../../reducers/authReducer'
+import { LOG_OUT, RESET_ERRORS } from '../../reducers/authReducer'
 import ProfileTabs from './ProfileTabs'
 import { deleteUser } from '../../utils/user.utils'
 import { deleteToken } from '../../utils/token.utils'
+import { RESET_PROFILE_ERRORS } from '../../reducers/profileReducer'
 
 const Profile = () => {
     const { useAuth, useDialog, useProfile } = useAppHooks()
@@ -18,6 +19,8 @@ const Profile = () => {
         dispatchAuth({ type: LOG_OUT })
         deleteUser()
         deleteToken()
+        dispatchAuth({ type: RESET_ERRORS })
+        dispatchProfile({ type: RESET_PROFILE_ERRORS })
         if (isShowed) {
             dispatchDialog({ type: CLOSE_DIALOG })
         }

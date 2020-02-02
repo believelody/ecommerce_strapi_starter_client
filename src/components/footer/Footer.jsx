@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { Pane, Text } from 'evergreen-ui'
 import styled from 'styled-components'
 import Newsletter from '../newsletter/Newsletter'
+import { useAppHooks } from '../../context'
 
 const ListStyle = styled.ul`
   display: flex;
@@ -23,10 +24,12 @@ const ItemStyle = styled.li`
 `
 
 const Footer = ({}) => {
+  const { useProfile } = useAppHooks()
+  const [{profile}, dispatchProfile] = useProfile
 
   return (
     <Pane width='100%' maxHeight={110} background='tint2' bottom={0}>
-      <Newsletter />
+      {(!profile || (profile && !profile.isSubscribed)) && <Newsletter />}
       <ListStyle>
         <NavLink to='/ugc' style={{ width: "100%" }}>
           <ItemStyle>

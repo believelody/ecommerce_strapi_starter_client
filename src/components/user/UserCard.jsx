@@ -33,7 +33,7 @@ const UserCard = () => {
                 `${profile.firstname} ${profile.lastname}` :
                 profile.username
               } 
-              src={profile ? `${apiUrl}${profile.image.url}` : null} 
+              src={profile && profile.image ? `${apiUrl}${profile.image.url}` : null} 
               size={100}
             />
             <Label
