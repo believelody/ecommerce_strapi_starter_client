@@ -47,6 +47,7 @@ export const updateInfoMutation = (_id, data) => `
             }
         }){
             profile {
+                gender
                 username
                 firstname
                 lastname
@@ -55,6 +56,8 @@ export const updateInfoMutation = (_id, data) => `
                     url
                     name
                 }
+                emailConfirm
+                isSubscribed
             }
         }
     }

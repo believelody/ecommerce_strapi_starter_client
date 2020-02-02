@@ -10,27 +10,18 @@ const ProfileImage = ({ image, setImage, profileId }) => {
         oFReader.onload = function (oFREvent) {
             setImage({ url: oFREvent.target.result, name: files[0].name, file: files[0]})
         }
-        // dispatchLoading({ type: SET_LOADING })
-        // try {
-        //     const {data} = await api.profile.changeImage(profile._id, files[0].name)
-        //     console.log(data)
-        // } catch (e) {
-        //     console.log(e)
-        // }
-        // dispatchLoading({ type: RESET_LOADING })
     }
 
     return (
-        image &&
         <Card
             display='flex'
             flexDirection='column'
             alignItems='center'
             justifyContent='center'
-            width={300}
+            width='30%'
             height='auto'
         >
-            <Image src={image.url} alt={image.name} />
+            <Image src={image && image.url || '/blank_profile.webp'} alt={image && image.name || 'no pics'} />
             <FilePicker
                 width='100%'
                 onChange={handleChange}
