@@ -12,18 +12,21 @@ import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
 import verifyEmailTemplate from '../../utils/verifyEmailTemplate.utils'
 import { generateVerifyCode } from '../../utils/verifyCode.utils'
+import SegmentsField from '../fields/SegmentsField'
 
 const RegisterForm = () => {
   const { useAuth, useLoading } = useAppHooks()
   const [{errors}, dispatchAuth] = useAuth
   const [{loading}, dispatchLoading] = useLoading
 
+  const [gender, setGender] = useState('male')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [confirmEmail, setConfirmEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
+  const handleGender = value => setGender(value)
   const handleUsername = e => setUsername(e.target.value)
   const handleEmail = e => setEmail(e.target.value)
   const handleConfirmEmail = e => setConfirmEmail(e.target.value)
@@ -33,6 +36,9 @@ const RegisterForm = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     dispatchAuth({ type: RESET_ERRORS })
+    if (!gender) {
+      dispatchAuth({ type: ERROR_AUTH, payload: {gender: 'Gender is required'}})
+    }
     if (!username) {
       dispatchAuth({ type: ERROR_AUTH, payload: {username: 'Username is required'}})
     }
@@ -59,7 +65,7 @@ const RegisterForm = () => {
       const res = await api.user.register(username, email, password)
 
       let code = generateVerifyCode()
-      await api.profile.createProfile(res.user._id, res.user.username, code)
+      await api.profile.createProfile(gender, res.user._id, res.user.username, code)
       dispatchAuth({
           type: SUCCESS_AUTH,
           payload: {
@@ -105,58 +111,66 @@ const RegisterForm = () => {
       <Pane borderBottom width='100%' paddingY={8} textAlign='center'>
         <Heading size={700}>Create a new account</Heading>
       </Pane>
-      <Pane textAlign='center' marginY={20}>
-          <form onSubmit={handleSubmit}>
-            <FieldComponent
-              label={<Label name='Username *' />}
-              name='username'
-              placeholder='enter a username here'
-              handleChange={handleUsername}
-              error={errors && errors.username}
-            />
-            <FieldComponent
-              label={<Label name='Email *' />}
-              name='email'
-              type='email'
-              placeholder='ex: username@mail.com'
-              handleChange={handleEmail}
-              error={errors && errors.email}
-            />
-            <FieldComponent
-              label={<Label name='Email Confirm *' />}
-              name='confirmEmail'
-              type='email'
-              placeholder='must be same than email field'
-              handleChange={handleConfirmEmail}
-              error={errors && errors.confirmEmail}
-            />
-            <FieldComponent
-              label={<Label name='Password *' />}
-              name='password'
-              type='password'
-              placeholder='enter your password here'
-              hint='It must contain at least 6 characters, 1 numerical'
-              handleChange={handlePassword}
-              error={errors && errors.password}
-            />
-            <FieldComponent
-              label={<Label name='Password Confirm *' />}
-              name='confirmPassword'
-              type='password'
-              placeholder='must be same than password field'
-              handleChange={handleConfirmPassword}
-              error={errors && errors.confirmPassword}
-            />
-            {
-              errors && errors.authFailed &&
-              <ErrorAlert label='authFailed' errors={errors} />
-            }
-            {
-              errors && errors.noMatch &&
-              <ErrorAlert label='noMatch' errors={errors} />
-            }
-            <Button appearance='primary' intent='success'>Register</Button>
-          </form>
+      <Pane textAlign='center' marginY={20} is='form' onSubmit={handleSubmit}>
+        <SegmentsField
+          title='Select your gender *'
+          options={[
+            {value: 'male', label: 'Male'},
+            {value: 'female', label: 'Female'}
+          ]}
+          value={gender}
+          handleValue={handleGender}
+          error={errors && errors.gender}
+        />
+        <FieldComponent
+          label={<Label name='Username *' />}
+          name='username'
+          placeholder='enter a username here'
+          handleChange={handleUsername}
+          error={errors && errors.username}
+        />
+        <FieldComponent
+          label={<Label name='Email *' />}
+          name='email'
+          type='email'
+          placeholder='ex: username@mail.com'
+          handleChange={handleEmail}
+          error={errors && errors.email}
+        />
+        <FieldComponent
+          label={<Label name='Email Confirm *' />}
+          name='confirmEmail'
+          type='email'
+          placeholder='must be same than email field'
+          handleChange={handleConfirmEmail}
+          error={errors && errors.confirmEmail}
+        />
+        <FieldComponent
+          label={<Label name='Password *' />}
+          name='password'
+          type='password'
+          placeholder='enter your password here'
+          hint='It must contain at least 6 characters, 1 numerical'
+          handleChange={handlePassword}
+          error={errors && errors.password}
+        />
+        <FieldComponent
+          label={<Label name='Password Confirm *' />}
+          name='confirmPassword'
+          type='password'
+          placeholder='must be same than password field'
+          handleChange={handleConfirmPassword}
+          error={errors && errors.confirmPassword}
+        />
+        {
+          errors && errors.authFailed &&
+          <ErrorAlert label='authFailed' errors={errors} />
+        }
+        {
+          errors && errors.noMatch &&
+          <ErrorAlert label='noMatch' errors={errors} />
+        }
+        <Button appearance='primary' intent='success'>Register</Button>
       </Pane>
       <NavLink to='/login'>
         <Button appearance='minimal'>Already an account? Connect here!</Button>

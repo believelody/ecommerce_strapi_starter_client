@@ -19,11 +19,13 @@ export const getProfileByUserQuery = id => `
   query {
     profiles(where: {user: "${id}"}) {
       _id,
+      gender,
       username,
       firstname,
       lastname,
       birthday,
       emailConfirm,
+      isSubscribed,
       image {
         name,
         url

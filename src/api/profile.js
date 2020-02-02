@@ -3,7 +3,7 @@ import { getEmailConfirmQuery, checkCodeQuery, getProfileByUserQuery } from '../
 import { updateInfoMutation, confirmVerificationMutation, subscribeNewsletterMutation } from '../mutations/profile.mutation'
 
 export default {
-  createProfile: (user, username, code) => create('profiles', { username, user, code, emailConfirm: false, isSubscribed: false }),
+  createProfile: (gender, user, username, code) => create('profiles', { gender, username, user, code, emailConfirm: false, isSubscribed: false }),
   getProfileByUser: id => privateQuery({ query: getProfileByUserQuery(id) }),
   getEmailConfirmStatusByUser: id => privateQuery({ query: getEmailConfirmQuery(id) }),
   verifyCode: code => privateQuery({ query: checkCodeQuery(code) }),

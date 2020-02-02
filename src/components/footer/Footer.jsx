@@ -27,6 +27,9 @@ const Footer = ({}) => {
   const { useProfile } = useAppHooks()
   const [{profile}, dispatchProfile] = useProfile
 
+  console.log(profile)
+  
+
   return (
     <Pane width='100%' maxHeight={110} background='tint2' bottom={0}>
       {(!profile || (profile && !profile.isSubscribed)) && <Newsletter />}

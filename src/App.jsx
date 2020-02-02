@@ -29,11 +29,13 @@ const App = () => {
   
   const getProfileByUser = async id => {
     try {
+      dispatchLoading({ type: SET_LOADING })
       const { data } = await api.profile.getProfileByUser(id)
       dispatchProfile({
         type: GET_PROFILE,
         payload: { profile: data.profiles[0] }
       })
+      dispatchLoading({ type: RESET_LOADING })
     } catch (e) {
       console.log(e)
     }
