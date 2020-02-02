@@ -9,6 +9,7 @@ import RegisterPage from '../../pages/RegisterPage'
 import PasswordForgottenPage from '../../pages/PasswordForgottenPage'
 import ProductDetailPage from '../../pages/ProductDetailPage'
 import ProfilePage from '../../pages/ProfilePage'
+import ResetPasswordPage from '../../pages/ResetPasswordPage'
 
 const Main = ({}) => {
   return (
@@ -21,6 +22,7 @@ const Main = ({}) => {
           <Route path='/login' exact component={LoginPage} />
           <Route path='/register' exact component={RegisterPage} />
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />
+          <Route path='/reset-password' exact component={ResetPasswordPage} />
           <PrivateRoute path='/profile' exact component={ProfilePage} />
         </Switch>
       </main>

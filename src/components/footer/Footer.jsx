@@ -26,8 +26,6 @@ const ItemStyle = styled.li`
 const Footer = ({}) => {
   const { useProfile } = useAppHooks()
   const [{profile}, dispatchProfile] = useProfile
-
-  console.log(profile)
   
 
   return (

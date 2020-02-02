@@ -7,10 +7,12 @@ import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
 import SuccessAlert from '../alerts/SuccessAlert'
 import { NavLink } from 'react-router-dom'
+import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 
 const PasswordForgottenForm = ({ }) => {
-  const { useAuth, useToast, history } = useAppHooks()
+  const { useAuth, useLoading } = useAppHooks()
   const [{user, errors}, dispatchAuth] = useAuth
+  const [loadingState, dispatchLoading] = useLoading
 
   const [email, setEmail] = useState('')
   const [success, setSuccess] = useState(false)
@@ -23,12 +25,14 @@ const PasswordForgottenForm = ({ }) => {
       dispatchAuth({ type: ERROR_AUTH, payload: {email: 'This field is required'} })
     }
     setSuccess(true)
-    // try {
-    //   const res = await api.user.changePassword(email)
-    //
-    // } catch (e) {
-    //   dispatchAuth({ type: ERROR_AUTH, payload: {password_change_failed: e.message} })
-    // }
+    try {
+      dispatchLoading({ type: SET_LOADING })
+      const res = await api.user.changePassword(email)
+      console.log(res)
+      dispatchLoading({ type: RESET_LOADING })
+    } catch (e) {
+      dispatchAuth({ type: ERROR_AUTH, payload: {password_change_failed: e.message} })
+    }
   }
 
   return (

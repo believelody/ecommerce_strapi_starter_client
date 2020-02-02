@@ -111,66 +111,88 @@ const RegisterForm = () => {
       <Pane borderBottom width='100%' paddingY={8} textAlign='center'>
         <Heading size={700}>Create a new account</Heading>
       </Pane>
-      <Pane textAlign='center' marginY={20} is='form' onSubmit={handleSubmit}>
-        <SegmentsField
-          title='Select your gender *'
-          options={[
-            {value: 'male', label: 'Male'},
-            {value: 'female', label: 'Female'}
-          ]}
-          value={gender}
-          handleValue={handleGender}
-          error={errors && errors.gender}
-        />
-        <FieldComponent
-          label={<Label name='Username *' />}
-          name='username'
-          placeholder='enter a username here'
-          handleChange={handleUsername}
-          error={errors && errors.username}
-        />
-        <FieldComponent
-          label={<Label name='Email *' />}
-          name='email'
-          type='email'
-          placeholder='ex: username@mail.com'
-          handleChange={handleEmail}
-          error={errors && errors.email}
-        />
-        <FieldComponent
-          label={<Label name='Email Confirm *' />}
-          name='confirmEmail'
-          type='email'
-          placeholder='must be same than email field'
-          handleChange={handleConfirmEmail}
-          error={errors && errors.confirmEmail}
-        />
-        <FieldComponent
-          label={<Label name='Password *' />}
-          name='password'
-          type='password'
-          placeholder='enter your password here'
-          hint='It must contain at least 6 characters, 1 numerical'
-          handleChange={handlePassword}
-          error={errors && errors.password}
-        />
-        <FieldComponent
-          label={<Label name='Password Confirm *' />}
-          name='confirmPassword'
-          type='password'
-          placeholder='must be same than password field'
-          handleChange={handleConfirmPassword}
-          error={errors && errors.confirmPassword}
-        />
-        {
-          errors && errors.authFailed &&
-          <ErrorAlert label='authFailed' errors={errors} />
-        }
-        {
-          errors && errors.noMatch &&
-          <ErrorAlert label='noMatch' errors={errors} />
-        }
-        <Button appearance='primary' intent='success'>Register</Button>
+      <Pane display='flex' flexWrap='wrap' justifyContent='center' marginY={20} is='form' onSubmit={handleSubmit}>
+        <Pane width='40%' marginRight={16}>
+          <SegmentsField
+            title='Select your gender *'
+            options={[
+              { value: 'male', label: 'Male' },
+              { value: 'female', label: 'Female' }
+            ]}
+            value={gender}
+            handleValue={handleGender}
+            error={errors && errors.gender}
+          />
+        </Pane>
+        <Pane width='40%'>
+          <FieldComponent
+            label={<Label name='Username *' />}
+            name='username'
+            placeholder='enter a username here'
+            handleChange={handleUsername}
+            error={errors && errors.username}
+          />
+        </Pane>
+        <Pane width='40%' marginRight={16}>
+          <FieldComponent
+            label={<Label name='Email *' />}
+            name='email'
+            type='email'
+            placeholder='ex: username@mail.com'
+            handleChange={handleEmail}
+            error={errors && errors.email}
+          />
+        </Pane>
+        <Pane width='40%'>
+          <FieldComponent
+            label={<Label name='Email Confirm *' />}
+            name='confirmEmail'
+            type='email'
+            placeholder='must be same than email field'
+            handleChange={handleConfirmEmail}
+            error={errors && errors.confirmEmail}
+          />
+        </Pane>
+        <Pane width='40%' marginRight={16}>
+          <FieldComponent
+            label={<Label name='Password *' />}
+            name='password'
+            type='password'
+            placeholder='enter your password here'
+            hint='It must contain at least 6 characters, 1 numerical'
+            handleChange={handlePassword}
+            error={errors && errors.password}
+          />
+        </Pane>
+        <Pane width='40%'>
+          <FieldComponent
+            label={<Label name='Password Confirm *' />}
+            name='confirmPassword'
+            type='password'
+            placeholder='must be same than password field'
+            handleChange={handleConfirmPassword}
+            error={errors && errors.confirmPassword}
+          />
+        </Pane>        
+        <Pane width='100%' textAlign='center'>
+          {
+            errors && errors.authFailed &&
+            <ErrorAlert label='authFailed' errors={errors} />
+          }
+          {
+            errors && errors.noMatch &&
+            <ErrorAlert label='noMatch' errors={errors} />
+          }
+          <Button
+            width={200}
+            height={40}
+            appearance='primary'
+            intent='success'
+            justifyContent='center'
+          >
+            Register
+          </Button>
+        </Pane>
       </Pane>
       <NavLink to='/login'>
         <Button appearance='minimal'>Already an account? Connect here!</Button>

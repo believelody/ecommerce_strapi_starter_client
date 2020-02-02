@@ -3,11 +3,11 @@ import { Pane, InlineAlert } from 'evergreen-ui'
 import Segments from '../segments/Segments'
 import Label from '../label/Label'
 
-const SegmentsField = ({ options, handleValue, value, error, title }) => {
+const SegmentsField = ({ options, handleValue, value, error, title, marginBottom = 4 }) => {
     return (
-        <Pane display='block' marginBottom={16}>
+        <Pane display='block'>
             {
-                title && <Label name={title} />
+                title && <Pane marginBottom={marginBottom}><Label name={title} /></Pane>
             }
             <Segments
                 options={options}
