@@ -17,7 +17,7 @@ const FieldComponent = ({
         isInvalid={!!error}
         onChange={handleChange}
         validationMessage={error}
-        value={value}
+        value={value || ''}
         disabled={disabled}
       />
     </Pane>

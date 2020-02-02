@@ -29,6 +29,8 @@ export const changePassword = email => axios.post(`${apiUrl}/auth/forgot-passwor
   url: `http://localhost:3000/reset-password`
 })
 
+export const resetPassword = (code, newPwd, confirmPwd) => axios.post(`${apiUrl}/auth/reset-password`, { code, password: newPwd, passwordConfirmation: confirmPwd })
+
 export const send = obj => strapi.request('POST', '/email', {data: obj})
 
 export const upload = async (formElement) => await strapi.upload(new FormData(formElement))

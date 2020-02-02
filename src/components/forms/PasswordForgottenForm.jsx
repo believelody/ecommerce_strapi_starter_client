@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Pane, Button, Card } from 'evergreen-ui'
 import api from '../../api'
 import { useAppHooks } from '../../context'
@@ -11,7 +11,7 @@ import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 
 const PasswordForgottenForm = ({ }) => {
   const { useAuth, useLoading } = useAppHooks()
-  const [{user, errors}, dispatchAuth] = useAuth
+  const [{errors}, dispatchAuth] = useAuth
   const [loadingState, dispatchLoading] = useLoading
 
   const [email, setEmail] = useState('')
@@ -27,8 +27,7 @@ const PasswordForgottenForm = ({ }) => {
     setSuccess(true)
     try {
       dispatchLoading({ type: SET_LOADING })
-      const res = await api.user.changePassword(email)
-      console.log(res)
+      await api.user.changePassword(email)
       dispatchLoading({ type: RESET_LOADING })
     } catch (e) {
       dispatchAuth({ type: ERROR_AUTH, payload: {password_change_failed: e.message} })
@@ -43,6 +42,7 @@ const PasswordForgottenForm = ({ }) => {
           description='Please enter email you use to create your account'
           name='email'
           type='email'
+          value={email}
           placeholder='enter your email here'
           handleChange={handleEmail}
           error={errors && errors.email}
