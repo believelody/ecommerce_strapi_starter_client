@@ -8,7 +8,7 @@ const RowStyle = styled.div`
   height: auto;
   width: 100%;
   border-bottom: ${props => props.borderBottom ? '1px solid rgba(0, 0, 0, 0.2)' : 'none'};
-  overflow: auto;
+  overflow: none;
   & .row-header {
     height: 30px;
     line-height: 40px;

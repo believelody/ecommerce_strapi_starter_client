@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Pane, Checkbox, Button } from 'evergreen-ui'
 import FieldComponent from '../fields/FieldComponent'
 import { useAppHooks } from '../../context'
 import { IS_SAME, SHIPPING_ADDRESS } from '../../reducers/checkoutReducer'
 
-const ShippingAddressForm = ({ profile }) => {
+const ShippingAddressForm = () => {
   const { useCheckout } = useAppHooks()
-  const [{shippingAddress}, dispatchCheckout] = useCheckout
+  const [checkoutState, dispatchCheckout] = useCheckout
 
   const [address1, setAddress1] = useState(null)
   const [address2, setAddress2] = useState(null)

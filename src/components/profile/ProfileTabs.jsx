@@ -3,6 +3,7 @@ import { Pane, Text } from 'evergreen-ui'
 import ProfileAddresses from './ProfileAddresses'
 import Tabs from '../tabs/Tabs'
 import ProfileAboutMe from './ProfileAboutMe'
+import ProfileInfoAccount from './ProfileInfoAccount'
 
 const ProfileTabs = () => {
 
@@ -35,7 +36,7 @@ const ProfileTabs = () => {
                         tab: <Text size={500}>About Me</Text>
                     },
                     {
-                        content: <Text>Account Tab</Text>,
+                        content: <ProfileInfoAccount />,
                         label: 'account',
                         tab: <Text size={500}>Account Info</Text>
                     },

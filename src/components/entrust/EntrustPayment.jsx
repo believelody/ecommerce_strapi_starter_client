@@ -7,7 +7,7 @@ const EntrustPayment = () => {
             <img
                 src='payment_gateway.png'
                 alt='payment-entrust'
-                style={{ width: '100%', height: '100%'}}
+                style={{ width: 'auto', maxHeight: 56}}
             />
         </Pane>
     )

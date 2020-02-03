@@ -10,7 +10,7 @@ const CartTab = () => {
 
   return (
     <Text size={600}>
-      Cart <Pill size={500} color={cart.length > 0 ? 'yellow' : 'neutral'}>{cart.length}</Pill>
+      Cart <Pill color={cart.length > 0 ? 'yellow' : 'neutral'}>{cart.length}</Pill>
     </Text>
   )
 }

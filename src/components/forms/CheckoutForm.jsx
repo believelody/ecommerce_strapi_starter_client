@@ -119,7 +119,7 @@ const CheckoutForm = ({ stripe }) => {
             type='submit'
             appearance='primary'
             intent='success'
-            paddingY={24}
+            height={40}
             paddingX={56}
           >
             {shippingMethod && !isPaying && <Label name={`Buy $ ${(total + shippingMethod.price).toFixed(2)}`} />}

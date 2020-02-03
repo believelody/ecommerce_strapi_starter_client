@@ -76,6 +76,7 @@ const LoginForm = () => {
           name='email'
           type='email'
           placeholder='ex: username@mail.com'
+          value={email}
           handleChange={handleEmail}
           error={errors && errors.email}
         />
@@ -84,6 +85,7 @@ const LoginForm = () => {
           name='password'
           type='password'
           placeholder='enter your password here'
+          value={password}
           hint='It must contain at least 6 characters, 1 numerical'
           handleChange={handlePassword}
           error={errors && errors.password}

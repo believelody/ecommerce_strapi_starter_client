@@ -86,7 +86,7 @@ const ShippingAddress = ({ profile }) => {
                 onChange={e => dispatchCheckout({ type: isSame ? IS_NOT_SAME : IS_SAME })}
                 marginBottom={20}
             />
-            <Button float='right' onClick={changeAddress}>
+            <Button type='button' float='right' onClick={changeAddress}>
                 Change shipping address
             </Button>
             <Card background='tealTint' padding={8} textAlign='left'>
