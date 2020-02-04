@@ -1,6 +1,6 @@
 import { create, privateQuery, upload } from './'
 import { getEmailConfirmQuery, checkCodeQuery, getProfileByUserQuery } from '../queries/profile.query'
-import { updateInfoMutation, confirmVerificationMutation, subscribeNewsletterMutation } from '../mutations/profile.mutation'
+import { updateInfoMutation, confirmVerificationMutation, subscribeNewsletterMutation, deleteProfileMutation } from '../mutations/profile.mutation'
 
 export default {
   createProfile: (gender, user, username, code) => create('profiles', { gender, username, user, code, emailConfirm: false, isSubscribed: false }),
@@ -9,6 +9,7 @@ export default {
   verifyCode: code => privateQuery({ query: checkCodeQuery(code) }),
   changeImage: formElement => upload(formElement),
   updateInfo: (_id, data) => privateQuery({ query: updateInfoMutation(_id, data)}),
-  confirmEmail: _id => privateQuery({ query: confirmVerificationMutation(_id) }),
-  subscribeNewsletter: _id => privateQuery({ query: subscribeNewsletterMutation(_id)})
+  confirmEmail: (_id, confirm, code) => privateQuery({ query: confirmVerificationMutation(_id, confirm, code) }),
+  subscribeNewsletter: (_id, checked) => privateQuery({ query: subscribeNewsletterMutation(_id, checked)}),
+  deleteProfile: _id => privateQuery({ query: deleteProfileMutation(_id)})
 }

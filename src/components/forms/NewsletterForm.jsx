@@ -43,7 +43,7 @@ const NewsletterForm = () => {
                     </p>`
                 )
                 if (profile) {
-                    await api.profile.subscribeNewsletter(profile._id)
+                    await api.profile.subscribeNewsletter(profile._id, true)
                 }
                 setIsSubmit(true)
                 dispatchProfile({ type: RESET_PROFILE_ERRORS })

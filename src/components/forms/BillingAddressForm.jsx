@@ -65,7 +65,7 @@ const BillingAddressForm = () => {
           name='address1'
           placeholder='Ex: 123 rue de la route'
           handleChange={handleAddress1}
-          value={address1 || ''}
+          value={address1}
           errors={billingAddressErrors && billingAddressErrors.address1}
         />
         <FieldComponent
@@ -74,14 +74,14 @@ const BillingAddressForm = () => {
           hint='This field is optional'
           placeholder='Ex: Résidence Sylvestre Appart 123'
           handleChange={handleAddress2}
-          value={address2 || ''}
+          value={address2}
         />
         <FieldComponent
           label='Zip code *'
           name='zip'
           placeholder='Enter your zip code'
           handleChange={handleZip}
-          value={zip || ''}
+          value={zip}
           errors={billingAddressErrors && billingAddressErrors.zip}
         />
         <FieldComponent
@@ -89,7 +89,7 @@ const BillingAddressForm = () => {
           name='city'
           placeholder='Enter your city here'
           handleChange={handleCity}
-          value={city || ''}
+          value={city}
           errors={billingAddressErrors && billingAddressErrors.city}
         />
         <Button disabled={isSubmitted}>{isSubmitted ? 'Thank you !' : 'Set Billing Address'}</Button>

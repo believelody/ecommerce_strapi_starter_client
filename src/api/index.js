@@ -24,7 +24,7 @@ export const login = (email, password) => strapi.login(email, password)
 
 export const create = (path, data) => strapi.createEntry(path, data)
 
-export const changePassword = email => axios.post(`${apiUrl}/auth/forgot-password`, {
+export const sendForgottenPasswordLink = email => axios.post(`${apiUrl}/auth/forgot-password`, {
   email,
   url: `http://localhost:3000/reset-password`
 })

@@ -1,32 +1,42 @@
-export const subscribeNewsletterMutation = _id => `
+export const subscribeNewsletterMutation = (_id, checked) => `
     mutation {
         updateProfile(input: {
             where: {
                 id: "${_id}"
             },
             data: {
-                isSubscribed: true
+                isSubscribed: ${checked}
             }
         }){
             profile {
+                _id
                 isSubscribed
+                username
+                firstname
+                lastname
+                image {
+                    url
+                    name
+                }
+                emailConfirm
             }
         }
     }
 `
 
-export const confirmVerificationMutation = (_id) => `
+export const confirmVerificationMutation = (_id, confirm, code) => `
     mutation {
         updateProfile(input: {
             where: {
                 id: "${_id}"
             },
             data: {
-                code: "",
-                emailConfirm: true
+                code: "${code}",
+                emailConfirm: ${confirm}
             }
         }){
             profile {
+                _id
                 emailConfirm
             }
         }
@@ -47,6 +57,7 @@ export const updateInfoMutation = (_id, data) => `
             }
         }){
             profile {
+                _id
                 gender
                 username
                 firstname
@@ -58,6 +69,21 @@ export const updateInfoMutation = (_id, data) => `
                 }
                 emailConfirm
                 isSubscribed
+            }
+        }
+    }
+`
+
+export const deleteProfileMutation = id => `
+    mutation {
+        deleteProfile(input : {
+            where: {
+                id: "${id}"
+            }
+        })
+        {
+            profile {
+                _id
             }
         }
     }

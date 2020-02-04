@@ -131,6 +131,7 @@ const RegisterForm = () => {
             placeholder='enter a username here'
             handleChange={handleUsername}
             error={errors && errors.username}
+            value={username}
           />
         </Pane>
         <Pane width='40%' marginRight={16}>
@@ -141,6 +142,7 @@ const RegisterForm = () => {
             placeholder='ex: username@mail.com'
             handleChange={handleEmail}
             error={errors && errors.email}
+            value={email}
           />
         </Pane>
         <Pane width='40%'>
@@ -151,6 +153,7 @@ const RegisterForm = () => {
             placeholder='must be same than email field'
             handleChange={handleConfirmEmail}
             error={errors && errors.confirmEmail}
+            value={confirmEmail}
           />
         </Pane>
         <Pane width='40%' marginRight={16}>
@@ -162,6 +165,7 @@ const RegisterForm = () => {
             hint='It must contain at least 6 characters, 1 numerical'
             handleChange={handlePassword}
             error={errors && errors.password}
+            value={password}
           />
         </Pane>
         <Pane width='40%'>
@@ -172,6 +176,7 @@ const RegisterForm = () => {
             placeholder='must be same than password field'
             handleChange={handleConfirmPassword}
             error={errors && errors.confirmPassword}
+            value={confirmPassword}
           />
         </Pane>        
         <Pane width='100%' textAlign='center'>

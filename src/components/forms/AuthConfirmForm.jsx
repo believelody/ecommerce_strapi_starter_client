@@ -24,17 +24,25 @@ const AuthConfirmForm = ({ handleClose }) => {
     else {
       setIsSubmitted(true)
       try {
+        console.log(user)
         const {data} = await api.profile.verifyCode(code)
         if (data.profiles[0]) {
-          await api.profile.confirmEmail(data.profiles[0]._id)
-          toaster.notify(`Well done ${user.name}, your email is confirmed. Have fun in our store`)
+          await api.profile.confirmEmail(data.profiles[0]._id, true, '')
+          toaster.success(
+            `Email Verification Success`,
+            {
+              description: `Well done ${user.name}, your email has been confirmed. Have fun in our store`
+            }
+          )
           handleClose()
         }
         else {
           dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: 'Sorry this code is incorrect. Please try again'} })
+          setIsSubmitted(false)
         }
       } catch (e) {
         dispatchAuth({ type: ERROR_AUTH, payload: {verification_failed: e.message} })
+        setIsSubmitted(false)
       }
     }
   }
@@ -49,6 +57,7 @@ const AuthConfirmForm = ({ handleClose }) => {
         placeholder='enter your verification code here'
         handleChange={handleCode}
         error={errors && errors.code}
+        value={code}
       />
       { 
         errors && errors.verification_failed && 

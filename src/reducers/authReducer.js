@@ -2,6 +2,7 @@ export const SUCCESS_AUTH = 'SUCCESS_AUTH'
 export const ERROR_AUTH = 'ERROR_AUTH'
 export const RESET_ERRORS = 'RESET_ERRORS'
 export const LOG_OUT = 'LOG_OUT'
+export const UPDATE_USER = 'UPDATE_USER'
 
 export const initAuthState = {
     user: null,
@@ -16,6 +17,12 @@ export const authReducer = (state, { type, payload }) => {
                 ...state,
                 user: payload.user,
                 isConnected: true
+            }
+
+        case UPDATE_USER:
+            return {
+                ...state,
+                user: payload.user
             }
 
         case ERROR_AUTH:

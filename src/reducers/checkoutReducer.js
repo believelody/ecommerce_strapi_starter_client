@@ -6,7 +6,7 @@ export const BILLING_ADDRESS = 'BILLING_ADDRESS'
 export const SHIPPING_METHOD = 'SHIPPING_METHOD'
 export const IS_SAME = 'IS_SAME'
 export const IS_NOT_SAME = 'IS_NOT_SAME'
-export const RESET_ERRORS = 'RESET_ERRORS'
+export const RESET_CHECKOUT_ERRORS = 'RESET_CHECKOUT_ERRORS'
 export const PROMO_CODE = 'PROMO_CODE'
 
 export const initCheckoutState = {
@@ -21,7 +21,7 @@ export const initCheckoutState = {
 
 export const checkoutReducer = (state, { type, payload }) => {
     switch (type) {
-        case RESET_ERRORS:
+        case RESET_CHECKOUT_ERRORS:
             return {
                 ...state,
                 errors: null

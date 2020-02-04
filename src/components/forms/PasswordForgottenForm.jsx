@@ -27,7 +27,7 @@ const PasswordForgottenForm = ({ }) => {
     setSuccess(true)
     try {
       dispatchLoading({ type: SET_LOADING })
-      await api.user.changePassword(email)
+      await api.user.sendForgottenPasswordLink(email)
       dispatchLoading({ type: RESET_LOADING })
     } catch (e) {
       dispatchAuth({ type: ERROR_AUTH, payload: {password_change_failed: e.message} })
