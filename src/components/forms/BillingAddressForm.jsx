@@ -92,7 +92,7 @@ const BillingAddressForm = () => {
           value={city}
           errors={billingAddressErrors && billingAddressErrors.city}
         />
-        <Button disabled={isSubmitted}>{isSubmitted ? 'Thank you !' : 'Set Billing Address'}</Button>
+        <Button type='button' disabled={isSubmitted}>{isSubmitted ? 'Thank you !' : 'Set Billing Address'}</Button>
       </form>
     </Pane>
   )

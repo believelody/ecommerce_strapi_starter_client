@@ -15,11 +15,12 @@ import isMobile from '../../utils/isMobile.utils'
 import DetailAmountCheckout from '../checkout/DetailAmountCheckout'
 import PromoCode from '../promo/PromoCode'
 import { APPLY_PROMO_CODE } from '../../reducers/cartReducer'
+import paymentTextUtils from '../../utils/paymentText.utils'
 
 const CheckoutForm = ({ stripe }) => {
   const { useCart, useCheckout, useLoading } = useAppHooks()
   const [{total}, dispatchCart] = useCart
-  const [{isPaymentSucceed, errors, shippingMethod, promo}, dispatchCheckout] = useCheckout
+  const [{isPaymentSucceed, errors, shippingMethod, promo, paymentMethod}, dispatchCheckout] = useCheckout
   const [loadingState, dispatchLoading] = useLoading
 
   const [currentIndex, setIndex] = useState(-1)
@@ -114,21 +115,37 @@ const CheckoutForm = ({ stripe }) => {
         <PromoCode />
         <DetailAmountCheckout />
         <Pane display='flex' flexWrap='wrap' alignItems='center'>
-          <Button
-            id='stripe__button'
-            type='submit'
-            appearance='primary'
-            intent='success'
-            height={40}
-            paddingX={56}
-          >
-            {shippingMethod && !isPaying && <Label name={`Buy $ ${(total + shippingMethod.price).toFixed(2)}`} />}
-            {isPaying && <Spinner />}
-          </Button>
-          <Text paddingY={8} paddingX={16}>Or</Text>
-          <Button appearance='primary' intent='warning' color='blue'>
-            PayPal Checkout
-          </Button>
+          {
+            paymentMethod.type !== 'paypal' &&
+            <Button
+              id='stripe__button'
+              type='submit'
+              appearance='primary'
+              intent='success'
+              height={40}
+              paddingX={56}
+            >
+              {
+                shippingMethod && !isPaying &&
+                <Label name={paymentTextUtils(paymentMethod, total + shippingMethod.price)} />
+              }
+              {
+                isPaying &&
+                <Spinner />
+              }
+            </Button>
+          }
+          {
+            paymentMethod.type === 'paypal' &&
+            <Button appearance='primary' intent='warning' color='blue'>
+              PayPal Checkout
+              <img
+                src='/paypal_icon.png'
+                alt='paypal_icon'
+                style={{ width: 25, height: 'auto' }}
+              />
+            </Button>
+          }
         </Pane>
         <Pane
           marginTop={8}

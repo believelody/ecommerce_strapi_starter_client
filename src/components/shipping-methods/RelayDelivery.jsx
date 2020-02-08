@@ -35,7 +35,7 @@ const RelayDelivery = ({ options, currentIndex }) => {
     
     return (
         <Pane paddingY={8} paddingX={16}>
-            <Button onClick={openSideSheet}>Pick a relay point</Button>
+            <Button type='button' onClick={openSideSheet}>Pick a relay point</Button>
             <ShippingMethodOptions
                 options={options}
                 label="Choose a shipping method"

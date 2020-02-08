@@ -85,6 +85,7 @@ const ShippingAddressForm = () => {
         />
         <Button
           appearance='primary'
+          type='button'
           intent='success'
           disabled={isSubmitted}
         >

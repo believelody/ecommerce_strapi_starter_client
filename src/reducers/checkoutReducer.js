@@ -4,6 +4,7 @@ export const CANCEL_PAYMENT = 'CANCEL_PAYMENT'
 export const SHIPPING_ADDRESS = 'SHIPPING_ADDRESS'
 export const BILLING_ADDRESS = 'BILLING_ADDRESS'
 export const SHIPPING_METHOD = 'SHIPPING_METHOD'
+export const PAYMENT_METHOD = 'PAYMENT_METHOD'
 export const IS_SAME = 'IS_SAME'
 export const IS_NOT_SAME = 'IS_NOT_SAME'
 export const RESET_CHECKOUT_ERRORS = 'RESET_CHECKOUT_ERRORS'
@@ -15,6 +16,7 @@ export const initCheckoutState = {
     billingAddress: null,
     isSame: false,
     shippingMethod: null,
+    paymentMethod: { type: 'credit_card', fees: 0 },
     errors: null,
     promo: null
 }
@@ -43,6 +45,12 @@ export const checkoutReducer = (state, { type, payload }) => {
           return {
             ...state,
             shippingMethod: payload.shippingMethod
+          }
+
+        case PAYMENT_METHOD:
+          return {
+            ...state,
+            paymentMethod: payload.paymentMethod
           }
 
         case IS_SAME:
