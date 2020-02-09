@@ -5,7 +5,7 @@ const PaypalPayment = () => {
     return (
         <Pane padding={24}>
             <Paragraph>
-                This is paypal payment. Once you click on <i>"buy"</i>, you will be redirected to paypal process checkout
+                This is paypal payment. Once you click on <i>"Buy with Paypal Checkout"</i>, you will be redirected to paypal process checkout
             </Paragraph>
             <img 
                 src='/paypal_logo.svg' 

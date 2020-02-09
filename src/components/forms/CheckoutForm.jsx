@@ -138,7 +138,7 @@ const CheckoutForm = ({ stripe }) => {
           {
             paymentMethod.type === 'paypal' &&
             <Button appearance='primary' intent='warning' color='blue'>
-              PayPal Checkout
+              Buy with PayPal Checkout
               <img
                 src='/paypal_icon.png'
                 alt='paypal_icon'

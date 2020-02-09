@@ -15,7 +15,11 @@ export const initCheckoutState = {
     shippingAddress: null,
     billingAddress: null,
     isSame: false,
-    shippingMethod: null,
+    shippingMethod: {
+      label: 'Standard Delivery - $3.99',
+      value: 'relay-standard',
+      price: 3.99
+    },
     paymentMethod: { type: 'credit_card', fees: 0 },
     errors: null,
     promo: null

@@ -11,8 +11,10 @@ import { PAYMENT_METHOD } from '../../reducers/checkoutReducer'
 import paymentMethodUtils from '../../utils/paymentMethod.utils'
 
 const PaymentForm = () => {
-    const { useCheckout } = useAppHooks()
-    const [checkoutState, dispatchCheckout] = useCheckout
+    const { useCheckout, useCart } = useAppHooks()
+    const [{paymentMethod, shippingMethod}, dispatchCheckout] = useCheckout
+    const [{total}, dispatchCart] = useCart
+
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const handleCurrentIndex = index => {
@@ -30,7 +32,11 @@ const PaymentForm = () => {
                 elements={[
                     {
                         tab: <Text>Credit Card</Text>,
-                        content: <CreditCardPayment currentIndex={currentIndex} />
+                        content: <CreditCardPayment
+                            shippingMethod={shippingMethod}
+                            total={total}
+                            currentIndex={currentIndex}
+                        />
                     },
                     {
                         tab: <Text>Paypal</Text>,
@@ -38,15 +44,27 @@ const PaymentForm = () => {
                     },
                     {
                         tab: <Text>Recurrent x2</Text>,
-                        content: <Recurrent2xPayment currentIndex={currentIndex} />
+                        content: <Recurrent2xPayment
+                            paymentMethod={paymentMethod}
+                            shippingMethod={shippingMethod}
+                            total={total}
+                            currentIndex={currentIndex} />
                     },
                     {
                         tab: <Text>Recurrent x3</Text>,
-                        content: <Recurrent3xPayment currentIndex={currentIndex} />
+                        content: <Recurrent3xPayment
+                            paymentMethod={paymentMethod}
+                            shippingMethod={shippingMethod}
+                            total={total}
+                            currentIndex={currentIndex} />
                     },
                     {
                         tab: <Text>Recurrent x4</Text>,
-                        content: <Recurrent4xPayment currentIndex={currentIndex} />
+                        content: <Recurrent4xPayment
+                            paymentMethod={paymentMethod}
+                            shippingMethod={shippingMethod}
+                            total={total}
+                            currentIndex={currentIndex} />
                     },
                 ]}
             />

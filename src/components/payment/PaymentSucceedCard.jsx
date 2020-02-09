@@ -5,10 +5,9 @@ import { useAppHooks } from '../../context'
 import { CANCEL_PAYMENT } from '../../reducers/checkoutReducer'
 
 const PaymentSucceedCard = () => {
-    const { useCheckout } = useAppHooks()
+    const { useCheckout, useProfile } = useAppHooks()
     const [checkoutState, dispatchCheckout] = useCheckout
-
-    // const countRef = useRef(null)
+    const [{ profile }, dispatchProfile] = useProfile
 
     const [isRedirecting, setRedirecting] = useState(false)
     const [count, setCount] = useState(10)
@@ -47,9 +46,9 @@ const PaymentSucceedCard = () => {
             border
         >
             <Icon icon='tick-circle' color='success' size={56} />
-           <Heading size={600}>Thank you, your payment succeed</Heading>
+           <Heading size={600}>Thank you {profile.username}, your payment succeeded</Heading>
            <Paragraph paddingY={16}>
-               We sent you an email with your invoice. Stay tuned about new trends and happy shopping.
+               We sent you an email with your invoice. Stay tuned about our new trends and happy shopping !
            </Paragraph>
             <Code>Back to home page in {count}</Code>
         </Card> :

@@ -2,11 +2,11 @@ import React from 'react'
 import { Pane, Paragraph } from 'evergreen-ui'
 import StripeCheckout from '../stripe/StripeCheckout'
 
-const CreditCardPayment = ({ currentIndex }) => {
+const CreditCardPayment = ({ currentIndex, shippingMethod, total }) => {
     return (
         <Pane paddingY={16} paddingX={8}>
             <Paragraph marginBottom={24}>
-                This is credit card payment. The total amount of your purchase will be credited.
+                This is credit card payment. The total amount of $ {(total + shippingMethod.price).toFixed(2)} will be credited.
             </Paragraph>
             {
                 currentIndex === 0 &&
