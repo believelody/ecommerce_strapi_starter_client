@@ -1,10 +1,12 @@
 import React from 'react'
 import { Paragraph, Pane } from 'evergreen-ui'
-import isMobile from '../../utils/isMobile.utils'
+import ReactMarkdown from 'react-markdown'
 
 const Description = ({ text }) => (
-  <Pane>
-    <Paragraph>{text}</Paragraph>
+  <Pane marginX={8}>
+    <Paragraph>
+      <ReactMarkdown source={text} escapeHtml={false} />
+    </Paragraph>
   </Pane>
 )
 

@@ -26,6 +26,7 @@ const TabMenu = () => {
           tab: <CartTab />
         }
       ]}
+      updateIndex={cart.length > 0 ? 1 : null}
     />
   )
 }

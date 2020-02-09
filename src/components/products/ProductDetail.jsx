@@ -28,6 +28,7 @@ const ProductDetail = ({ id }) => {
       dispatchLoading({ type: RESET_LOADING })
     } catch (e) {
       console.log(e.message)
+      dispatchLoading({ type: RESET_LOADING })
     }
   }
 
@@ -93,6 +94,7 @@ const ProductDetail = ({ id }) => {
               currentIndex={currentIndex}
               setIndex={setIndex}
             />
+            <hr />
             <Accordion
               header={<Label name='Reviews' />}
               content={

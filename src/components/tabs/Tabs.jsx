@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Pane, Tablist, Tab } from 'evergreen-ui'
 
-const Tabs = ({ elements, getCurrentIndexFromChild = null, marginTop = 10 }) => {
+const Tabs = ({ elements, getCurrentIndexFromChild = null, marginTop = 10, updateIndex = null }) => {
     const [index, setIndex] = useState(0)
 
     const selectIndex = i => {
         if (getCurrentIndexFromChild) getCurrentIndexFromChild(i)
         setIndex(i)
     }
+
+    useEffect(() => {
+        if (updateIndex) {
+            setIndex(updateIndex)
+        }
+    }, [updateIndex])
 
     return (
         <Pane marginTop={marginTop} elevation={1}>
