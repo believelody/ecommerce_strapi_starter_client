@@ -4,7 +4,7 @@ import CartItem from './CartItem'
 import { useAppHooks } from '../../context'
 
 const CartList = () => {
-  const { useCart, useModal } = useAppHooks()
+  const { useCart } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
 
   const [currentIndex, setIndex] = useState(-1)
@@ -12,8 +12,8 @@ const CartList = () => {
   return (
     <Table>
       <Table.Head>
-        <Table.TextHeaderCell>Item</Table.TextHeaderCell>
-        <Table.TextHeaderCell>Qt</Table.TextHeaderCell>
+        <Table.TextHeaderCell flexBasis={96}>Item</Table.TextHeaderCell>
+        <Table.TextHeaderCell padding={0}>Qt</Table.TextHeaderCell>
         <Table.TextHeaderCell>Amount</Table.TextHeaderCell>
         <Table.TextHeaderCell>Option</Table.TextHeaderCell>
       </Table.Head>

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Pane, Table, Icon, Text } from 'evergreen-ui'
+import { Pane, Table, Icon } from 'evergreen-ui'
+import Marquee from 'react-double-marquee'
 import Accordion from '../accordions/Accordion'
 import ContentCartItem from './ContentCartItem'
 
@@ -13,8 +14,10 @@ const CartItem = ({ item, index, currentIndex, setIndex }) => {
         setIndex={setIndex}
         header={
           <Pane display='flex'>
-            <Table.TextCell>{`${item.product.name.substring(0, 9)}...`}</Table.TextCell>
-            <Table.TextCell>{item.quantity}</Table.TextCell>
+            <Table.TextCell flexBasis={96}>
+              <Marquee speed={0.02}>{item.product.name}-{item.color.name}-{item.size.name}</Marquee>
+            </Table.TextCell>
+            <Table.TextCell padding={0}>{item.quantity}</Table.TextCell>
             <Table.TextCell>$ {item.quantity * item.product.price}</Table.TextCell>
             <Table.TextCell>
               <span className='row-icon'>
