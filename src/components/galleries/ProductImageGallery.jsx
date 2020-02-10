@@ -1,10 +1,10 @@
 import React from 'react'
-import { Pane, IconButton } from 'evergreen-ui'
+import { Pane } from 'evergreen-ui'
 import ImageGallery from 'react-image-gallery'
-import { apiUrl } from '../../api'
 import isMobile from '../../utils/isMobile.utils'
+import { apiUrl } from '../../api'
 
-const ProductImageGallery = ({ images }) => {
+const ProductImageGallery = ({ images, fullScreen = true }) => {
   let WIDTH = isMobile() ? 300 : 430
   let HEIGHT = isMobile() ? 430 : 300
   let THUMB_SIZE = isMobile() ? 40 : 80
@@ -42,6 +42,7 @@ const ProductImageGallery = ({ images }) => {
         showBullets
         showPlayButton={false}
         thumbnailPosition={isMobile() ? 'top' : 'left'}
+        showFullscreenButton={fullScreen}
         onThumbnailClick={
           (event, index) => {
             console.log(event)

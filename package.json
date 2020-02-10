@@ -43,6 +43,7 @@
     "react-markdown": "^4.3.1",
     "react-moment": "^0.9.7",
     "react-router-dom": "^5.0.1",
+    "react-star-ratings": "^2.3.0",
     "react-stripe-elements": "^6.0.1",
     "strapi-sdk-javascript": "^0.3.1",
     "styled-components": "^4.3.2"

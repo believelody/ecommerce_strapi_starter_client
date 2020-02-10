@@ -5,11 +5,11 @@ import { CLOSE_MODAL } from '../../reducers/modalReducer'
 
 const Modal = () => {
   const { useModal } = useAppHooks()
-  const [{isOpened, title, msg, status, action, labelConfirm}, dispatchModal] = useModal
+  const [{isOpened, title, msg, status, action, labelConfirm, children}, dispatchModal] = useModal
 
   const closeModal = async () => {
     dispatchModal({ type: CLOSE_MODAL })
-    await action()
+    if (action) await action()
   }
 
   return (
@@ -21,8 +21,11 @@ const Modal = () => {
        onConfirm={closeModal}
        intent={status}
        confirmLabel={labelConfirm ? labelConfirm : 'Delete'}
+       hasFooter={children ? false : true}
       >
-        {msg ? msg : 'Please confirm your action'}
+        {!children && msg && msg}
+        {!children && !msg && 'Please confirm your action'}
+        {children}
       </Dialog>
     </Pane>
   )

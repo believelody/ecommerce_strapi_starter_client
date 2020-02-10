@@ -29,6 +29,7 @@ export const modalReducer = (state, { type, payload }) => {
         case OPEN_MODAL_CHILDREN:
           return {
             ...state,
+            isOpened: true,
             children: payload.children
           }
 

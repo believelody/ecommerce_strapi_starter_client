@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Pane, Card, Text } from 'evergreen-ui'
+import { Pane, Card } from 'evergreen-ui'
 import Accordion from '../accordions/Accordion'
 import Description from '../description/Description'
-import ProductImageGallery from '../images/ProductImageGallery'
+import ProductImageGallery from '../galleries/ProductImageGallery'
 import ProductOptions from '../products/ProductOptions'
 import Label from '../label/Label'
+import ReviewsList from '../reviews/ReviewsList'
 import api from '../../api'
 import { useAppHooks } from '../../context'
-import isMobile from '../../utils/isMobile.utils'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import {arrayColor, arraySize} from '../../utils/product.utils'
 
@@ -98,9 +98,7 @@ const ProductDetail = ({ id }) => {
             <Accordion
               header={<Label name='Reviews' />}
               content={
-                <Pane maxHeight={600}>
-                  <Text>Reviews</Text>
-                </Pane>
+                <ReviewsList reviews={product.reviews} />
               }
               index={1}
               currentIndex={currentIndex}

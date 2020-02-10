@@ -58,6 +58,17 @@ export const getProductQuery = id => `
       tags {
         _id,
         name
+      },
+      reviews {
+        author,
+        text,
+        date,
+        rating,
+        order,
+        thumbnails {
+          name,
+          url
+        }
       }
     }
   }
