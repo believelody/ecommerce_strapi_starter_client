@@ -5,7 +5,7 @@ const EntrustShipping = () => {
     return (
         <Pane height={120} width='auto' marginTop={4}>
             <img
-                src='shipping_carrier.png'
+                src='/shipping_carrier.png'
                 alt='shipping-entrust'
                 style={{ width: 'auto', height: '100%' }}
             />

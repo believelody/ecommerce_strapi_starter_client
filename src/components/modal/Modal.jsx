@@ -5,7 +5,7 @@ import { CLOSE_MODAL } from '../../reducers/modalReducer'
 
 const Modal = () => {
   const { useModal } = useAppHooks()
-  const [{isOpened, title, msg, status, action, labelConfirm, children}, dispatchModal] = useModal
+  const [{isOpened, title, msg, status, action, labelConfirm, children: Component}, dispatchModal] = useModal
 
   const closeModal = async () => {
     dispatchModal({ type: CLOSE_MODAL })
@@ -15,17 +15,19 @@ const Modal = () => {
   return (
     <Pane>
       <Dialog
-       isShown={isOpened}
-       title={title}
-       onCloseComplete={() => dispatchModal({ type: CLOSE_MODAL })}
-       onConfirm={closeModal}
-       intent={status}
-       confirmLabel={labelConfirm ? labelConfirm : 'Delete'}
-       hasFooter={children ? false : true}
+        isShown={isOpened}
+        title={title}
+        onCloseComplete={() => dispatchModal({ type: CLOSE_MODAL })}
+        onConfirm={closeModal}
+        intent={status}
+        confirmLabel={labelConfirm ? labelConfirm : 'Delete'}
+        hasFooter={!!Component ? false : true}
       >
-        {!children && msg && msg}
-        {!children && !msg && 'Please confirm your action'}
-        {children}
+        {!!!Component && msg && msg}
+        {!!!Component && !msg && 'Please confirm your action'}
+        <Pane display='flex' justifyContent='center' alignItems='center' width='100%'>
+          {!!Component && <Component handleClose={() => dispatchModal({ type: CLOSE_MODAL })} />}
+        </Pane>
       </Dialog>
     </Pane>
   )

@@ -35,7 +35,6 @@ const ReviewItem = ({ review }) => {
                     <Pane>
                         <StarRatings
                             rating={review.rating}
-                            starRatedColor='blue'
                             numberOfStars={5}
                             name='rating'
                             starDimension='20px'

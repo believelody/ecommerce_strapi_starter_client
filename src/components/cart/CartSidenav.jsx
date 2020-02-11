@@ -1,19 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Pane, Text, Button, Table, Icon } from 'evergreen-ui'
+import { Link, withRouter } from 'react-router-dom'
+import { Pane, Text, Button, Icon, Heading, Small } from 'evergreen-ui'
 import CartList from './CartList'
 import Label from '../label/Label'
+import LoginForm from '../forms/LoginForm'
 import { useAppHooks } from '../../context'
 import { RESET_CART } from '../../reducers/cartReducer'
-import { OPEN_MODAL } from '../../reducers/modalReducer'
 import { snipcartCountItems, snipcartClearItems, snipcartShowModal, snipcartAddItem, snipcartBillingAddress, snipcartShippingAddress, snipcartLogoutUser } from '../../snipcart'
-import { deleteCart } from '../../utils/cart.utils'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
+import { OPEN_MODAL, OPEN_MODAL_CHILDREN } from '../../reducers/modalReducer'
+import { deleteCart } from '../../utils/cart.utils'
 
-const CartSidenav = () => {
+const CartSidenav = ({ history }) => {
   const { useAuth, useCart, useModal, useLoading } = useAppHooks()
   const [{ isConnected }, dispatchAuth] = useAuth
-  const [{ total, cart }, dispatchCart] = useCart
+  const [{ total }, dispatchCart] = useCart
   const [modalState, dispatchModal] = useModal
   const [loadingState, dispatchLoading] = useLoading
 
@@ -44,19 +45,39 @@ const CartSidenav = () => {
     }
   })
 
-  const openSnipcart = async e => {
-    try {
-      if (isConnected) {
-        let countItems = await snipcartCountItems()
-        if (countItems === 0) {
-          await snipcartAddItem(cart)
-        }
-        await snipcartShowModal()
+  // const openSnipcart = async e => {
+  //   try {
+  //     if (isConnected) {
+  //       let countItems = await snipcartCountItems()
+  //       if (countItems === 0) {
+  //         await snipcartAddItem(cart)
+  //       }
+  //       await snipcartShowModal()
+  //     }
+  //   }
+  //   catch (e) {
+  //     console.log(e)
+  //   }
+  // }
+
+  const redirectAndClose = handleClose => {
+    history.replace('/checkout')
+    handleClose()
+  }
+
+  const openLoginModal = () => {
+    dispatchModal({
+      type: OPEN_MODAL_CHILDREN,
+      payload: {
+        children: ({handleClose}) => <LoginForm handleClose={() => redirectAndClose(handleClose)} />,
+        title: (
+          <Pane textAlign='center'>
+            <Heading>Please login first before checkout</Heading>
+            <Text><Small>Just take 15sec to login and finish your awesome purchase !</Small></Text>
+          </Pane>
+        )
       }
-    }
-    catch (e) {
-      console.log(e)
-    }
+    })
   }
 
   return (
@@ -72,14 +93,14 @@ const CartSidenav = () => {
           <Icon icon='caret-right' color='success' />
           {
             !isConnected ?
-            <Link to='/login'>
-              <Text
-                color='green'
-                size={500}
-              >
-                Checkout
-              </Text>
-            </Link> :
+            <Text
+              color='green'
+              size={500}
+              onClick={openLoginModal}
+            >
+              Checkout
+            </Text>
+              :
             <Link to='/checkout'>
               <Text
                 color='green'
@@ -105,4 +126,4 @@ const CartSidenav = () => {
   )
 }
 
-export default CartSidenav
+export default withRouter(CartSidenav)

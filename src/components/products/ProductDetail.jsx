@@ -10,6 +10,10 @@ import api from '../../api'
 import { useAppHooks } from '../../context'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import {arrayColor, arraySize} from '../../utils/product.utils'
+import ProductDetailRating from './ProductDetailRating'
+import ProductDetailWish from './ProductDetailWish'
+import EntrustPayment from '../entrust/EntrustPayment'
+import EntrustShipping from '../entrust/EntrustShipping'
 
 const ProductDetail = ({ id }) => {
   const {useLoading} = useAppHooks()
@@ -48,10 +52,7 @@ const ProductDetail = ({ id }) => {
               <Card
                 width={400}
                 minWidth={320}
-                borderTop
-                borderLeft
-                borderRight
-                borderBottom
+                border
               >
                 <Pane
                   display='flex'
@@ -82,6 +83,10 @@ const ProductDetail = ({ id }) => {
                     width='100%'
                     withCartButton
                   />
+                </Pane>
+                <Pane display='flex' alignItems='center' justifyContent='space-around' marginY={4} marginX={8}>
+                  <ProductDetailRating reviews={product.reviews} />
+                  <ProductDetailWish product={product} />
                 </Pane>
               </Card>
             </Pane>

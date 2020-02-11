@@ -10,9 +10,7 @@ import { sideSheetReducer, initSideSheetState } from '../reducers/sideSheetReduc
 import { profileReducer, initProfileState } from '../reducers/profileReducer'
 import { dialogReducer, initDialogState } from '../reducers/dialogReducer'
 
-const history = createBrowserHistory({
-  forceRefresh: true
-})
+const history = createBrowserHistory()
 
 export const AppContext = createContext()
 

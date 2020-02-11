@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
 import { Pane, Card, Button, Heading, toaster } from 'evergreen-ui'
 import api from '../../api'
 import FieldComponent from '../fields/FieldComponent'
@@ -11,8 +10,8 @@ import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
 
-const LoginForm = () => {
-  const { useAuth, useLoading, useToast } = useAppHooks()
+const LoginForm = ({ handleClose = null }) => {
+  const { useAuth, useLoading } = useAppHooks()
   const [{errors}, dispatchAuth] = useAuth
   const [{loading}, dispatchLoading] = useLoading
 
@@ -45,7 +44,9 @@ const LoginForm = () => {
       toaster.notify(`Welcome ${res.user.username}`)
       setEmail('')
       setPassword('')
-      // history.push('/profile')
+      if (handleClose) {
+        handleClose()
+      }
     } catch (e) {
       dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
     }
@@ -96,12 +97,6 @@ const LoginForm = () => {
         }
         <Button appearance='primary'>Login</Button>
       </Pane>
-      <NavLink to='/register'>
-        <Button appearance='minimal' intent='success'>No account? Register here!</Button>
-      </NavLink>
-      <NavLink to='/forgot-password'>
-        <Button appearance='minimal' intent='warning'>Password forgotten? Click here!</Button>
-      </NavLink>
     </Card>
   )
 }

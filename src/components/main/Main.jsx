@@ -1,7 +1,8 @@
 import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { useLocation, Switch, Route } from 'react-router-dom'
 import { Pane, Text } from 'evergreen-ui'
 import PrivateRoute from '../private-route/PrivateRoute'
+import Modal from '../modal/Modal'
 import HomePage from '../../pages/HomePage'
 import CheckoutPage from '../../pages/CheckoutPage'
 import LoginPage from '../../pages/LoginPage'
@@ -11,12 +12,13 @@ import ProductDetailPage from '../../pages/ProductDetailPage'
 import ProfilePage from '../../pages/ProfilePage'
 import ResetPasswordPage from '../../pages/ResetPasswordPage'
 
-const Main = ({}) => {
+const Main = () => {
+
   return (
     <Pane width='75%' height='100%' overflow='auto' margin={0} padding={0}>
       <main>
         <Switch>
-          <Route path='/' exact component={HomePage} />
+          <Route path='/' exact children={<HomePage />} />
           <Route path='/products/:id' exact component={ProductDetailPage} />
           <Route path='/checkout' exact component={CheckoutPage} />
           <Route path='/login' exact component={LoginPage} />
