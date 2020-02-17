@@ -34,14 +34,14 @@ export const getProfileByUserQuery = id => `
         num_order,
         amount,
         items
-      }
+      },
       shippingaddresses {
         _id,
         address,
         address2,
         zip,
         city
-      }
+      },
       billingaddresses {
         _id,
         address,

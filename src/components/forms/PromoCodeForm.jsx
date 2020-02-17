@@ -6,7 +6,7 @@ import { useAppHooks } from '../../context'
 import promoCodeMock from '../../mock/promoCode.mock'
 import { PROMO_CODE } from '../../reducers/checkoutReducer'
 
-const FormStyle = styled.form`
+const FormStyle = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
@@ -22,7 +22,7 @@ const PromoCodeForm = () => {
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
 
-    const handleSubmit = e => {
+    const handleClick = e => {
         e.preventDefault()
         if (!code) {
             setError('Promo code field cannot be empty.')
@@ -44,7 +44,7 @@ const PromoCodeForm = () => {
     }
 
     return !success ?
-        <FormStyle onSubmit={handleSubmit}>
+        <FormStyle>
             <Pane width='70%' paddingLeft={8}>
                 <FieldComponent
                     type='code'
@@ -57,7 +57,7 @@ const PromoCodeForm = () => {
                 />
             </Pane>
             <Pane width='30%'>
-                <Button appearance='minimal' type='submit'>PROMO</Button>
+                <Button appearance='minimal' onClick={handleClick}>PROMO</Button>
             </Pane>
         </FormStyle>
         :

@@ -9,7 +9,7 @@ const AddressesList = ({ addresses, selectAddress, obj, type }) => {
             <Radio
                 options={
                     addresses.map((address, i) => ({
-                        label: `${address.address1 || ''} ${address.address2 || ''} ${address.zip || ''} ${address.city || ''}`,
+                        label: `${address.address || ''} ${address.address2 || ''} ${address.zip || ''} ${address.city || ''}`,
                         value: `address-${i}`,
                         related: address
                     }))

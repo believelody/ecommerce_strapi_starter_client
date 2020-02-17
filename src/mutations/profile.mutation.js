@@ -1,3 +1,37 @@
+export const changeShippingAddressMutation = (id, selected) => `
+    mutation {
+        updateProfile(input: {
+            where: {
+                id: "${id}"
+            },
+            data: {
+                selectShippingAddress: "${selected}
+            }
+        }){
+            profile {
+                _id
+            }
+        }
+    }
+`
+
+export const changeBillingAddressMutation = (id, selected) => `
+    mutation {
+        updateProfile(input: {
+            where: {
+                id: "${id}"
+            },
+            data: {
+                selectBillingAddress: "${selected}
+            }
+        }){
+            profile {
+                _id
+            }
+        }
+    }
+`
+
 export const subscribeNewsletterMutation = (_id, checked) => `
     mutation {
         updateProfile(input: {
