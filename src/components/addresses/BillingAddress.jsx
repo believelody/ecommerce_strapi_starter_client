@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { Pane, Button, Card, Paragraph, Strong } from 'evergreen-ui'
 import BillingAddressForm from '../forms/BillingAddressForm'
 import { useAppHooks } from '../../context'
@@ -9,7 +9,9 @@ import { BILLING_ADDRESS } from '../../reducers/checkoutReducer'
 const BillingAddress = ({ profile }) => {
     const { useSideSheet, useCheckout } = useAppHooks()
     const [sideSheetState, dispatchSideSheet] = useSideSheet
-    const [{ billingAddress, isSameAsShipping }, dispatchCheckout] = useCheckout
+    const [{ billingAddress, shippingAddress, isSame }, dispatchCheckout] = useCheckout
+
+    const [adresses, setAddresses] = useState(isSame ? shippingAddress : billingAddress)
 
     const addNewAddress = e => {
         dispatchSideSheet({
@@ -40,61 +42,51 @@ const BillingAddress = ({ profile }) => {
             payload: {
                 title: 'Billing address',
                 description: 'Change your current address',
-                content: (
-                    <Card
-                        backgroundColor="white"
-                        elevation={0}
-                        minHeight={450}
-                        paddingBottom={16}
-                    >
-                        <AddressContent 
-                            addresses={
-                                profile &&
-                                    profile.addressList > 0 ?
-                                    profile.addressList :
-                                    billingAddress ?
-                                        [billingAddress] :
-                                        []
-                            }
-                            label="Billing" 
-                            addressForm={<BillingAddressForm />}
-                        />
-                    </Card>
-                )
+                content: ({ handleClose }) =>
+                <Card
+                    backgroundColor="white"
+                    elevation={0}
+                    minHeight={450}
+                    paddingBottom={16}
+                >
+                    <AddressContent
+                        addresses={
+                            profile &&
+                                profile.billingaddresses.length > 0 ?
+                                profile.billingaddresses :
+                                []
+                        }
+                        label="Billing"
+                        checkoutObj="billingAddress"
+                        profileObj="selectedBillingAddress"
+                        type={BILLING_ADDRESS}
+                        addressForm={BillingAddressForm}
+                        handleClose={handleClose}
+                        defaultValue={profile.selectedBillingAddress}
+                    />
+                </Card>
             }
         })
     }
 
-    useEffect(() => {
-        if (profile && profile.billingAddress) {
-            dispatchCheckout({
-                type: BILLING_ADDRESS,
-                payload: {
-                    billingAddress: profile.billingAddress
-                }
-            })
-        }
-    }, [profile])
-
     return (
-        !isSameAsShipping &&
         <Pane>
             {
-                billingAddress &&
-                <Pane>
-                    <Button float='right' onClick={changeAddress}>
+                adresses &&
+                <Pane padding={8}>
+                    <Button type='button' float='right' onClick={changeAddress}>
                         Change billing address
                     </Button>
-                    <Card background='tealTint' padding={8}>
-                        {billingAddress.address1 && <Paragraph>{billingAddress.address1}</Paragraph>}
-                        {billingAddress.address2 && <Paragraph>{billingAddress.address2}</Paragraph>}
-                        {billingAddress.zip && <Paragraph>{billingAddress.zip}</Paragraph>}
-                        {billingAddress.city && <Paragraph>{billingAddress.city}</Paragraph>}
+                    <Card background='tealTint' padding={8} textAlign='left'>
+                        {adresses.address && <Paragraph>{adresses.address}</Paragraph>}
+                        {adresses.address2 && <Paragraph>{adresses.address2}</Paragraph>}
+                        {adresses.zip && <Paragraph>{adresses.zip}</Paragraph>}
+                        {adresses.city && <Paragraph>{adresses.city}</Paragraph>}
                     </Card>
                 </Pane>
             }
             {
-                !billingAddress &&
+                !adresses &&
                 <Card textAlign='center' background='tint2' paddingY={16}>
                     <Paragraph>
                         You don't have any address.{' '}

@@ -5,11 +5,43 @@ export const changeShippingAddressMutation = (id, selected) => `
                 id: "${id}"
             },
             data: {
-                selectShippingAddress: "${selected}
+                selectedShippingAddress: ${selected}
             }
         }){
             profile {
-                _id
+                _id,
+                gender,
+                username,
+                firstname,
+                lastname,
+                birthday,
+                emailConfirm,
+                isSubscribed,
+                image {
+                    name,
+                    url
+                },
+                orders {
+                    num_order,
+                    amount,
+                    items
+                },
+                shippingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                billingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                selectedShippingAddress,
+                selectedBillingAddress
             }
         }
     }
@@ -22,11 +54,43 @@ export const changeBillingAddressMutation = (id, selected) => `
                 id: "${id}"
             },
             data: {
-                selectBillingAddress: "${selected}
+                selectedBillingAddress: ${selected}
             }
         }){
             profile {
-                _id
+                _id,
+                gender,
+                username,
+                firstname,
+                lastname,
+                birthday,
+                emailConfirm,
+                isSubscribed,
+                image {
+                    name,
+                    url
+                },
+                orders {
+                    num_order,
+                    amount,
+                    items
+                },
+                shippingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                billingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                selectedShippingAddress,
+                selectedBillingAddress
             }
         }
     }
@@ -43,16 +107,39 @@ export const subscribeNewsletterMutation = (_id, checked) => `
             }
         }){
             profile {
-                _id
-                isSubscribed
-                username
-                firstname
-                lastname
+                _id,
+                gender,
+                username,
+                firstname,
+                lastname,
+                birthday,
+                emailConfirm,
+                isSubscribed,
                 image {
+                    name,
                     url
-                    name
-                }
-                emailConfirm
+                },
+                orders {
+                    num_order,
+                    amount,
+                    items
+                },
+                shippingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                billingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                selectedShippingAddress,
+                selectedBillingAddress
             }
         }
     }
@@ -70,8 +157,39 @@ export const confirmVerificationMutation = (_id, confirm, code) => `
             }
         }){
             profile {
-                _id
-                emailConfirm
+                _id,
+                gender,
+                username,
+                firstname,
+                lastname,
+                birthday,
+                emailConfirm,
+                isSubscribed,
+                image {
+                    name,
+                    url
+                },
+                orders {
+                    num_order,
+                    amount,
+                    items
+                },
+                shippingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                billingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                selectedShippingAddress,
+                selectedBillingAddress
             }
         }
     }
@@ -91,18 +209,39 @@ export const updateInfoMutation = (_id, data) => `
             }
         }){
             profile {
-                _id
-                gender
-                username
-                firstname
-                lastname
-                birthday
+                _id,
+                gender,
+                username,
+                firstname,
+                lastname,
+                birthday,
+                emailConfirm,
+                isSubscribed,
                 image {
+                    name,
                     url
-                    name
-                }
-                emailConfirm
-                isSubscribed
+                },
+                orders {
+                    num_order,
+                    amount,
+                    items
+                },
+                shippingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                billingaddresses {
+                    _id,
+                    address,
+                    address2,
+                    zip,
+                    city
+                },
+                selectedShippingAddress,
+                selectedBillingAddress
             }
         }
     }

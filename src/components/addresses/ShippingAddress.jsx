@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Pane, Card, Strong, Paragraph, Checkbox } from 'evergreen-ui'
 import { Button } from 'evergreen-ui/commonjs/buttons'
 import { useAppHooks } from '../../context'
@@ -38,44 +38,33 @@ const ShippingAddress = ({ profile }) => {
         dispatchSideSheet({
             type: OPEN_SIDE_SHEET,
             payload: {
-                title: 'Shipping address',
-                description: 'Change your current address',
-                content: (
-                    <Card
-                        backgroundColor="white"
-                        elevation={0}
-                        paddingBottom={16}
-                    >
-                        <AddressContent
-                            addresses={
-                                profile &&
-                                profile.addressList.length > 0 ?
-                                profile.addressList :
-                                shippingAddress ?
-                                [shippingAddress] :
-                                []
-                            }
-                            label="Shipping"
-                            obj="shippingAddress"
-                            type={SHIPPING_ADDRESS}
-                            addressForm={<ShippingAddressForm />}
-                        />
-                    </Card>
-                )
+                title: 'Select shipping address for checkout',
+                description: 'Press the cross or click anywhere outside to close side sheet',
+                content: ({handleClose}) =>
+                <Card
+                    backgroundColor="white"
+                    elevation={0}
+                    paddingBottom={16}
+                >
+                    <AddressContent
+                        addresses={
+                            profile &&
+                            profile.shippingaddresses.length > 0 ?
+                            profile.shippingaddresses :
+                            []
+                        }
+                        label="Shipping"
+                        checkoutObj="shippingAddress"
+                        profileObj="selectedShippingAddress"
+                        type={SHIPPING_ADDRESS}
+                        addressForm={ShippingAddressForm}
+                        handleClose={handleClose}
+                        defaultValue={profile.selectedShippingAddress}
+                    />
+                </Card>
             }
         })
     }
-
-    useEffect(() => {
-        if (profile && profile.shippingAddress) {
-            dispatchCheckout({
-                type: SHIPPING_ADDRESS,
-                payload: {
-                    shippingAddress: profile.shippingAddress
-                }
-            })
-        }
-    }, [profile])
 
     return (
         shippingAddress ?
@@ -83,14 +72,14 @@ const ShippingAddress = ({ profile }) => {
             <Checkbox
                 label='Also use as billing address?'
                 checked={isSame}
-                onChange={e => dispatchCheckout({ type: isSame ? IS_NOT_SAME : IS_SAME })}
+                onChange={() => dispatchCheckout({ type: isSame ? IS_NOT_SAME : IS_SAME })}
                 marginBottom={20}
             />
             <Button type='button' float='right' onClick={changeAddress}>
                 Change shipping address
             </Button>
             <Card background='tealTint' padding={8} textAlign='left'>
-                {shippingAddress.address1 && <Paragraph>{shippingAddress.address1}</Paragraph>}
+                {shippingAddress.address && <Paragraph>{shippingAddress.address}</Paragraph>}
                 {shippingAddress.address2 && <Paragraph>{shippingAddress.address2}</Paragraph>}
                 {shippingAddress.zip && <Paragraph>{shippingAddress.zip}</Paragraph>}
                 {shippingAddress.city && <Paragraph>{shippingAddress.city}</Paragraph>}

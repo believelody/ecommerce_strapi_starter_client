@@ -14,8 +14,7 @@ import {getCart} from './utils/cart.utils'
 import isMobile from './utils/isMobile.utils'
 import { getToken } from './utils/token.utils'
 import { getUser } from './utils/user.utils'
-import addressesMock from './mock/addresses.mock'
-import { SHIPPING_ADDRESS, IS_SAME } from './reducers/checkoutReducer'
+import { IS_SAME, UPDATE_ADDRESSES } from './reducers/checkoutReducer'
 import api from './api'
 import { GET_PROFILE } from './reducers/profileReducer'
 
@@ -28,8 +27,8 @@ const App = () => {
   const [{ profile }, dispatchProfile] = useProfile
   
   const getProfileByUser = async id => {
+    dispatchLoading({ type: SET_LOADING })
     try {
-      dispatchLoading({ type: SET_LOADING })
       const { data } = await api.profile.getProfileByUser(id)
       dispatchProfile({
         type: GET_PROFILE,
@@ -38,6 +37,7 @@ const App = () => {
       dispatchLoading({ type: RESET_LOADING })
     } catch (e) {
       console.log(e)
+      dispatchLoading({ type: RESET_LOADING })
     }
   }
 
@@ -73,14 +73,17 @@ const App = () => {
   }, [user])
 
   useEffect(() => {
-    dispatchCheckout({
-      type: SHIPPING_ADDRESS,
-      payload: {
-        shippingAddress: addressesMock[0]
-      }
-    })
-    dispatchCheckout({ type: IS_SAME })
-  }, [])
+    if (profile) {
+      dispatchCheckout({
+        type: UPDATE_ADDRESSES,
+        payload: {
+          shippingAddress: profile.shippingaddresses.length > 0 ? profile.shippingaddresses[profile.selectedShippingAddress] : null,
+          billingAddress: profile.billingaddresses.length > 0 ? profile.billingaddresses[profile.selectedBillingAddress] : null
+        }
+      })
+      dispatchCheckout({ type: IS_SAME })
+    }
+  }, [profile])
 
   return (
     <Pane maxHeight={window.screen.height}>

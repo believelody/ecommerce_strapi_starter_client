@@ -48,7 +48,9 @@ export const getProfileByUserQuery = id => `
         address2,
         zip,
         city
-      }
+      },
+      selectedShippingAddress,
+      selectedBillingAddress
     }
   }
 `

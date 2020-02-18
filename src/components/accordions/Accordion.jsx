@@ -10,7 +10,7 @@ const RowStyle = styled.div`
   border-bottom: ${props => props.borderBottom ? '1px solid rgba(0, 0, 0, 0.2)' : 'none'};
   overflow: none;
   & .row-header {
-    height: 30px;
+    height: auto;
     line-height: 40px;
     cursor: pointer;
 

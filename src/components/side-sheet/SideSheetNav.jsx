@@ -7,12 +7,14 @@ import ContentSideSheet from './ContentSideSheet'
 
 const SideSheetNav = () => {
     const {useSideSheet} = useAppHooks()
-    const [{isShowed, title, description, content, width}, dispatchSideSheet] = useSideSheet
+    const [{isShowed, title, description, content: Component, width}, dispatchSideSheet] = useSideSheet
+
+    const closeSideSheet = () => dispatchSideSheet({ type: CLOSE_SIDE_SHEET })
 
     return (
         <SideSheet
             isShown={isShowed}
-            onCloseComplete={() => dispatchSideSheet({ type: CLOSE_SIDE_SHEET})}
+            onCloseComplete={closeSideSheet}
             containerProps={{
                 display: 'flex',
                 flex: 1,
@@ -21,7 +23,9 @@ const SideSheetNav = () => {
             width={width}
         >
             <TitleSideSheet title={title} description={description} />
-            <ContentSideSheet content={content} />
+            <ContentSideSheet>
+                {!!Component && <Component handleClose={closeSideSheet} />}
+            </ContentSideSheet>
         </SideSheet>
     )
 }

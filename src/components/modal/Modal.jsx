@@ -1,5 +1,5 @@
-import React from 'react'
-import { Pane, Dialog } from 'evergreen-ui'
+import React, { useState } from 'react'
+import { Pane, Dialog, Text } from 'evergreen-ui'
 import { useAppHooks } from '../../context'
 import { CLOSE_MODAL } from '../../reducers/modalReducer'
 
@@ -7,9 +7,20 @@ const Modal = () => {
   const { useModal } = useAppHooks()
   const [{isOpened, title, msg, status, action, labelConfirm, children: Component}, dispatchModal] = useModal
 
+  const [submitting, setSubmitting] = useState(false)
+
   const closeModal = async () => {
+    if (action) {
+      try {
+        setSubmitting(true)
+        await action()
+        setSubmitting(false)
+      } catch (e) {
+        console.log(e)
+        setSubmitting(false)
+      }
+    }
     dispatchModal({ type: CLOSE_MODAL })
-    if (action) await action()
   }
 
   return (
@@ -20,11 +31,11 @@ const Modal = () => {
         onCloseComplete={() => dispatchModal({ type: CLOSE_MODAL })}
         onConfirm={closeModal}
         intent={status}
-        confirmLabel={labelConfirm ? labelConfirm : 'Delete'}
+        confirmLabel={submitting ? 'Please wait ...' : labelConfirm ? labelConfirm : 'Delete'}
         hasFooter={!!Component ? false : true}
+        isConfirmLoading={submitting}
       >
-        {!!!Component && msg && msg}
-        {!!!Component && !msg && 'Please confirm your action'}
+        {!!!Component && <Text>{msg || 'Please confirm your action'}</Text>}
         <Pane display='flex' justifyContent='center' alignItems='center' width='100%'>
           {!!Component && <Component handleClose={() => dispatchModal({ type: CLOSE_MODAL })} />}
         </Pane>

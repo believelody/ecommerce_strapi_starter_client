@@ -1,56 +1,97 @@
-import React, { useEffect, useState } from 'react'
-import { Pane, Button } from 'evergreen-ui'
+import React, { useState } from 'react'
+import { Pane, Button, toaster, InlineAlert } from 'evergreen-ui'
 import FieldComponent from '../fields/FieldComponent'
 import { useAppHooks } from '../../context'
 import { BILLING_ADDRESS } from '../../reducers/checkoutReducer'
+import api from '../../api'
+import { UPDATE_PROFILE } from '../../reducers/profileReducer'
 
-const BillingAddressForm = () => {
-  const { useCheckout } = useAppHooks()
-  const [{billingAddress}, dispatchCheckout] = useCheckout
-
-  const [address1, setAddress1] = useState(null)
-  const [address2, setAddress2] = useState(null)
-  const [zip, setZip] = useState(null)
-  const [city, setCity] = useState(null)
+const BillingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
+  const { useCheckout, useProfile } = useAppHooks()
+  const [checkoutState, dispatchCheckout] = useCheckout
+  const [{ profile }, dispatchProfile] = useProfile
+  
+  const [addr, setAddress] = useState(mode === 'edit' && indexAddress > -1 ? {
+    address: profile.billingaddresses[indexAddress].address || '',
+    address2: profile.billingaddresses[indexAddress].address2 || '',
+    zip: profile.billingaddresses[indexAddress].zip || '',
+    city: profile.billingaddresses[indexAddress].city || ''
+  } : {})
   const [billingAddressErrors, setErrors] = useState(null)
-  const [isSubmitted, setSubmit] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleAddress1 = e => setAddress1(e.target.value)
-  const handleAddress2 = e => setAddress2(e.target.value)
-  const handleZip = e => setZip(e.target.value)
-  const handleCity = e => setCity(e.target.value)
+  const handleAddress = e => setAddress({ ...addr, [e.target.name]: e.target.value })
 
-  const handleSubmit = e => {
+  const create = async () => {
+    const newAddress = await api.billing.createAddress({ ...addr, profile: profile._id })
+    const { data: { updateProfile } } = await api.profile.changeBillingAddress(profile._id, profile.billingaddresses.length > 0 ? profile.billingaddresses.length : 0)
+    dispatchCheckout({
+      type: BILLING_ADDRESS,
+      payload: {
+        billingAddress: newAddress
+      }
+    })
+    dispatchProfile({
+      type: UPDATE_PROFILE,
+      payload: {
+        profile: {
+          ...profile,
+          selectedBillingAddress: updateProfile.profile.selectedBillingAddress,
+          billingaddresses: [...profile.billingaddresses, newAddress]
+        }
+      }
+    })
+    toaster.success('You had successfully a new billing address')
+  }
+
+  const edit = async () => {
+    const updatedAddress = await api.billing.updateAddress(profile.billingaddresses[indexAddress]._id, { ...addr, profile: profile._id })
+    // profile.billingaddresses[indexAddress] = { address, address2, zip, city }
+    profile.billingaddresses.splice(indexAddress, 1, updatedAddress)
+    toaster.success('Your address has been successfully updated')
+  }
+
+  const handleSubmit = async e => {
     e.preventDefault()
-    if (!address1) {
-      setErrors(prevErrors => ({...prevErrors, address1: `You need to fill address field`}))
+    if (!addr.address) {
+      setErrors(prevErrors => ({...prevErrors, address: `You need to fill address field`}))
     }
-    else if (!zip) {
+    else if (!addr.zip) {
       setErrors(prevErrors => ({...prevErrors, zip: `You need to fill zip field`}))
     }
-    else if (!city) {
+    else if (!addr.city) {
       setErrors(prevErrors => ({...prevErrors, city: `You need to fill city field`}))
     }
     else {
-      dispatchCheckout({
-        type: BILLING_ADDRESS,
-        payload: {
-          billingAddress: {address1, address2, zip, city}
+      try {
+        setSubmitting(true)
+        if (mode === 'create') {
+          await create()
         }
-      })
-      setSubmit(true)
+        else {
+          await edit()
+        }
+        if (handleClose) {
+          setSubmitting(false)
+          handleClose()
+        }
+      } catch (e) {
+        console.log(e)
+        setErrors({ ...billingAddressErrors, internalError: 'Oups, there is something wrong !' })
+        setSubmitting(false)
+      }
     }
   }
 
   // useEffect(() => {
   //   if (isSame) {
-  //     setAddress1(billingAddress.address1)
+  //     setAddress(billingAddress.address)
   //     setAddress2(billingAddress.address2)
   //     setZip(billingAddress.zip)
   //     setCity(billingAddress.city)
   //   }
   //   else {
-  //     setAddress1(null)
+  //     setAddress(null)
   //     setAddress2(null)
   //     setZip(null)
   //     setCity(null)
@@ -58,42 +99,50 @@ const BillingAddressForm = () => {
   // }, [isSame])
 
   return (
-    <Pane>
-      <form onSubmit={handleSubmit}>
-        <FieldComponent
-          label='Address 1 *'
-          name='address1'
-          placeholder='Ex: 123 rue de la route'
-          handleChange={handleAddress1}
-          value={address1}
-          errors={billingAddressErrors && billingAddressErrors.address1}
-        />
-        <FieldComponent
-          label='Address 2'
-          name='address2'
-          hint='This field is optional'
-          placeholder='Ex: Résidence Sylvestre Appart 123'
-          handleChange={handleAddress2}
-          value={address2}
-        />
-        <FieldComponent
-          label='Zip code *'
-          name='zip'
-          placeholder='Enter your zip code'
-          handleChange={handleZip}
-          value={zip}
-          errors={billingAddressErrors && billingAddressErrors.zip}
-        />
-        <FieldComponent
-          label='City *'
-          name='city'
-          placeholder='Enter your city here'
-          handleChange={handleCity}
-          value={city}
-          errors={billingAddressErrors && billingAddressErrors.city}
-        />
-        <Button type='button' disabled={isSubmitted}>{isSubmitted ? 'Thank you !' : 'Set Billing Address'}</Button>
-      </form>
+    <Pane is='form' onSubmit={handleSubmit}>
+      <FieldComponent
+        label='Address 1 *'
+        name='address'
+        placeholder='Ex: 123 rue de la route'
+        handleChange={handleAddress}
+        value={addr.address}
+        errors={billingAddressErrors && billingAddressErrors.address}
+      />
+      <FieldComponent
+        label='Address 2'
+        name='address2'
+        hint='This field is optional'
+        placeholder='Ex: Résidence Sylvestre Appart 123'
+        handleChange={handleAddress}
+        value={addr.address2}
+      />
+      <FieldComponent
+        label='Zip code *'
+        name='zip'
+        placeholder='Enter your zip code'
+        handleChange={handleAddress}
+        value={addr.zip}
+        errors={billingAddressErrors && billingAddressErrors.zip}
+      />
+      <FieldComponent
+        label='City *'
+        name='city'
+        placeholder='Enter your city here'
+        handleChange={handleAddress}
+        value={addr.city}
+        errors={billingAddressErrors && billingAddressErrors.city}
+      />
+      <Button
+        appearance='primary'
+        intent='success'
+        disabled={submitting}
+      >
+        {submitting ? 'Please wait ...' : (mode === 'create' ? 'Set Billing Address' : 'Update Address')}
+      </Button>
+      {
+        billingAddressErrors && billingAddressErrors.internalError &&
+        <InlineAlert intent='danger'>{billingAddressErrors.internalError}</InlineAlert>
+      }
     </Pane>
   )
 }

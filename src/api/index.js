@@ -4,6 +4,7 @@ import variant from './variant'
 import product from './product'
 import profile from './profile'
 import shipping from './shipping'
+import billing from './billing'
 import user from './user'
 import order from './order'
 import category from './category'
@@ -23,6 +24,10 @@ export const register = (name, email, password) => strapi.register(name, email, 
 export const login = (email, password) => strapi.login(email, password)
 
 export const create = (path, data) => strapi.createEntry(path, data)
+
+export const update = (path, id, data) => strapi.updateEntry(path, id, data)
+
+export const deleteData = (path, id) => strapi.deleteEntry(path, id)
 
 export const sendForgottenPasswordLink = email => axios.post(`${apiUrl}/auth/forgot-password`, {
   email,
@@ -47,4 +52,4 @@ export const put = (path, data, id) => axios.put(`${apiUrl}/${path}/${id}`, data
   "Authorization": `Bearer ${getToken()}`
 })
 
-export default {order, product, profile, shipping, user, variant, category}
+export default {order, product, profile, shipping, user, variant, category, billing}

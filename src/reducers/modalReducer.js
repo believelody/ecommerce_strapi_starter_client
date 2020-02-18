@@ -1,6 +1,5 @@
 export const OPEN_MODAL = 'OPEN_MODAL'
 export const OPEN_MODAL_CHILDREN = 'OPEN_MODAL_CHILDREN'
-export const OPEN_MODAL_CONFIRM = 'OPEN_MODAL_CONFIRM'
 export const CLOSE_MODAL = 'CLOSE_MODAL'
 
 export const initModalState = {
@@ -33,16 +32,6 @@ export const modalReducer = (state, { type, payload }) => {
             children: payload.children,
             title: payload.title || ''
           }
-
-        case OPEN_MODAL_CONFIRM:
-            return {
-                ...state,
-                msg: null,
-                isOpened: true,
-                children: payload.children,
-                title: payload.title,
-            }
-
 
         case CLOSE_MODAL:
             return {
