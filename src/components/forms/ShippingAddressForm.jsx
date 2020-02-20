@@ -25,8 +25,8 @@ const ShippingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
   const handleAddress = e => setAddress({ ...addr, [e.target.name]: e.target.value})
 
   const create = async () => {
-    const newAddress = await api.shipping.createAddress({ ...addr, profile: profile._id })
-    const {data: {updateProfile}} = await api.profile.changeShippingAddress(profile._id, profile.shippingaddresses.length > 0 ? profile.shippingaddresses.length : 0)
+    let newAddress = await api.shipping.createAddress({ ...addr, profile: profile._id })
+    let updateProfile = await api.profile.changeShippingAddress(profile._id, profile.shippingaddresses.length > 0 ? profile.shippingaddresses.length : 0)
     dispatchCheckout({
       type: SHIPPING_ADDRESS,
       payload: {
@@ -38,7 +38,7 @@ const ShippingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
       payload: {
         profile: {
           ...profile,
-          selectedShippingAddress: updateProfile.profile.selectedShippingAddress,
+          selectedShippingAddress: updateProfile.selectedShippingAddress,
           shippingaddresses: [...profile.shippingaddresses, newAddress]
         }
       }
@@ -50,8 +50,7 @@ const ShippingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
   }
 
   const edit = async () => {
-    const updatedAddress = await api.shipping.updateAddress(profile.shippingaddresses[indexAddress]._id, { ...addr, profile: profile._id })
-    // profile.shippingaddresses[indexAddress] = { address, address2, zip, city }
+    let updatedAddress = await api.shipping.updateAddress(profile.shippingaddresses[indexAddress]._id, { ...addr, profile: profile._id })
     profile.shippingaddresses.splice(indexAddress, 1, updatedAddress)
     toaster.success('Your address has been successfully updated')
   }

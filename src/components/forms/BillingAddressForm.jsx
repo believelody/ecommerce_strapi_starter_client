@@ -23,8 +23,8 @@ const BillingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
   const handleAddress = e => setAddress({ ...addr, [e.target.name]: e.target.value })
 
   const create = async () => {
-    const newAddress = await api.billing.createAddress({ ...addr, profile: profile._id })
-    const { data: { updateProfile } } = await api.profile.changeBillingAddress(profile._id, profile.billingaddresses.length > 0 ? profile.billingaddresses.length : 0)
+    let newAddress = await api.billing.createAddress({ ...addr, profile: profile._id })
+    let updateProfile = await api.profile.changeBillingAddress(profile._id, profile.billingaddresses.length > 0 ? profile.billingaddresses.length : 0)
     dispatchCheckout({
       type: BILLING_ADDRESS,
       payload: {
@@ -36,7 +36,7 @@ const BillingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
       payload: {
         profile: {
           ...profile,
-          selectedBillingAddress: updateProfile.profile.selectedBillingAddress,
+          selectedBillingAddress: updateProfile.selectedBillingAddress,
           billingaddresses: [...profile.billingaddresses, newAddress]
         }
       }
@@ -45,8 +45,7 @@ const BillingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
   }
 
   const edit = async () => {
-    const updatedAddress = await api.billing.updateAddress(profile.billingaddresses[indexAddress]._id, { ...addr, profile: profile._id })
-    // profile.billingaddresses[indexAddress] = { address, address2, zip, city }
+    let updatedAddress = await api.billing.updateAddress(profile.billingaddresses[indexAddress]._id, { ...addr, profile: profile._id })
     profile.billingaddresses.splice(indexAddress, 1, updatedAddress)
     toaster.success('Your address has been successfully updated')
   }

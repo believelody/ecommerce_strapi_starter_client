@@ -38,7 +38,7 @@ const ProductDetailWish = ({ product }) => {
         <Pane display='flex' alignItems='center' justifyContent='flex-end' width='50%'>
             <Pill color={wish ? 'red' : 'neutral'}>{nbWish}</Pill>
             <Icon 
-                icon='heart' 
+                icon='pin' 
                 size={26} 
                 color={wish ? 'danger' : 'muted'} 
                 marginLeft={8} 

@@ -11,7 +11,12 @@ const AddressesList = ({ addresses, selectAddress, obj, type, defaultValue }) =>
             <Radio
                 options={
                     addresses.map((addr, i) => ({
-                        label: objToText(addr),
+                        label: objToText({
+                            address: addr.address,
+                            address2: addr.address2,
+                            zip: addr.zip,
+                            city: addr.city,
+                        }),
                         value: i,
                         related: addr
                     }))

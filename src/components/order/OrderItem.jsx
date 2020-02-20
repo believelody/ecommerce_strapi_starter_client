@@ -1,11 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import { Table, IconButton, Badge, Pane, Text, UnorderedList, ListItem, Card, Heading, Strong } from 'evergreen-ui'
+import { Table, IconButton, Badge, Pane, Text, UnorderedList, ListItem, Card, Heading, Strong, Popover, Position } from 'evergreen-ui'
 import moment from 'moment'
 import Accordion from '../accordions/Accordion'
 import { objToText } from '../../utils/address.utils'
 import Image from '../image/Image'
 import { apiUrl } from '../../api'
+import DetailOrderMenu from '../menu/DetailOrderMenu'
 
 const shippingStatusColor = status => {
     switch (status) {
@@ -41,6 +42,68 @@ const paymentStatusColor = status => {
     }
 }
 
+const PaymentMethodNotice = ({ type, amount, date }) => {
+    switch (type) {
+        case '2x':
+            return (
+                <Pane background='yellowTint' padding={4} border>
+                    <Heading size={400} color='orange'>Notice:</Heading>
+                    <Text size={300}>As reminder, you will be credited in following periods:</Text>
+                    <UnorderedList size={300}>
+                        <ListItem>
+                            $ {amount}  on {moment(date).format('MMMM Do YYYY')}
+                        </ListItem>
+                        <ListItem>
+                            $ {amount} on {moment(date).add(1, 'M').format('MMMM Do YYYY')}
+                        </ListItem>
+                    </UnorderedList>
+                </Pane>
+            )
+        case '3x':
+            return (
+                <Pane background='yellowTint' padding={4} border>
+                    <Heading size={400} color='orange'>Notice:</Heading>
+                    <Text size={300}>As reminder, you will be credited in following periods:</Text>
+                    <UnorderedList size={300}>
+                        <ListItem>
+                            $ {amount}  on {moment(date).format('MMMM Do YYYY')}
+                        </ListItem>
+                        <ListItem>
+                            $ {amount} on {moment(date).add(1, 'M').format('MMMM Do YYYY')}
+                        </ListItem>
+                        <ListItem>
+                            $ {amount} on {moment(date).add(2, 'M').format('MMMM Do YYYY')}
+                        </ListItem>
+                    </UnorderedList>
+                </Pane>
+            )
+        case '4x':
+            return (
+                <Pane background='yellowTint' padding={4} border>
+                    <Heading size={400} color='orange'>Notice:</Heading>
+                    <Text size={300}>As reminder, you will be credited in following periods:</Text>
+                    <UnorderedList size={300}>
+                        <ListItem>
+                            $ {amount}  on {moment(date).format('MMMM Do YYYY')}
+                        </ListItem>
+                        <ListItem>
+                            $ {amount} on {moment(date).add(1, 'M').format('MMMM Do YYYY')}
+                        </ListItem>
+                        <ListItem>
+                            $ {amount} on {moment(date).add(2, 'M').format('MMMM Do YYYY')}
+                        </ListItem>
+                        <ListItem>
+                            $ {amount} on {moment(date).add(3, 'M').format('MMMM Do YYYY')}
+                        </ListItem>
+                    </UnorderedList>
+                </Pane>
+            )
+    
+        default:
+            return null
+    }
+}
+
 const OrderItem = ({ order, index, currentIndex, setIndex }) => {
 
     return (
@@ -62,7 +125,7 @@ const OrderItem = ({ order, index, currentIndex, setIndex }) => {
                             </Table.TextCell>
                             <Table.TextCell>#{order.numOrder}</Table.TextCell>
                             <Table.TextCell>$ {order.amount}</Table.TextCell>
-                            <Table.TextCell>{moment(order.updatedAt).format('MMMM Do YYYY')}</Table.TextCell>
+                            <Table.TextCell>{moment(order.createdAt).format('MMMM Do YYYY')}</Table.TextCell>
                             <Table.TextCell>
                                 <Badge isSolid color={paymentStatusColor(order.paymentStatus)}>
                                     {order.paymentStatus}
@@ -73,8 +136,18 @@ const OrderItem = ({ order, index, currentIndex, setIndex }) => {
                                     {order.shippingStatus}
                                 </Badge>
                             </Table.TextCell>
-                            <Table.TextCell onClick={handleClick}>
-                                <IconButton icon='more' appearance='minimal' />
+                            <Table.TextCell>
+                                <Popover
+                                    position={Position.BOTTOM_RIGHT}
+                                    content={
+                                        <DetailOrderMenu
+                                            paymentStatus={order.paymentStatus}
+                                            shippingStatus={order.shippingStatus}
+                                        />
+                                    }
+                                >
+                                    <IconButton icon='more' appearance='minimal' />
+                                </Popover>
                             </Table.TextCell>
                         </Pane>
                     )
@@ -84,21 +157,50 @@ const OrderItem = ({ order, index, currentIndex, setIndex }) => {
                         <Pane textAlign='center'>
                             <Heading size={600}>Order details</Heading>
                         </Pane>
-                        <Pane paddingLeft={4} paddingY={4} borderBottom>
-                            <Text size={400}>Shipping Address: </Text>
-                            <Strong>{objToText(order.items.shippingAddress)}</Strong>
-                        </Pane>
-                        <Pane paddingLeft={4} paddingY={4} borderBottom>
-                            <Text size={400}>Billing Address: </Text>
-                            <Strong>{objToText(order.items.billingAddress)}</Strong>
-                        </Pane>
-                        <Pane paddingLeft={4} paddingY={4} borderBottom>
-                            <Text size={400}>Shipping Method: </Text>
-                            <Strong>{order.items.shippingMethod.label}</Strong>
-                        </Pane>
-                        <Pane paddingLeft={4} paddingY={4} borderBottom>
-                            <Text size={400}>Payment Method: </Text>
-                            <Strong>{order.items.paymentMethod.type.toUpperCase()}</Strong>
+                        <Pane display='flex' border>
+                            <Pane display='block' borderRight width='50%'>
+                                <Pane paddingLeft={4} paddingY={4} borderBottom>
+                                    <Text size={400}>Shipping Address: </Text>
+                                    <Strong>
+                                        {
+                                            objToText({
+                                                address: order.items.shippingAddress.address,
+                                                address2: order.items.shippingAddress.address2,
+                                                zip: order.items.shippingAddress.zip,
+                                                city: order.items.shippingAddress.city,
+                                            })
+                                        }
+                                    </Strong>
+                                </Pane>
+                                <Pane paddingLeft={4} paddingY={4}>
+                                    <Text size={400}>Shipping Method: </Text>
+                                    <Strong>{order.items.shippingMethod.label}</Strong>
+                                </Pane>
+                            </Pane>
+                            <Pane display='block' borderLeft width='50%'>
+                                <Pane paddingLeft={4} paddingY={4} borderBottom>
+                                    <Text size={400}>Billing Address: </Text>
+                                    <Strong>
+                                        {
+                                            objToText({
+                                                address: order.items.billingAddress.address,
+                                                address2: order.items.billingAddress.address2,
+                                                zip: order.items.billingAddress.zip,
+                                                city: order.items.billingAddress.city,
+                                            })
+                                        }
+                                    </Strong>
+                                </Pane>
+                                <Pane paddingLeft={4} paddingY={4}>
+                                    <Text size={400}>Payment Method: </Text>
+                                    <Strong>{order.items.paymentMethod.type.toUpperCase()}</Strong>
+                                    <PaymentMethodNotice
+                                        amount={order.amount}
+                                        date={order.createdAt}
+                                        type={order.items.paymentMethod.type}
+                                    />
+                                </Pane>
+                            </Pane>
                         </Pane>
                         <Pane>
                             <Text>Items :</Text>

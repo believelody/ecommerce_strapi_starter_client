@@ -44,11 +44,11 @@ const ProfileShippingAddresses = () => {
     }
 
     const selectAddress = async (options, value, type, obj) => {
-        let {data: {updateProfile}} = await api.profile.changeShippingAddress(profile._id, value)
+        let updateProfile = await api.profile.changeShippingAddress(profile._id, value)
         dispatchCheckout({
             type,
             payload: {
-                [obj]: updateProfile.profile.shippingaddresses[updateProfile.profile.selectedShippingAddress]
+                [obj]: updateProfile.shippingaddresses[updateProfile.selectedShippingAddress]
             }
         })
         dispatchCheckout({ type: IS_SAME })
@@ -57,7 +57,7 @@ const ProfileShippingAddresses = () => {
             payload: {
                 profile: {
                     ...profile,
-                    selectedShippingAddress: updateProfile.profile.selectedShippingAddress
+                    selectedShippingAddress: updateProfile.selectedShippingAddress
                 }
             }
         })
@@ -73,11 +73,14 @@ const ProfileShippingAddresses = () => {
             if (id) {
                 await api.shipping.deleteAddress(id)
             }
-            let { data: { updateProfile } } = await api.profile.changeShippingAddress(profile._id, profile.selectedShippingAddress === index ? 0 : profile.selectedShippingAddress)
+            let updateProfile = await api.profile.changeShippingAddress(profile._id, profile.selectedShippingAddress === index ? 0 : profile.selectedShippingAddress)
+            if (updateProfile.shippingaddresses.length === 1) {
+                updateProfile = await api.profile.changeShippingAddress(profile._id, 0)
+            }
             dispatchCheckout({
                 type: SHIPPING_ADDRESS,
                 payload: {
-                    shippingAddress: updateProfile.profile.shippingaddresses.length > 1 ? updateProfile.profile.shippingaddresses[0] : null
+                    shippingAddress: updateProfile.shippingaddresses.length > 0 ? updateProfile.shippingaddresses[0] : null
                 }
             })
             dispatchProfile({
@@ -85,8 +88,8 @@ const ProfileShippingAddresses = () => {
                 payload: {
                     profile: {
                         ...profile,
-                        selectedShippingAddress: updateProfile.profile.selectedShippingAddress,
-                        shippingaddresses: updateProfile.profile.shippingaddresses
+                        selectedShippingAddress: updateProfile.selectedShippingAddress,
+                        shippingaddresses: updateProfile.shippingaddresses
                     }
                 }
             })
@@ -141,7 +144,12 @@ const ProfileShippingAddresses = () => {
                 <UpdateList
                     list={
                         profile.shippingaddresses.map((addr, i) => ({
-                            label: objToText(addr),
+                            label: objToText({
+                                address: addr.address,
+                                address2: addr.address2,
+                                zip: addr.zip,
+                                city: addr.city,
+                            }),
                             value: i,
                             related: addr
                         }))

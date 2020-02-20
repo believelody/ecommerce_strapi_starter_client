@@ -44,11 +44,11 @@ const ProfileBillingAddresses = () => {
     }
 
     const selectAddress = async (options, value, type, obj) => {
-        let {data: {updateProfile}} = await api.profile.changeBillingAddress(profile._id, value)
+        let updateProfile = await api.profile.changeBillingAddress(profile._id, value)
         dispatchCheckout({
             type,
             payload: {
-                [obj]: updateProfile.profile.billingaddresses[updateProfile.profile.selectedBillingAddress]
+                [obj]: updateProfile.billingaddresses[updateProfile.selectedBillingAddress]
             }
         })
         dispatchCheckout({ type: IS_SAME })
@@ -57,7 +57,7 @@ const ProfileBillingAddresses = () => {
             payload: {
                 profile: {
                     ...profile,
-                    selectedBillingAddress: updateProfile.profile.selectedBillingAddress
+                    selectedBillingAddress: updateProfile.selectedBillingAddress
                 }
             }
         })
@@ -73,11 +73,14 @@ const ProfileBillingAddresses = () => {
             if (id) {
                 await api.billing.deleteAddress(id)
             }
-            let { data: { updateProfile } } = await api.profile.changeShippingAddress(profile._id, profile.selectedBillingAddress === index ? 0 : profile.selectedBillingAddress)
+            let updateProfile = await api.profile.changeBillingAddress(profile._id, profile.selectedBillingAddress === index ? 0 : profile.selectedBillingAddress)
+            if (updateProfile.billingaddresses.length === 1) {
+                updateProfile = await api.profile.changeBillingAddress(profile._id, 0)
+            }
             dispatchCheckout({
                 type: BILLING_ADDRESS,
                 payload: {
-                    shippingAddress: updateProfile.profile.billingaddresses.length > 1 ? updateProfile.profile.billingaddresses[0] : null
+                    billingAddress: updateProfile.billingaddresses.length > 0 ? updateProfile.billingaddresses[0] : null
                 }
             })
             dispatchProfile({
@@ -85,8 +88,8 @@ const ProfileBillingAddresses = () => {
                 payload: {
                     profile: {
                         ...profile,
-                        selectedBillingAddress: updateProfile.profile.selectedBillingAddress,
-                        billingaddresses: updateProfile.profile.billingaddresses
+                        selectedBillingAddress: updateProfile.selectedBillingAddress,
+                        billingaddresses: updateProfile.billingaddresses
                     }
                 }
             })
@@ -141,7 +144,12 @@ const ProfileBillingAddresses = () => {
                 <UpdateList
                     list={
                         profile.billingaddresses.map((addr, i) => ({
-                            label: objToText(addr),
+                            label: objToText({
+                                address: addr.address,
+                                address2: addr.address2,
+                                zip: addr.zip,
+                                city: addr.city,
+                            }),
                             value: i,
                             related: addr
                         }))

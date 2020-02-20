@@ -24,10 +24,9 @@ const AuthConfirmForm = ({ handleClose }) => {
     else {
       setIsSubmitted(true)
       try {
-        console.log(user)
         const {data} = await api.profile.verifyCode(code)
         if (data.profiles[0]) {
-          await api.profile.confirmEmail(data.profiles[0]._id, true, '')
+          const res = await api.profile.confirmEmail(data.profiles[0]._id)
           toaster.success(
             `Email Verification Success`,
             {
