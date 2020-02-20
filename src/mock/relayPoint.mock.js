@@ -1,12 +1,12 @@
 export default [
     {
         label: 'Standard Delivery - $3.99',
-        value: 'relay-standard',
+        value: 0,
         price: 3.99
     },
     {
         label: 'Express Delivery - $5.99',
-        value: 'relay-express',
+        value: 1,
         price: 5.99
     }
 ]

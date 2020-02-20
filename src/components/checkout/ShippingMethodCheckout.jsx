@@ -15,11 +15,13 @@ const ShippingMethodCheckout = ({index, currentIndex, setIndex}) => {
         currentIndex={currentIndex}
         setIndex={setIndex}
         header={
-          <Pane textAlign='center'>
-            {index === currentIndex && <Icon icon='caret-right' />}
-            <Strong size={index === currentIndex ? 600 : 500}>Select a shipping method</Strong>
-            {index === currentIndex && <Icon icon='caret-left' />}
-          </Pane>
+          ({handleClick}) => (
+            <Pane textAlign='center' onClick={handleClick}>
+              {index === currentIndex && <Icon icon='caret-right' />}
+              <Strong size={index === currentIndex ? 600 : 500}>Select a shipping method</Strong>
+              {index === currentIndex && <Icon icon='caret-left' />}
+            </Pane>
+          )
         }
         content={<ShippingMethodsTab />}
       />

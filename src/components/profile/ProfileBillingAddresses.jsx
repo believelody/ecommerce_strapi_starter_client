@@ -118,7 +118,6 @@ const ProfileBillingAddresses = () => {
                 <Pane borderBottom display='flex' justifyContent='space-between'>
                     <Button
                         appearance={displaySetting ? 'primary' : 'minimal'}
-                        intent='warning'
                         onClick={toggleSetting}
                         disabled={profile.billingaddresses.length === 0}
                     >
@@ -150,6 +149,7 @@ const ProfileBillingAddresses = () => {
                     handleEdit={editAddress}
                     handleDelete={handleDelete}
                     title='Edit or Delete an address'
+                    selected={profile.selectedBillingAddress}
                 />
             }
         </Card>

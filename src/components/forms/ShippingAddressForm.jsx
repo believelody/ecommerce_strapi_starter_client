@@ -7,12 +7,12 @@ import api from '../../api'
 import { toaster } from 'evergreen-ui/commonjs/toaster'
 import { UPDATE_PROFILE } from '../../reducers/profileReducer'
 
-const ShippingAddressForm = ({ handleClose, mode, indexAddress }) => {
+const ShippingAddressForm = ({ handleClose, mode, indexAddress = -1 }) => {
   const { useCheckout, useProfile } = useAppHooks()
   const [checkoutState, dispatchCheckout] = useCheckout
   const [{profile}, dispatchProfile] = useProfile
 
-  const [addr, setAddress] = useState(mode === 'edit' && indexAddress ? {
+  const [addr, setAddress] = useState(mode === 'edit' && indexAddress > -1 ? {
     address: profile.shippingaddresses[indexAddress].address || '',
     address2: profile.shippingaddresses[indexAddress].address2 || '',
     zip: profile.shippingaddresses[indexAddress].zip || '',

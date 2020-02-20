@@ -15,7 +15,7 @@ const CartList = () => {
         <Table.TextHeaderCell flexBasis={96}>Item</Table.TextHeaderCell>
         <Table.TextHeaderCell padding={0}>Qt</Table.TextHeaderCell>
         <Table.TextHeaderCell>Amount</Table.TextHeaderCell>
-        <Table.TextHeaderCell>Option</Table.TextHeaderCell>
+        <Table.TextHeaderCell />
       </Table.Head>
       <Table.Body>
         {

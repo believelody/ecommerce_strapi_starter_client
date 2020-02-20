@@ -4,6 +4,7 @@ import ProfileAddresses from './ProfileAddresses'
 import Tabs from '../tabs/Tabs'
 import ProfileAboutMe from './ProfileAboutMe'
 import ProfileInfoAccount from './ProfileInfoAccount'
+import ProfileOrder from './ProfileOrder'
 
 const ProfileTabs = () => {
 
@@ -14,8 +15,8 @@ const ProfileTabs = () => {
                 elements={[
                     {
                         content: (
-                            <Pane>
-                                <Text>Order Tab</Text>
+                            <Pane padding={8} background='tint2'>
+                                <ProfileOrder />
                             </Pane>
                         ),
                         label: 'orders',
@@ -23,7 +24,7 @@ const ProfileTabs = () => {
                     },
                     {
                         content: (
-                            <Pane marginX='5%'>
+                            <Pane padding={8} >
                                 <ProfileAddresses />
                             </Pane>
                         ),

@@ -9,6 +9,7 @@ import ShippingAddressForm from '../forms/ShippingAddressForm'
 import UpdateList from '../list/UpdateList'
 import { OPEN_MODAL } from '../../reducers/modalReducer'
 import { UPDATE_PROFILE } from '../../reducers/profileReducer'
+import { objToText } from '../../utils/address.utils'
 
 const ProfileShippingAddresses = () => {
     const { useCheckout, useSideSheet, useModal, useProfile, useLoading } = useAppHooks()
@@ -148,6 +149,7 @@ const ProfileShippingAddresses = () => {
                     handleEdit={editAddress}
                     handleDelete={handleDelete}
                     title='Edit or Delete an address'
+                    selected={profile.selectedShippingAddress}
                 />
             }
         </Card>

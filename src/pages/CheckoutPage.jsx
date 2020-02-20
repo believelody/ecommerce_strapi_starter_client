@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Pane } from 'evergreen-ui'
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useAppHooks } from '../context';
@@ -7,12 +7,23 @@ import EntrustPayment from '../components/entrust/EntrustPayment';
 import EntrustShipping from '../components/entrust/EntrustShipping';
 import PaymentSucceedCard from '../components/payment/PaymentSucceedCard';
 import CheckoutCard from '../components/checkout/CheckoutCard';
+import { RESET_CART } from '../reducers/cartReducer';
+import { deleteCart } from '../utils/cart.utils';
 
 
 const CheckoutPage = () => {
   const  { useCart, useCheckout } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
   const [{isPaymentSucceed}, dispatchCheckout] = useCheckout
+
+  useEffect(() => {
+    if (isPaymentSucceed) {
+      setTimeout(() => {
+        dispatchCart({ type: RESET_CART })
+        deleteCart()
+      }, 10000);
+    }
+  }, [isPaymentSucceed])
 
   return (
     cart.length > 0 ?

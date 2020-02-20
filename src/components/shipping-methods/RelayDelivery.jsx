@@ -16,9 +16,8 @@ const RelayDelivery = ({ options, currentIndex }) => {
             payload: {
                 title: 'Relay Point',
                 description: 'Pick your relay point',
-                content: (
-                    <Pane>Yes we can</Pane>
-                )
+                content: ({ handleClose }) =>
+                <Pane>Yes we can</Pane>
             }
         })
     }
@@ -42,12 +41,14 @@ const RelayDelivery = ({ options, currentIndex }) => {
                 type={SHIPPING_METHOD}
                 obj="shippingMethod"
                 callback={
-                    (options, value, type, obj) => dispatchCheckout({
-                        type,
-                        payload: {
-                            [obj]: options.find(option => option.value === value)
-                        }
-                    })
+                    (options, value, type, obj) => {
+                        dispatchCheckout({
+                            type,
+                            payload: {
+                                [obj]: options[value]
+                            }
+                        })
+                    }
                 }
             />
         </Pane>

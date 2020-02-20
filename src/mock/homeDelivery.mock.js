@@ -1,12 +1,12 @@
 export default [
     {
         label: 'Standard Delivery - $4.99',
-        value: 'home-standard',
+        value: 0,
         price: 4.99
     },
     {
         label: 'Express Delivery - $7.99',
-        value: 'home-express',
+        value: 1,
         price: 7.99
     }
 ]

@@ -36,7 +36,7 @@ const RowStyle = styled.div`
   }
 `
 
-const Accordion = ({ header, content, index, currentIndex, setIndex, borderBottom }) => {
+const Accordion = ({ header: Component, content, index, currentIndex, setIndex, borderBottom }) => {
   const itemRef = useRef()
   const itemTitleRef = useRef()
   const itemContentRef = useRef()
@@ -50,14 +50,6 @@ const Accordion = ({ header, content, index, currentIndex, setIndex, borderBotto
     setIndex(currentIndex === index ? -1 : index)
   }
 
-  // const expandDiv = () => {
-  //   itemContentRef.current.style.height = `${itemContentRef.current.scrollHeight}px`
-  // }
-
-  // const reduceDiv = () => {
-  //   itemContentRef.current.style.height = `0px`
-  // }
-
   useEffect(() => {
     setExpandDiv(prevExpandDiv => ({
       ...prevExpandDiv,
@@ -65,22 +57,16 @@ const Accordion = ({ header, content, index, currentIndex, setIndex, borderBotto
     }))
   }, [currentIndex])
 
-  // useEffect(() => itemRef && itemTitleRef && itemContentRef && itemContentRef.current && itemDiv.isExpanded ? expandDiv() : reduceDiv(), [itemDiv.isExpanded])
-
-  // useEffect(() => {
-  //   if (itemRef && itemTitleRef && itemContentRef && itemContentRef.current && itemDiv.isExpanded) {
-  //     itemContentRef.current.style.height = `${itemContentRef.current.scrollHeight}px`
-  //   }
-  // })
-
   return (
     <RowStyle
       ref={itemRef}
       borderBottom={borderBottom}
       isExpanded={itemDiv.isExpanded}
     >
-      <AccordionHeader titleRef={itemTitleRef} handleClick={() => handleClick(index)}>
-        {header}
+      <AccordionHeader titleRef={itemTitleRef}>
+        {
+          !!Component && <Component handleClick={() => handleClick(index)} />
+        }
       </AccordionHeader>
       <AccordionContent contentRef={itemContentRef}>
         {content}

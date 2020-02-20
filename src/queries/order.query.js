@@ -1,11 +1,15 @@
 export const getOrdersQuery = () => `
   query {
     orders {
-      num_order,
+      _id,
+      numOrder,
       amount,
       items,
+      paymentStatus,
+      shippingStatus,
       profile {
-        username
+        _id,
+        username,
         user {
           _id,
           email
@@ -18,11 +22,15 @@ export const getOrdersQuery = () => `
 export const getOrderQuery = id => `
   query {
     order(id: '${id}') {
-      num_order,
+      _id,
+      numOrder,
       amount,
       items,
+      paymentStatus,
+      shippingStatus,
       profile {
-        username
+        _id,
+        username,
         user {
           _id,
           email

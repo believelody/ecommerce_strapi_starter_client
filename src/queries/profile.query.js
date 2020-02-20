@@ -26,14 +26,20 @@ export const getProfileByUserQuery = id => `
       birthday,
       emailConfirm,
       isSubscribed,
+      badge,
       image {
         name,
         url
       },
       orders {
-        num_order,
+        _id,
+        numOrder,
         amount,
-        items
+        items,
+        paymentStatus,
+        shippingStatus,
+        createdAt,
+        updatedAt
       },
       shippingaddresses {
         _id,

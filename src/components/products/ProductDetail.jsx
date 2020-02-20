@@ -93,7 +93,7 @@ const ProductDetail = ({ id }) => {
           </Card>
           <Card elevation={2} background='tint1' marginTop={15}>
             <Accordion
-              header={<Label name='Description' />}
+              header={({ handleClick }) => <Label name='Description' handleClick={handleClick} />}
               content={<Description text={product.description} />}
               index={0}
               currentIndex={currentIndex}
@@ -101,7 +101,7 @@ const ProductDetail = ({ id }) => {
             />
             <hr />
             <Accordion
-              header={<Label name='Reviews' />}
+              header={({ handleClick }) => <Label name='Reviews' handleClick={handleClick} />}
               content={
                 <ReviewsList reviews={product.reviews} />
               }

@@ -30,7 +30,7 @@ const HomeDelivery = ({ currentIndex, options }) => {
                     (options, value, type, obj) => dispatchCheckout({
                         type,
                         payload: {
-                            [obj]: options.find(option => option.value === value)
+                            [obj]: options[value]
                         }
                     })
                 }

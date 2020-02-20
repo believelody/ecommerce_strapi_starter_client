@@ -22,9 +22,11 @@ export const changeShippingAddressMutation = (id, selected) => `
                     url
                 },
                 orders {
-                    num_order,
+                    numOrder,
                     amount,
-                    items
+                    items,
+                    paymentStatus,
+                    shippingStatus
                 },
                 shippingaddresses {
                     _id,
@@ -71,9 +73,11 @@ export const changeBillingAddressMutation = (id, selected) => `
                     url
                 },
                 orders {
-                    num_order,
+                    numOrder,
                     amount,
-                    items
+                    items,
+                    paymentStatus,
+                    shippingStatus
                 },
                 shippingaddresses {
                     _id,
@@ -120,9 +124,11 @@ export const subscribeNewsletterMutation = (_id, checked) => `
                     url
                 },
                 orders {
-                    num_order,
+                    numOrder,
                     amount,
-                    items
+                    items,
+                    paymentStatus,
+                    shippingStatus
                 },
                 shippingaddresses {
                     _id,
@@ -170,9 +176,11 @@ export const confirmVerificationMutation = (_id, confirm, code) => `
                     url
                 },
                 orders {
-                    num_order,
+                    numOrder,
                     amount,
-                    items
+                    items,
+                    paymentStatus,
+                    shippingStatus
                 },
                 shippingaddresses {
                     _id,
@@ -222,9 +230,11 @@ export const updateInfoMutation = (_id, data) => `
                     url
                 },
                 orders {
-                    num_order,
+                    numOrder,
                     amount,
-                    items
+                    items,
+                    paymentStatus,
+                    shippingStatus
                 },
                 shippingaddresses {
                     _id,

@@ -23,6 +23,8 @@ export const register = (name, email, password) => strapi.register(name, email, 
 
 export const login = (email, password) => strapi.login(email, password)
 
+export const get = path => strapi.getEntries(path)
+
 export const create = (path, data) => strapi.createEntry(path, data)
 
 export const update = (path, id, data) => strapi.updateEntry(path, id, data)
@@ -39,10 +41,6 @@ export const resetPassword = (code, newPwd, confirmPwd) => axios.post(`${apiUrl}
 export const send = obj => strapi.request('POST', '/email', {data: obj})
 
 export const upload = async (formElement) => await strapi.upload(new FormData(formElement))
-
-export const get = (path, query) => axios.get(`${apiUrl}/${path}?user=${query}`, {
-  "Authorization": `Bearer ${getToken()}`
-})
 
 export const post = (path, data, query) => axios.post(`${apiUrl}/${path}${query}`, data, {
   "Authorization": `Bearer ${getToken()}`
