@@ -1,16 +1,21 @@
 import React from 'react'
-import { Pane, Card, Avatar } from 'evergreen-ui'
-import Label from '../label/Label'
+import { Pane, Card, Avatar, Text, Strong } from 'evergreen-ui'
 import { useAppHooks } from '../../context'
-import { deleteCart } from '../../utils/cart.utils'
-import { deleteToken } from '../../utils/token.utils'
 import { Link } from 'react-router-dom'
 import { apiUrl } from '../../api'
 
+const IconBadge = ({badge}) => (
+  <>
+    {badge == 'bronze' && <Text marginX={8}>🥉</Text>}
+    {badge == 'silver' && <Text marginX={8}>🥈</Text>}
+    {badge == 'gold' && <Text marginX={8}>🏆</Text>}
+    {badge == 'diamond' && <Text marginX={8}>💎</Text>}
+  </>
+)
+
 const UserCard = () => {
-  const {useAuth, useProfile} = useAppHooks()
-  const [{user}, dispatchAuth] = useAuth
-  const [{profile}, dispatchProfile] = useProfile
+  const {useProfile} = useAppHooks()
+  const [{ profile }, dispatchProfile] = useProfile
 
   return (
     <Pane elevation={2} marginTop={10}>
@@ -36,14 +41,16 @@ const UserCard = () => {
               src={profile && profile.image ? `${apiUrl}${profile.image.url}` : null} 
               size={100}
             />
-            <Label
-              name={
-                profile.firstname && profile.lastname ?
-                `${profile.firstname} ${profile.lastname}`:
-                profile.username
-              }
-              paddingBottom={5}
-            />
+            <Pane textAlign='center'>
+              <Strong>
+                {
+                  profile.firstname && profile.lastname ?
+                  `${profile.firstname} ${profile.lastname}` :
+                  profile.username
+                }
+              </Strong>
+              <IconBadge badge={profile.badge.toString()} />
+            </Pane>
           </Card>
         }
       </Link>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import moment from 'moment'
 import { Pane, Button, toaster } from 'evergreen-ui'
 import ProfileImage from '../profile/ProfileImage'
 import ProfileInfo from '../profile/ProfileInfo'
-import { useAppHooks } from '../../context'
+import ErrorAlert from '../alerts/ErrorAlert'
 import api, { apiUrl } from '../../api'
-import moment from 'moment'
-import { ERROR_PROFILE, UPDATE_PROFILE, RESET_PROFILE_ERRORS } from '../../reducers/profileReducer'
+import { useAppHooks } from '../../context'
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
+import { ERROR_PROFILE, UPDATE_PROFILE, RESET_PROFILE_ERRORS } from '../../reducers/profileReducer'
 
 const ProfileAboutMeForm = () => {
     const { useProfile, useLoading } = useAppHooks()
@@ -53,7 +54,7 @@ const ProfileAboutMeForm = () => {
                     let formId = e.target.id
                     await uploadFile(document.getElementById(formId))
                 }
-                const { data } = await api.profile.updateInfo(profile._id, {
+                let updateProfile = await api.profile.updateInfo(profile._id, {
                     username: info.username,
                     firstname: info.firstname,
                     lastname: info.lastname,
@@ -62,7 +63,7 @@ const ProfileAboutMeForm = () => {
                 dispatchProfile({
                     type: UPDATE_PROFILE,
                     payload: {
-                        profile: data.updateProfile.profile
+                        profile: updateProfile
                     }
                 })
                 toaster.success('Your profile has been successfully updated')
