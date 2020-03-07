@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Heading, Pane, Strong } from 'evergreen-ui'
 
-const Label = ({ name, size = 500, handleClick = null, borderBottom = false, paddingBottom = 0, width, color = '', paddingY = 0, isLink, link = null }) => {
+const Label = ({ name, size = 500, handleClick = null, borderBottom = false, paddingBottom = 0, width, color = '', paddingY = 0, link = null }) => {
 
   return (
     <Pane

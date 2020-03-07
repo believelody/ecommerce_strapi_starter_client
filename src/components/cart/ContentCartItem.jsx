@@ -42,7 +42,7 @@ const ContentCartItem = ({ item, currentIndex }) => {
       dispatchModal({
         type: OPEN_MODAL,
         payload: {
-          title: `Delete ${item.product.name} ?`,
+          title: `Remove ${item.product.name} from your cart ?`,
           msg: 'Please confirm your action. Once done, you cannot go back',
           status: 'danger',
           action: removeItem

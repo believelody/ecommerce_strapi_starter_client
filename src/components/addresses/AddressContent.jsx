@@ -24,14 +24,15 @@ const AddressContent = ({ addresses, addressForm: Component, label, checkoutObj,
                     currentIndex={currentIndex}
                     setIndex={setIndex}
                     header={
-                        <Pane padding={8}>
+                        ({ handleClick }) => (
+                        <Pane padding={8} onClick={handleClick}>
                             <Heading textAlign='center'>
                                 Your {label} Address List
                             </Heading>
                             <Paragraph style={{fontStyle: 'italic'}} size={300}>
                                 The change will only affect checkout process. To change your current {label.toLowerCase()} address, go to profile.
                             </Paragraph>
-                        </Pane>
+                        </Pane>)
                     }
                     content={
                         <AddressesList
@@ -70,11 +71,13 @@ const AddressContent = ({ addresses, addressForm: Component, label, checkoutObj,
                     currentIndex={currentIndex}
                     setIndex={setIndex}
                     header={
-                        <Pane display='flex' justifyContent='flex-end'>
-                            <Button appearance="minimal" height={24} iconBefore="plus">
-                                Add a new address
-                            </Button>
-                        </Pane>
+                        ({handleClick}) => (
+                            <Pane display='flex' justifyContent='flex-end' onClick={handleClick}>
+                                <Button appearance="minimal" height={24} iconBefore="plus">
+                                    Add a new address
+                                </Button>
+                            </Pane>
+                        )
                     }
                     content={<Component handleClose={handleClose} />}
                 />

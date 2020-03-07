@@ -7,6 +7,7 @@ import OfflineUserCard from '../user/OfflineUserCard'
 import TabMenu from '../tabs/TabMenu'
 import Footer from '../footer/Footer'
 import { useAppHooks } from '../../context'
+import LanguageMenu from '../menu/LanguageMenu'
 
 const Sidenav = ({}) => {
   const {useAuth} = useAppHooks()
@@ -31,6 +32,7 @@ const Sidenav = ({}) => {
       >
         <SidenavHeader>
           <Logo name='Brand Store' size={600} />
+          <LanguageMenu />
         </SidenavHeader>
         {
           isConnected ?

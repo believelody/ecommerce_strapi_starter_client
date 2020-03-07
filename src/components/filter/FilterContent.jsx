@@ -10,7 +10,7 @@ const COLORS = ['red', 'blue', 'green', 'black', 'grey', 'yellow', 'purple']
 
 const transformArray = array => array.map(label => ({label, value: label}))
 
-const FilterContent = ({ tags }) => {
+const FilterContent = ({ tags, handleClose }) => {
     return (
         <Pane
             width='100%'

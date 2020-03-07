@@ -21,10 +21,6 @@ const CartSidenav = ({ history }) => {
   const emptyCart = async e => {
     try {
       dispatchLoading({ type: SET_LOADING, payload: { msg: "please wait..." } })
-      // await snipcartClearItems()
-      // await snipcartShippingAddress({shippingSameAsBilling: false})
-      // await snipcartBillingAddress({shippingSameAsBilling: false})
-      // await snipcartLogoutUser()
       dispatchCart({ type: RESET_CART })
       deleteCart()
       dispatchLoading({ type: RESET_LOADING })
@@ -44,21 +40,6 @@ const CartSidenav = ({ history }) => {
       action: emptyCart
     }
   })
-
-  // const openSnipcart = async e => {
-  //   try {
-  //     if (isConnected) {
-  //       let countItems = await snipcartCountItems()
-  //       if (countItems === 0) {
-  //         await snipcartAddItem(cart)
-  //       }
-  //       await snipcartShowModal()
-  //     }
-  //   }
-  //   catch (e) {
-  //     console.log(e)
-  //   }
-  // }
 
   const redirectAndClose = handleClose => {
     history.replace('/checkout')

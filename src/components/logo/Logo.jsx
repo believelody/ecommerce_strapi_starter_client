@@ -4,8 +4,8 @@ import Label from '../label/Label'
 
 const Logo = ({ name, size }) => {
   return (
-    <Pane elevation={2} paddingY={16} borderBottom>
-      <Label size={size} name={name} />
+    <Pane padding={8} flex='auto'>
+      <Label link='/' size={size} name={name} />
     </Pane>
   )
 }

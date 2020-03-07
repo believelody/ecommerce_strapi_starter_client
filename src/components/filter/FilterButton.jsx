@@ -24,7 +24,7 @@ const FilterButton = () => {
                     payload: {
                         title: 'Products Filter',
                         description: 'Find what you search with options below',
-                        content: (
+                        content: ({ handleClose }) => (
                             <Card
                                 backgroundColor="white"
                                 elevation={0}
@@ -33,7 +33,7 @@ const FilterButton = () => {
                                 alignItems="start"
                                 justifyContent="start"
                             >
-                                <FilterContent />
+                                <FilterContent handleClose={handleClose} />
                             </Card>
                         )
                     }

@@ -20,7 +20,7 @@ import { GET_PROFILE } from './reducers/profileReducer'
 
 const App = () => {
   const { useCart, useAuth, useLoading, useCheckout, useProfile } = useAppHooks()
-  const [{cart}, dispatchCart] = useCart
+  const [cartState, dispatchCart] = useCart
   const [{user}, dispatchAuth] = useAuth
   const [loadingState, dispatchLoading] = useLoading
   const [checkoutState, dispatchCheckout] = useCheckout
@@ -46,17 +46,6 @@ const App = () => {
       dispatchCart({ type: IMPORT_CART_FROM_LOCALSTORAGE, payload: {cart: getCart()} })
     }
   }, [getCart])
-  
-  // useEffect(() => {
-    //   const removeItemsFromCart = async () => {
-      //     try {
-        //       await snipcartClearItems()
-        //     }
-        //     catch (e) {
-          //       console.log(e)
-          //     }
-          //   }
-          // }, [])
           
   useEffect(() => {
     dispatchLoading({ type: SET_LOADING })

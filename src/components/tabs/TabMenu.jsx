@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Paragraph } from 'evergreen-ui'
 import HomeTab from './HomeTab'
 import CartTab from './CartTab'
 import EmptyCart from '../cart/EmptyCart'
@@ -26,7 +25,7 @@ const TabMenu = () => {
           tab: <CartTab />
         }
       ]}
-      updateIndex={cart.length > 0 ? 1 : null}
+      updateIndex={cart.length > 0 ? 1 : 0}
     />
   )
 }
