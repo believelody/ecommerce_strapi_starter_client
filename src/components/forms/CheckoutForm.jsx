@@ -26,6 +26,17 @@ const CheckoutForm = ({ stripe }) => {
   const [currentIndex, setIndex] = useState(-1)
   const [isPaying, setIsPaying] = useState(false)
 
+  const updateSku = async (item) => {
+    let { data: { skus } } = await api.product.getProductSku(item.product._id, item.color._id, item.size._id)
+    let updatedSku = await api.product.updateSku(skus[0]._id, skus[0].unit - item.quantity)
+    return !!updatedSku
+  }
+  const updateOrder = async (item) => {
+    let { data: {product} } = await api.product.getProductNbOrder(item.product._id)
+    let updatedProductNbOrder = await api.product.updateNbOrder(product._id, product.nbOrder ? product.nbOrder + item.quantity : item.quantity)
+    return !!updatedProductNbOrder
+  }
+
   const handleSubmit = async e => {
     e.preventDefault()
     setIsPaying(true)
@@ -41,10 +52,8 @@ const CheckoutForm = ({ stripe }) => {
         paymentStatus: 'paid'
       })
       cart.forEach(async item => {
-        let { data: { skus } } = await api.product.getProductSku(item.product._id, item.color._id, item.size._id)
-        console.log(skus[0])
-        let updatedSku = await api.product.updateSku(skus[0]._id, skus[0].unit - item.quantity)
-        console.log(updatedSku)
+        await updateSku(item)
+        await updateOrder(item)
       })
       dispatchProfile({
         type: UPDATE_PROFILE,

@@ -82,3 +82,11 @@ export const getProductSkuQuery = (productId, colorId, sizeId) => `
     }
   }
 `
+export const getProductNbOrderQuery = id => `
+  query {
+    product(id: "${id}") {
+      _id,
+      nbOrder
+    }
+  }
+`
