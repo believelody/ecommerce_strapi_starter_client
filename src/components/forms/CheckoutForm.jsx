@@ -12,14 +12,14 @@ import { PAYMENT_SUCCEED, PAYMENT_FAILED } from '../../reducers/checkoutReducer'
 import isMobile from '../../utils/isMobile.utils'
 import DetailAmountCheckout from '../checkout/DetailAmountCheckout'
 import PromoCode from '../promo/PromoCode'
-import { APPLY_PROMO_CODE } from '../../reducers/cartReducer'
+import { APPLY_PROMO_CODE, RESET_CART } from '../../reducers/cartReducer'
 import paymentTextUtils from '../../utils/paymentText.utils'
 import { UPDATE_PROFILE } from '../../reducers/profileReducer'
 
 const CheckoutForm = ({ stripe }) => {
   const { useCart, useCheckout, useLoading, useProfile } = useAppHooks()
   const [{total, cart}, dispatchCart] = useCart
-  const [{errors, shippingMethod, promo, paymentMethod, shippingAddress, billingAddress}, dispatchCheckout] = useCheckout
+  const [{ errors, shippingMethod, promo, paymentMethod, shippingAddress, billingAddress, isPaymentSucceed }, dispatchCheckout] = useCheckout
   const [loadingState, dispatchLoading] = useLoading
   const [{profile}, dispatchProfile] = useProfile
 
@@ -39,6 +39,12 @@ const CheckoutForm = ({ stripe }) => {
         stripeToken: 'yes we can',
         shippingStatus: 'processing',
         paymentStatus: 'paid'
+      })
+      cart.forEach(async item => {
+        let { data: { skus } } = await api.product.getProductSku(item.product._id, item.color._id, item.size._id)
+        console.log(skus[0])
+        let updatedSku = await api.product.updateSku(skus[0]._id, skus[0].unit - item.quantity)
+        console.log(updatedSku)
       })
       dispatchProfile({
         type: UPDATE_PROFILE,
@@ -66,6 +72,10 @@ const CheckoutForm = ({ stripe }) => {
       })
     }
   }, [promo])
+
+  // useEffect(() => {
+  //   return () => dispatchCart({ type: RESET_CART })
+  // }, [isPaymentSucceed])
 
   return (
     <Card

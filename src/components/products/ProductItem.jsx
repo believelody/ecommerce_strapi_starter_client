@@ -25,8 +25,6 @@ const ProductItem = ({ product }) => {
   const COLORS = arrayColor(product.colors)
   const SIZES = arraySize(product.sizes)
 
-
-
   return (
     <ListItem
       width={320}

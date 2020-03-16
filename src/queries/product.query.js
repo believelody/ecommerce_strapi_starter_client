@@ -10,19 +10,17 @@ export const getProductsQuery = () => `
       },
       colors {
         _id,
-        name,
-        skus {
-          _id,
-          unit
-        }
+        name
       },
       sizes {
         _id,
-        name,
-        skus {
-          _id,
-          unit
-        }
+        name
+      },
+      skus {
+        _id,
+        unit,
+        color { _id },
+        size { _id }
       }
     }
   }
@@ -34,27 +32,29 @@ export const getProductQuery = id => `
       _id,
       name,
       description,
-      price
+      price,
+      skus {
+        _id,
+        unit,
+        color {
+          _id
+        },
+        size {
+          _id
+        }
+      },
       thumbnails {
         name,
         url
       },
       colors {
         _id,
-        name,
-        skus {
-          _id,
-          unit
-        }
+        name
       },
       sizes {
         _id,
-        name,
-        skus {
-          _id,
-          unit
-        }
-      }
+        name
+      },
       tags {
         _id,
         name
@@ -70,6 +70,15 @@ export const getProductQuery = id => `
           url
         }
       }
+    }
+  }
+`
+
+export const getProductSkuQuery = (productId, colorId, sizeId) => `
+  query {
+    skus(where: {product: "${productId}", color: "${colorId}", size: "${sizeId}"}) {
+      _id,
+      unit
     }
   }
 `
