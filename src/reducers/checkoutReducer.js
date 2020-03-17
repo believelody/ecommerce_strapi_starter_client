@@ -28,82 +28,82 @@ export const initCheckoutState = {
 
 export const checkoutReducer = (state, { type, payload }) => {
     switch (type) {
-        case RESET_CHECKOUT_ERRORS:
-            return {
-                ...state,
-                errors: null
-            }
-
-        case SHIPPING_ADDRESS:
+      case RESET_CHECKOUT_ERRORS:
           return {
-            ...state,
-            shippingAddress: payload.shippingAddress
+              ...state,
+              errors: null
           }
 
-        case BILLING_ADDRESS:
+      case SHIPPING_ADDRESS:
+        return {
+          ...state,
+          shippingAddress: payload.shippingAddress
+        }
+
+      case BILLING_ADDRESS:
+        return {
+          ...state,
+          billingAddress: payload.billingAddress
+        }
+
+      case UPDATE_ADDRESSES:
+        return {
+          ...state,
+          shippingAddress: payload.shippingAddress,
+          billingAddress: payload.billingAddress
+        }
+
+      case SHIPPING_METHOD:
+        return {
+          ...state,
+          shippingMethod: payload.shippingMethod
+        }
+
+      case PAYMENT_METHOD:
+        return {
+          ...state,
+          paymentMethod: payload.paymentMethod
+        }
+
+      case IS_SAME:
+        return {
+          ...state,
+          isSame: true
+        }
+
+      case IS_NOT_SAME:
+        return {
+          ...state,
+          isSame: false,
+          billingAddress: state.billingAddress
+        }
+
+      case PAYMENT_FAILED:
+          let key, value
+          Object.entries(payload).forEach(([k, v]) => {
+              key = k
+              value = v
+          })
+
           return {
-            ...state,
-            billingAddress: payload.billingAddress
+              ...state,
+              isPaymentSucceed: false,
+              errors: { ...state.errors, [key]: value }
           }
 
-        case UPDATE_ADDRESSES:
+      case PAYMENT_SUCCEED:
           return {
-            ...state,
-            shippingAddress: payload.shippingAddress,
-            billingAddress: payload.billingAddress
+              ...state,
+              isPaymentSucceed: true,
+              errors: null
           }
 
-        case SHIPPING_METHOD:
+      case CANCEL_PAYMENT:
           return {
-            ...state,
-            shippingMethod: payload.shippingMethod
+              ...state,
+              isPaymentSucceed: false,
+              errors: null
           }
-
-        case PAYMENT_METHOD:
-          return {
-            ...state,
-            paymentMethod: payload.paymentMethod
-          }
-
-        case IS_SAME:
-          return {
-            ...state,
-            isSame: true
-          }
-
-        case IS_NOT_SAME:
-          return {
-            ...state,
-            isSame: false,
-            billingAddress: state.billingAddress
-          }
-
-        case PAYMENT_FAILED:
-            let key, value
-            Object.entries(payload).forEach(([k, v]) => {
-                key = k
-                value = v
-            })
-
-            return {
-                ...state,
-                isPaymentSucceed: false,
-                errors: { ...state.errors, [key]: value }
-            }
-
-        case PAYMENT_SUCCEED:
-            return {
-                ...state,
-                isPaymentSucceed: true,
-                errors: null
-            }
-
-        case CANCEL_PAYMENT:
-            return {
-                ...state,
-                isPaymentSucceed: false,
-                errors: null
-            }
 
       case PROMO_CODE:
         return {

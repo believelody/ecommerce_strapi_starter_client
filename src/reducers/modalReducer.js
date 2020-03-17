@@ -9,7 +9,8 @@ export const initModalState = {
     children: null,
     status: 'none',
     action: null,
-    labelConfirm: null
+    labelConfirm: null,
+    noClose: false
 }
 
 export const modalReducer = (state, { type, payload }) => {
@@ -22,7 +23,8 @@ export const modalReducer = (state, { type, payload }) => {
                 title: payload.title,
                 status: payload.status,
                 action: payload.action,
-                labelConfirm: payload.labelConfirm
+                labelConfirm: payload.labelConfirm,
+                noClose: payload.noClose || false
             }
 
         case OPEN_MODAL_CHILDREN:
@@ -30,7 +32,8 @@ export const modalReducer = (state, { type, payload }) => {
             ...state,
             isOpened: true,
             children: payload.children,
-            title: payload.title || ''
+            title: payload.title || '',
+            noClose: payload.noClose || false
           }
 
         case CLOSE_MODAL:
@@ -42,7 +45,8 @@ export const modalReducer = (state, { type, payload }) => {
                 children: null,
                 status: 'none',
                 action: null,
-                labelConfirm: null
+                labelConfirm: null,
+                noClose: false,
             }
 
         default:

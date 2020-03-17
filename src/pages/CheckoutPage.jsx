@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pane } from 'evergreen-ui'
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useAppHooks } from '../context';
@@ -9,24 +9,36 @@ import PaymentSucceedCard from '../components/payment/PaymentSucceedCard';
 import CheckoutCard from '../components/checkout/CheckoutCard';
 import { RESET_CART } from '../reducers/cartReducer';
 import { deleteCart } from '../utils/cart.utils';
+import { OPEN_MODAL_CHILDREN } from '../reducers/modalReducer';
 
 
 const CheckoutPage = () => {
-  const  { useCart, useCheckout } = useAppHooks()
+  const  { useCart, useCheckout, useModal, history } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
   const [{isPaymentSucceed}, dispatchCheckout] = useCheckout
+  const [modalState, dispatchModal] = useModal
+
+  const [isRedirecting, setRedirecting] = useState(false)
 
   useEffect(() => {
     if (isPaymentSucceed) {
+      dispatchModal({
+        type: OPEN_MODAL_CHILDREN,
+        payload: {
+          children: PaymentSucceedCard,
+          noClose: true
+        }
+      })
       setTimeout(() => {
-        dispatchCart({ type: RESET_CART })
         deleteCart()
-      }, 10000);
+        setRedirecting(true)
+        dispatchCart({ type: RESET_CART })
+      }, 5000);
     }
   }, [isPaymentSucceed])
 
   return (
-    cart.length > 0 ?
+    !isRedirecting > 0 ?
     <StripeProvider apiKey={process.env.STRIPE_PUBLIC_KEY}>
       <Elements>
         <Pane
@@ -38,9 +50,7 @@ const CheckoutPage = () => {
           background='tint1'
           position='relative'
         >
-          {
-            isPaymentSucceed ? <PaymentSucceedCard /> : <CheckoutCard />
-          }
+          <CheckoutCard />
           <Pane
             width='100%'
             bottom={12}

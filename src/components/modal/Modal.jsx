@@ -5,7 +5,7 @@ import { CLOSE_MODAL } from '../../reducers/modalReducer'
 
 const Modal = () => {
   const { useModal } = useAppHooks()
-  const [{isOpened, title, msg, status, action, labelConfirm, children: Component}, dispatchModal] = useModal
+  const [{noClose, isOpened, title, msg, status, action, labelConfirm, children: Component}, dispatchModal] = useModal
 
   const [submitting, setSubmitting] = useState(false)
 
@@ -33,6 +33,9 @@ const Modal = () => {
         intent={status}
         confirmLabel={submitting ? 'Please wait ...' : labelConfirm ? labelConfirm : 'Delete'}
         hasFooter={!!Component ? false : true}
+        hasClose={!noClose}
+        shouldCloseOnOverlayClick={!noClose}
+        shouldCloseOnEscapePres={!noClose}
         isConfirmLoading={submitting}
       >
         {!!!Component && <Text>{msg || 'Please confirm your action'}</Text>}

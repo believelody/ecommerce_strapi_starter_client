@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { Card, Heading, Paragraph, Icon, Small, Code } from 'evergreen-ui'
-import { Redirect } from 'react-router-dom'
 import { useAppHooks } from '../../context'
 import { CANCEL_PAYMENT } from '../../reducers/checkoutReducer'
 
-const PaymentSucceedCard = () => {
+const PaymentSucceedCard = ({ handleClose }) => {
     const { useCheckout, useProfile } = useAppHooks()
     const [checkoutState, dispatchCheckout] = useCheckout
     const [{ profile }, dispatchProfile] = useProfile
 
-    const [isRedirecting, setRedirecting] = useState(false)
-    const [count, setCount] = useState(10)
+    const [count, setCount] = useState(5)
 
     useEffect(() => {
         setTimeout(() => {
-            setRedirecting(true)
             dispatchCheckout({type: CANCEL_PAYMENT})
-        }, 10000);
+            if (handleClose) {
+                handleClose()
+            }
+        }, 5000);
     }, [])
 
     useEffect(() => {
@@ -34,7 +34,6 @@ const PaymentSucceedCard = () => {
     }, [])
 
     return (
-        !isRedirecting ?
         <Card
             padding={32}
             margin='auto'
@@ -51,8 +50,7 @@ const PaymentSucceedCard = () => {
                We sent you an email with your invoice. Stay tuned about our new trends and happy shopping !
            </Paragraph>
             <Code>Back to home page in {count}</Code>
-        </Card> :
-        <Redirect to='/' />
+        </Card>
     )
 }
 
