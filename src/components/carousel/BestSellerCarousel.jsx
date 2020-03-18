@@ -13,6 +13,7 @@ const CarouselItem = ({ item }) => (
         height={420}
         display={isMobileUtils() ? 'block' : 'flex'}
         background='tint1'
+        overflow='hidden'
     >
         <Pane width='65%' borderLeft borderRight>
             <NavLink to={`/products/${item._id}`}>
