@@ -10,7 +10,7 @@ import isMobileUtils from '../../utils/isMobile.utils'
 const CarouselItem = ({item}) => (
     <Card
         width='100%'
-        height={380}
+        height={370}
         display={isMobileUtils() ? 'block' : 'flex'}
         background='tint1'
     >
@@ -20,7 +20,7 @@ const CarouselItem = ({item}) => (
             </Pane>
             <Pane textAlign='left' marginX={4}>
                 <Paragraph>
-                    {item.description.slice(0, 100)}...
+                    {item.description.slice(0, 99)}...
                 </Paragraph>
             </Pane>
         </Pane>
@@ -36,35 +36,33 @@ const CarouselItem = ({item}) => (
         </Pane>
         <Pane width='30%' textAlign='center'>
             <Pane marginY={8} borderBottom>
-                <Heading size={500}>💥New Product On Store !!!💥</Heading>
+                <Heading size={500}>✨New Product On Store !!!✨</Heading>
                 <Paragraph>Don't miss it, check available variants. Link below</Paragraph>
             </Pane>
-            <Pane borderBottom>
-                <UnorderedList marginY={12}>
-                    {
-                        item.colors.map((color, index) => (
-                            <Text
-                                key={index}
-                                marginX={8}
-                                paddingY={4}
-                                paddingX={8}
-                                size={400}
-                                color='white'
-                                borderRadius={2}
-                                background={`${color.name}`}
-                            >
-                                {color.name}
-                            </Text>
-                        ))
-                    }
-                </UnorderedList>
-                <UnorderedList marginY={8}>
-                    {
-                        item.sizes.map((size, index) => (
-                            <Badge key={index} isSolid marginX={16} size={300}>{size.name}</Badge>
-                        ))
-                    }
-                </UnorderedList>
+            <Pane paddingY={8}>
+                {
+                    item.colors.map((color, index) => (
+                        <Text
+                            key={index}
+                            marginX={8}
+                            paddingY={4}
+                            paddingX={8}
+                            size={400}
+                            color='white'
+                            borderRadius={2}
+                            background={`${color.name}`}
+                        >
+                            {color.name}
+                        </Text>
+                    ))
+                }
+            </Pane>
+            <Pane paddingY={8} borderBottom>
+                {
+                    item.sizes.map((size, index) => (
+                        <Badge key={index} isSolid marginX={16} size={300}>{size.name}</Badge>
+                    ))
+                }
             </Pane>
             <Pane
                 background='#F7D154'
@@ -78,7 +76,7 @@ const CarouselItem = ({item}) => (
                 <NavLink to={`/products/${item._id}`}>
                     <Button appearance='primary' intent='success'>
                         Get yours right now ❗❗❗
-                                    </Button>
+                    </Button>
                 </NavLink>
             </Pane>
         </Pane>
@@ -91,7 +89,7 @@ const NewProductCarousel = ({ items }) => {
     const handleSlidePrev = (e) => {
         carouselRef.current.slidePrev()
     }
-    
+
     const handleSlideNext = (e) => {
         carouselRef.current.slideNext()
     }

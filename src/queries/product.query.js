@@ -6,6 +6,7 @@ export const getProductsQuery = () => `
       description,
       price,
       newProduct,
+      nbOrder,
       thumbnails {
         name,
         url
@@ -36,6 +37,7 @@ export const getProductQuery = id => `
       description,
       price,
       newProduct,
+      nbOrder,
       skus {
         _id,
         unit,
