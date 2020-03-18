@@ -3,7 +3,9 @@ export const getProductsQuery = () => `
     products {
       _id
       name,
-      price
+      description,
+      price,
+      newProduct,
       thumbnails {
         name,
         url
@@ -21,7 +23,7 @@ export const getProductsQuery = () => `
         unit,
         color { _id },
         size { _id }
-      }
+      },
     }
   }
 `
@@ -33,6 +35,7 @@ export const getProductQuery = id => `
       name,
       description,
       price,
+      newProduct,
       skus {
         _id,
         unit,

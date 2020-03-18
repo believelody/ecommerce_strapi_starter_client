@@ -30,7 +30,7 @@ const ProductList = ({}) => {
   return (
     <Pane width='100%'>
       <Text width='100%' textAlign='center' size={600}>Product List</Text>
-      <UnorderedList listStyle='none'>
+      <UnorderedList listStyle='none' display='flex' flexWrap='wrap' justifyContent='space-between' marginX={16}>
         {
           products.length > 0 && products.map(product => (
             <ProductItem key={product._id} product={product} />

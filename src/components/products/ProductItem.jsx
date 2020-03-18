@@ -27,14 +27,11 @@ const ProductItem = ({ product }) => {
 
   return (
     <ListItem
-      width={320}
+      width={300}
     >
       <Card
-        height={400}
-        borderBottom
-        borderTop
-        borderLeft
-        borderRight
+        height={380}
+        border
         elevation={2}
         display='flex'
         flexDirection='column'
@@ -44,7 +41,7 @@ const ProductItem = ({ product }) => {
           <Pane width='70%'><Label name={product.name} /></Pane>
           <Badge color='orange' size={400} paddingBottom={20} marginRight={10}>$ {product.price}</Badge>
         </Pane>
-        <Slider infinite autoplay={3000}>
+        <Slider infinite>
           {
             product.thumbnails.map(thumbnail =>
               <ImageStyle

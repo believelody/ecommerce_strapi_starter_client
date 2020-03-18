@@ -11,6 +11,7 @@ import PasswordForgottenPage from '../../pages/PasswordForgottenPage'
 import ProductDetailPage from '../../pages/ProductDetailPage'
 import ProfilePage from '../../pages/ProfilePage'
 import ResetPasswordPage from '../../pages/ResetPasswordPage'
+import ProductListPage from '../../pages/ProductListPage'
 
 const Main = () => {
 
@@ -19,13 +20,14 @@ const Main = () => {
       <main>
         <Switch>
           <Route path='/' exact children={<HomePage />} />
+          <Route path='/products' exact children={<ProductListPage />} />
           <Route path='/products/:id' exact component={ProductDetailPage} />
-          <Route path='/checkout' exact component={CheckoutPage} />
           <Route path='/login' exact component={LoginPage} />
           <Route path='/register' exact component={RegisterPage} />
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />
           <Route path='/reset-password' exact component={ResetPasswordPage} />
           <PrivateRoute path='/profile' exact component={ProfilePage} />
+          <PrivateRoute path='/checkout' exact component={CheckoutPage} />
         </Switch>
       </main>
     </Pane>

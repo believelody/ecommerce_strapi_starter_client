@@ -33,7 +33,7 @@ const CheckoutForm = ({ stripe }) => {
   }
   const updateOrder = async (item) => {
     let { data: {product} } = await api.product.getProductNbOrder(item.product._id)
-    let updatedProductNbOrder = await api.product.updateNbOrder(product._id, product.nbOrder ? product.nbOrder + item.quantity : item.quantity)
+    let updatedProductNbOrder = await api.product.updateNbOrder(product._id, product.nbOrder ? product.nbOrder + 1 : 1)
     return !!updatedProductNbOrder
   }
 

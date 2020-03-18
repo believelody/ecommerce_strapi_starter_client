@@ -3,7 +3,7 @@ import { Pane, Text } from 'evergreen-ui'
 import ReactStarRatings from 'react-star-ratings'
 
 const ProductDetailRating = ({ reviews }) => {
-    const rating = reviews.reduce((acc, cur) => acc + cur.rating, 0)/reviews.length
+    const rating = reviews.length > 0 ? reviews.reduce((acc, cur) => acc + cur.rating, 0)/reviews.length : 0
 
     return (
         <Pane display='flex' alignItems='center' justifyContent='flex-start' width='50%'>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pane, Card } from 'evergreen-ui'
+import { Pane, Card, Icon } from 'evergreen-ui'
 import Accordion from '../accordions/Accordion'
 import Description from '../description/Description'
 import ProductImageGallery from '../galleries/ProductImageGallery'
@@ -14,9 +14,10 @@ import ProductDetailRating from './ProductDetailRating'
 import ProductDetailWish from './ProductDetailWish'
 import EntrustPayment from '../entrust/EntrustPayment'
 import EntrustShipping from '../entrust/EntrustShipping'
+import { Button } from 'evergreen-ui/commonjs/buttons'
 
 const ProductDetail = ({ id }) => {
-  const {useLoading} = useAppHooks()
+  const {useLoading, history} = useAppHooks()
   const [loadingState, dispatchLoading] = useLoading
 
   const [product, setProduct] = useState(null)
@@ -24,6 +25,10 @@ const ProductDetail = ({ id }) => {
 
   const COLORS = product && arrayColor(product.colors)
   const SIZES = product && arraySize(product.sizes)
+
+  const backToList = () => {
+    history.goBack()
+  }
 
   const fetchProduct = async id => {
     try {
@@ -46,6 +51,10 @@ const ProductDetail = ({ id }) => {
       {
         product &&
         <React.Fragment>
+          <Button height={40} onClick={backToList} marginBottom={16}>
+            <Icon icon='arrow-left' marginRight={8} />
+            Back to list
+          </Button>
           <Card padding={15} elevation={2} background='tint1' marginBottom={15}>
             <Pane display='flex' alignItems='start' justifyContent='space-around' flexWrap='wrap' minHeight={300}>
               <ProductImageGallery images={product.thumbnails} />
