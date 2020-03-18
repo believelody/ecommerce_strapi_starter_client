@@ -6,10 +6,6 @@ import styled from 'styled-components'
 import Label from '../label/Label'
 import ProductOptions from '../products/ProductOptions'
 import { apiUrl } from '../../api'
-import { useAppHooks } from '../../context'
-import { ADD_TO_CART, IMPORT_CART_FROM_LOCALSTORAGE } from '../../reducers/cartReducer'
-import {setCart} from '../../utils/cart.utils'
-import isMobile from '../../utils/isMobile.utils'
 import {arrayColor, arraySize} from '../../utils/product.utils'
 
 const ImageStyle = styled.div`

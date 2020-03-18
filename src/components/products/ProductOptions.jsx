@@ -11,7 +11,7 @@ import {setCart} from '../../utils/cart.utils'
 const MIN_SKU = 5
 
 const ProductOptions = ({
-  product, width, withCartButton = false, qt = 0, color = 0, size = 0, decreaseQuantity = null, increaseQuantity = null, colors, sizes, handleColor = null, handleSize = null
+  product, width, withCartButton = false, qt = 0, color = 0, size = 0, decreaseQuantity = null, increaseQuantity = null, colors, sizes, handleColor = null, handleSize = null, getQuantityFromParent = null
 }) => {
   const { useCart } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
@@ -104,6 +104,7 @@ const ProductOptions = ({
     lessThanMin()
     quantityMoreThanSku()
     noMoreItem()
+    getQuantityFromParent(quantity)
   }, [quantity, product, sku, selectedColor, selectedSize])
 
   return (
