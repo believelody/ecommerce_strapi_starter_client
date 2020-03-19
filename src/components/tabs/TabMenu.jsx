@@ -16,7 +16,7 @@ const TabMenu = () => {
       elements={[
         {
           content: <HomeMenu />,
-          label: 'home',
+          label: 'menu',
           tab: <HomeTab />
         },
         {

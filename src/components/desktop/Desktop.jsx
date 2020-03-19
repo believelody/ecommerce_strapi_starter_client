@@ -6,6 +6,7 @@ import Main from '../main/Main'
 import Loading from '../loading/Loading'
 import SideSheetNav from '../side-sheet/SideSheetNav'
 import Dialog from '../dialog/Dialog'
+import Modal from '../modal/Modal'
 
 const Desktop = () => {
   return (
@@ -21,6 +22,7 @@ const Desktop = () => {
         <Loading />
         <SideSheetNav />
         <Dialog />
+        <Modal />
       </Pane>
     </BrowserRouter>
   )

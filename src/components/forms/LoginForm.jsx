@@ -9,6 +9,7 @@ import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERRORS } from '../../reducers/authReduc
 import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { setToken } from '../../utils/token.utils'
 import { setUser } from '../../utils/user.utils'
+import { NavLink } from 'react-router-dom'
 
 const LoginForm = ({ handleClose = null }) => {
   const { useAuth, useLoading } = useAppHooks()
@@ -67,6 +68,7 @@ const LoginForm = ({ handleClose = null }) => {
       flexDirection='column'
       elevation={2}
       width='60%'
+      background='tint1'
     >
       <Pane borderBottom width='100%' paddingY={8} textAlign='center'>
         <Heading size={700}>Connect to your account</Heading>
@@ -97,6 +99,12 @@ const LoginForm = ({ handleClose = null }) => {
         }
         <Button appearance='primary'>Login</Button>
       </Pane>
+      <NavLink to='/register'>
+        <Button onClick={e => handleClose && handleClose()} appearance='minimal' intent='success'>No account? Register here!</Button>
+      </NavLink>
+      <NavLink to='/forgot-password'>
+        <Button onClick={e => handleClose && handleClose()} appearance='minimal' intent='warning'>Password forgotten? Click here!</Button>
+      </NavLink>
     </Card>
   )
 }

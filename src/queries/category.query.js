@@ -1,31 +1,43 @@
 export const getCategoriesQuery = () => `
   query {
     categories {
+      _id,
       name,
-      image {
-        name,
-        url
-      }
     }
   }
 `
 
-export const getCategoryQuery = id => `
+export const getCategoryQuery = name => `
   query {
-    category(id: '${id}') {
+    categories(where: {name: "${name}"}) {
+      _id,
       name,
       description,
-      image {
-        name,
-        url
-      },
       products {
+        _id,
         name,
+        description,
         price,
+        newProduct,
+        nbOrder,
         thumbnails {
           name,
           url
-        }
+        },
+        colors {
+          _id,
+          name
+        },
+        sizes {
+          _id,
+          name
+        },
+        skus {
+          _id,
+          unit,
+          color { _id },
+          size { _id }
+        },
       }
     }
   }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pane, Text, UnorderedList } from 'evergreen-ui'
+import { Pane, Text, UnorderedList, Heading } from 'evergreen-ui'
 import ProductItem from './ProductItem'
 import api, { apiUrl } from '../../api'
 import { useAppHooks } from '../../context'
@@ -29,7 +29,9 @@ const ProductList = ({}) => {
 
   return (
     <Pane width='100%'>
-      <Text width='100%' textAlign='center' size={600}>Product List</Text>
+      <Pane borderBottom>
+        <Heading marginBottom={8} width='100%' textAlign='center' size={600} color='white'>All Products</Heading>
+      </Pane>
       <UnorderedList listStyle='none' display='flex' flexWrap='wrap' justifyContent='space-between' marginX={16}>
         {
           products.length > 0 && products.map(product => (

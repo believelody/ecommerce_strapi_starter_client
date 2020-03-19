@@ -4,7 +4,6 @@ import 'react-animated-slider/build/horizontal.css'
 import { Pane } from 'evergreen-ui'
 import Mobile from './components/mobile/Mobile'
 import Desktop from './components/desktop/Desktop'
-import Modal from './components/modal/Modal'
 import { useAppHooks } from './context'
 import { SUCCESS_AUTH } from './reducers/authReducer'
 import { IMPORT_CART_FROM_LOCALSTORAGE } from './reducers/cartReducer'
@@ -77,7 +76,6 @@ const App = () => {
   return (
     <Pane maxHeight={window.screen.height}>
       {isMobile() ? <Mobile /> : <Desktop />}
-      <Modal />
     </Pane>
   )
 }

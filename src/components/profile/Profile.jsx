@@ -24,9 +24,9 @@ const Profile = () => {
     
     return (
         <Pane height='100%' display='flex' flexDirection='column'>
-            <Pane display='block' textAlign='center' background='blueTint' paddingY={16}>
-                <Heading size={700}>Hi <em>{user.name}</em></Heading>
-                <Paragraph>
+            <Pane display='block' textAlign='center' paddingY={16}>
+                <Heading size={700} color='white'>Hi <em>{user.name}</em></Heading>
+                <Paragraph color='white'>
                     Here you will find all informations about you and your orders.
                 </Paragraph>
             </Pane>

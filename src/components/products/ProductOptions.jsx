@@ -104,7 +104,9 @@ const ProductOptions = ({
     lessThanMin()
     quantityMoreThanSku()
     noMoreItem()
-    getQuantityFromParent(quantity)
+    if (getQuantityFromParent) {
+      getQuantityFromParent(quantity)
+    }
   }, [quantity, product, sku, selectedColor, selectedSize])
 
   return (

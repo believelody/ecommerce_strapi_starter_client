@@ -54,7 +54,7 @@ const CartSidenav = ({ history }) => {
         title: (
           <Pane textAlign='center'>
             <Heading>Please login first before checkout</Heading>
-            <Text><Small>Just take 15sec to login and finish your awesome purchase !</Small></Text>
+            <Text><Small>Just take 10sec to login and finish your awesome purchase !</Small></Text>
           </Pane>
         )
       }

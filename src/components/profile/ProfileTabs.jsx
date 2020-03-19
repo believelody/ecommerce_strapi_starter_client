@@ -9,7 +9,7 @@ import ProfileOrder from './ProfileOrder'
 const ProfileTabs = () => {
 
     return (
-        <Pane flex='1 1 auto' background='tint1'>
+        <Pane background='tint1' flex='1 1 auto'>
             <Tabs
                 marginTop={0}
                 elements={[

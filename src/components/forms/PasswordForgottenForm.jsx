@@ -35,30 +35,28 @@ const PasswordForgottenForm = ({ }) => {
   }
 
   return (
-    <Pane display='block'>
-      <Card display='block' is='form' elevation={2} onSubmit={handleSubmit} padding={20}>
-        <FieldComponent
-          label={<Label name='Email *' />}
-          description='Please enter email you use to create your account'
-          name='email'
-          type='email'
-          value={email}
-          placeholder='enter your email here'
-          handleChange={handleEmail}
-          error={errors && errors.email}
-        />
-        <Pane display='flex' justifyContent='space-around'>
-          <Button disabled={!!success} appearance='primary'>Change Password</Button>
-          <NavLink to='/login'>
-            <Button appearance='minimal'>
-              Back to login
-          </Button>
-          </NavLink>
-        </Pane>
-      </Card>
-      { errors && errors.password_change_failed && <ErrorAlert label='password_change_failed' errors={errors} /> }
+    <Card display='block' is='form' elevation={2} onSubmit={handleSubmit} padding={20} background='tint1'>
+      <FieldComponent
+        label={<Label name='Email *' />}
+        description='Please enter email you use to create your account'
+        name='email'
+        type='email'
+        value={email}
+        placeholder='enter your email here'
+        handleChange={handleEmail}
+        error={errors && errors.email}
+      />
+      <Pane display='flex' justifyContent='space-around'>
+        <Button disabled={!!success} appearance='primary'>Change Password</Button>
+        <NavLink to='/login'>
+          <Button appearance='minimal'>
+            Back to login
+        </Button>
+        </NavLink>
+      </Pane>
       { success && <SuccessAlert msg='We sent you a link to change your password. Please check your email' /> }
-    </Pane>
+      { errors && errors.password_change_failed && <ErrorAlert label='password_change_failed' errors={errors} /> }
+    </Card>
   )
 }
 

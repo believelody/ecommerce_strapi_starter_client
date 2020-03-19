@@ -21,7 +21,12 @@ const ProfileImage = ({ image, setImage, profileId }) => {
             width='30%'
             height='auto'
         >
-            <Image src={image && image.url || '/blank_profile.webp'} alt={image && image.name || 'no pics'} />
+            <Image 
+                width='100%' 
+                height='auto' 
+                src={image && image.url || '/blank_profile.webp'} 
+                alt={image && image.name || 'no pics'} 
+            />
             <FilePicker
                 width='100%'
                 onChange={handleChange}

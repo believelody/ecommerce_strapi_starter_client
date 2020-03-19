@@ -12,6 +12,7 @@ import ProductDetailPage from '../../pages/ProductDetailPage'
 import ProfilePage from '../../pages/ProfilePage'
 import ResetPasswordPage from '../../pages/ResetPasswordPage'
 import ProductListPage from '../../pages/ProductListPage'
+import CategoryDetailPage from '../../pages/CategoryDetailPage'
 
 const Main = () => {
 
@@ -22,6 +23,7 @@ const Main = () => {
           <Route path='/' exact children={<HomePage />} />
           <Route path='/products' exact children={<ProductListPage />} />
           <Route path='/products/:id' exact component={ProductDetailPage} />
+          <Route path='/categories/:name' exact component={CategoryDetailPage} />
           <Route path='/login' exact component={LoginPage} />
           <Route path='/register' exact component={RegisterPage} />
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />

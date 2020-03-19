@@ -107,6 +107,7 @@ const RegisterForm = () => {
       flexDirection='column'
       elevation={2}
       width='60%'
+      background='tint1'
     >
       <Pane borderBottom width='100%' paddingY={8} textAlign='center'>
         <Heading size={700}>Create a new account</Heading>
