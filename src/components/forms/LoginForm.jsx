@@ -28,28 +28,30 @@ const LoginForm = ({ handleClose = null }) => {
     if (!email) {
       dispatchAuth({ type: ERROR_AUTH, payload: {email: 'Email is required'}})
     }
-    if (!password) {
+    else if (!password) {
       dispatchAuth({ type: ERROR_AUTH, payload: {password: 'Password is required'}})
     }
-    dispatchLoading({ type: SET_LOADING, payload: {msg: 'Please wait a while...'} })
-    try {
-      const res = await api.user.login(email, password)
-      dispatchAuth({
+    else {
+      dispatchLoading({ type: SET_LOADING, payload: { msg: 'Please wait a while...' } })
+      try {
+        const res = await api.user.login(email, password)
+        dispatchAuth({
           type: SUCCESS_AUTH,
           payload: {
-              user: { _id: res.user._id, name: res.user.username, email: res.user.email }
+            user: { _id: res.user._id, name: res.user.username, email: res.user.email }
           }
-      })
-      setToken(res.jwt)
-      setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
-      toaster.notify(`Welcome ${res.user.username}`)
-      setEmail('')
-      setPassword('')
-      if (handleClose) {
-        handleClose()
+        })
+        setToken(res.jwt)
+        setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
+        toaster.notify(`Welcome ${res.user.username}`)
+        setEmail('')
+        setPassword('')
+        if (handleClose) {
+          handleClose()
+        }
+      } catch (e) {
+        dispatchAuth({ type: ERROR_AUTH, payload: { authFailed: e.message } })
       }
-    } catch (e) {
-      dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
     }
     dispatchLoading({ type: RESET_LOADING })
   }

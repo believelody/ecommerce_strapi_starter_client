@@ -51,46 +51,49 @@ const RegisterForm = () => {
     if (!password) {
       dispatchAuth({ type: ERROR_AUTH, payload: {password: 'Password is required'}})
     }
-    if (!confirmPassword) {
+    else if (!confirmPassword) {
       dispatchAuth({ type: ERROR_AUTH, payload: {confirmPassword: 'This field is required'}})
     }
-    if (email !== confirmEmail) {
+    else if (email !== confirmEmail) {
       dispatchAuth({ type: ERROR_AUTH, payload: {noMatch: 'Email and email confirm must be same'} })
     }
-    if (password !== confirmPassword) {
+    else if (password !== confirmPassword) {
       dispatchAuth({ type: ERROR_AUTH, payload: {noMatch: 'Password and password confirm must be same'} })
     }
-    dispatchLoading({ type: SET_LOADING })
-    try {
-      const res = await api.user.register(username, email, password)
+    else {
+      dispatchLoading({ type: SET_LOADING })
+      try {
+        const res = await api.user.register(username, email, password)
 
-      let code = generateVerifyCode()
-      await api.profile.createProfile(gender, res.user._id, res.user.username, code)
-      dispatchAuth({
+        let code = generateVerifyCode()
+        await api.profile.createProfile(gender, res.user._id, res.user.username, code)
+        dispatchAuth({
           type: SUCCESS_AUTH,
           payload: {
-              user: { _id: res.user._id, name: res.user.username, email: res.user.email }
+            user: { _id: res.user._id, name: res.user.username, email: res.user.email }
           }
-      })
-      setToken(res.jwt)
-      setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
-      setEmail('')
-      setPassword('')
+        })
+        setToken(res.jwt)
+        setUser({ _id: res.user._id, name: res.user.username, email: res.user.email })
+        setEmail('')
+        setPassword('')
 
-      await verifyEmailTemplate(
-        res.user.email,
-        `Confirm your email`,
-        `Welcome ${res.user.username}, please confirm your email with this code: ${code}. Copy and paste it the verify form. Enjoy your shopping in our store.`,
-        `<p>
+        await verifyEmailTemplate(
+          res.user.email,
+          `Confirm your email`,
+          `Welcome ${res.user.username}, please confirm your email with this code: ${code}. Copy and paste it the verify form. Enjoy your shopping in our store.`,
+          `<p>
           Welcome ${res.user.username}, please confirm your email with this code: <b>${code}</b>. Copy and paste it the verify form. Enjoy your shopping in our store.
         </p>`
-      )
-      toaster.notify(`Hello ${res.user.username}, we just send you a confirm email.`)
-    } catch (e) {
-      console.log(e.message)
-      dispatchAuth({ type: ERROR_AUTH, payload: {authFailed: e.message} })
+        )
+        dispatchLoading({ type: RESET_LOADING })
+        toaster.notify(`Hello ${res.user.username}, we just send you a confirm email.`)
+      } catch (e) {
+        console.log(e.message)
+        dispatchAuth({ type: ERROR_AUTH, payload: { authFailed: e.message } })
+        dispatchLoading({ type: RESET_LOADING })
+      }
     }
-    dispatchLoading({ type: RESET_LOADING })
   }
 
   useEffect(() => {

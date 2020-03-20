@@ -13,6 +13,7 @@ import ProfilePage from '../../pages/ProfilePage'
 import ResetPasswordPage from '../../pages/ResetPasswordPage'
 import ProductListPage from '../../pages/ProductListPage'
 import CategoryDetailPage from '../../pages/CategoryDetailPage'
+import ContactPage from '../../pages/ContactPage'
 
 const Main = () => {
 
@@ -28,6 +29,7 @@ const Main = () => {
           <Route path='/register' exact component={RegisterPage} />
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />
           <Route path='/reset-password' exact component={ResetPasswordPage} />
+          <Route path='/contact' exact component={ContactPage} />
           <PrivateRoute path='/profile' exact component={ProfilePage} />
           <PrivateRoute path='/checkout' exact component={CheckoutPage} />
         </Switch>
