@@ -16,7 +16,7 @@ const PaymentCheckout = ({index, currentIndex, setIndex}) => {
         setIndex={setIndex}
         header={
           ({handleClick}) => (
-            <Pane textAlign='center' onClick={handleClick}>
+            <Pane textAlign='center' onClick={handleClick} cursor='pointer'>
               {index === currentIndex && <Icon icon='caret-right' />}
               <Strong size={index === currentIndex ? 600 : 500}>Payment Method</Strong>
               {index === currentIndex && <Icon icon='caret-left' />}

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Pane } from 'evergreen-ui'
+import Image from '../image/Image'
 
 const EntrustShipping = () => {
     return (
-        <Pane height={120} width='auto' marginTop={4}>
-            <img
+        <Pane height={100}>
+            <Image
                 src='/shipping_carrier.png'
                 alt='shipping-entrust'
-                style={{ width: 'auto', height: '100%' }}
             />
         </Pane>
     )

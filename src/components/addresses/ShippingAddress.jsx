@@ -78,7 +78,7 @@ const ShippingAddress = ({ profile }) => {
             <Button type='button' float='right' onClick={changeAddress}>
                 Change shipping address
             </Button>
-            <Card background='tealTint' padding={8} textAlign='left'>
+            <Card padding={8} textAlign='left'>
                 {shippingAddress.address && <Paragraph>{shippingAddress.address}</Paragraph>}
                 {shippingAddress.address2 && <Paragraph>{shippingAddress.address2}</Paragraph>}
                 {shippingAddress.zip && <Paragraph>{shippingAddress.zip}</Paragraph>}

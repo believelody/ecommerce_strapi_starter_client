@@ -17,7 +17,6 @@ const ProfileShippingAddresses = () => {
     const [sideSheetState, dispatchSideSheet] = useSideSheet
     const [modalState, dispatchModal] = useModal
     const [{profile}, dispatchProfile] = useProfile
-    const [loadingState, dispatchLoading] = useLoading
 
     const [displaySetting, setDisplaySetting] = useState(false)
 
@@ -113,7 +112,7 @@ const ProfileShippingAddresses = () => {
 
     return (
         profile &&
-        <Card border minWidth={320} minHeight={300} position='relative'>
+        <Card border minWidth={320} minHeight={300} elevation={0}>
             <Pane display='block'>
                 <Pane borderBottom>
                     <Heading textAlign='center' size={500} paddingY={8}>Shipping Addresses</Heading>

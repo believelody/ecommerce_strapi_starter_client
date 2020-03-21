@@ -23,7 +23,7 @@ const Profile = () => {
     }, [profile])
     
     return (
-        <Pane height='100%' display='flex' flexDirection='column'>
+        <Pane height='100%' display='block'>
             <Pane display='block' textAlign='center' paddingY={16}>
                 <Heading size={700} color='white'>Hi <em>{user.name}</em></Heading>
                 <Paragraph color='white'>

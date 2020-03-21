@@ -141,43 +141,44 @@ const ProfileInfoAccount = () => {
     }, [profile])
 
     return (
-        <Card padding={!isMobile() ? 32 : 8}>
-            <Pane marginBottom={50} paddingBottom={16} borderBottom>
+        <Card>
+            <Pane paddingY={16} borderBottom>
                 <Heading size={700} textAlign='center'>Here you will find your sensitive data</Heading>
             </Pane>
-            <Pane 
-                width={320} 
-                display='flex' 
-                justifyContent='flex-start' 
-                alignItems='center'
+            <Pane
+                width='auto'
+                display='block'
+                padding={!isMobile() ? 32 : 8}
             >
-                <FieldComponent
-                    name='email'
-                    email='email'
-                    placeholder='Change your email'
-                    label={<Label name='Email' />}
-                    value={email}
-                    handleChange={handleEmail}
-                    errors={errors && errors.email}
-                />
-                <Button onClick={changeEmail}>Change</Button>
-            </Pane>
-            <Pane>
-                <Switch
-                    label='Subscribe to our newsletter'
-                    checked={checked}
-                    handleChange={handleSubscribe}
-                />
-            </Pane>
-            <Pane marginTop={24}>
-                <Button appearance='primary' intent='danger' onClick={handleDeleteUser}>
-                    Delete User
+                <Pane width={320}>
+                    <FieldComponent
+                        name='email'
+                        email='email'
+                        placeholder='Change your email'
+                        label={<Label name='Email' />}
+                        value={email}
+                        handleChange={handleEmail}
+                        errors={errors && errors.email}
+                    />
+                    <Button onClick={changeEmail}>Change</Button>
+                </Pane>
+                <Pane>
+                    <Switch
+                        label='Subscribe to our newsletter'
+                        checked={checked}
+                        handleChange={handleSubscribe}
+                    />
+                </Pane>
+                <Pane marginTop={24}>
+                    <Button appearance='primary' intent='danger' onClick={handleDeleteUser}>
+                        Delete User
                 </Button>
-            </Pane>
-            <Pane>
-                <Button appearance='minimal' onClick={handleLogout}>
-                    Logout
+                </Pane>
+                <Pane>
+                    <Button appearance='minimal' onClick={handleLogout}>
+                        Logout
                 </Button>
+                </Pane>
             </Pane>
         </Card>
     )

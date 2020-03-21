@@ -20,7 +20,7 @@ const AddressCheckoutTab = () => {
                 },
                 {
                     content: isSame ?
-                    <Paragraph textAlign='center' marginY='auto' paddingY={50} height='auto' backgroundColor='teal1'>
+                    <Paragraph textAlign='center' marginY='auto' paddingY={50} height='auto'>
                         Same as shipping address
                     </Paragraph> :
                     <BillingAddress profile={profile} />,

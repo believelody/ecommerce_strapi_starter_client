@@ -12,7 +12,6 @@ const RowStyle = styled.div`
   & .row-header {
     height: auto;
     line-height: 40px;
-    cursor: pointer;
 
     & .row-icon {
       margin-top: 20px;

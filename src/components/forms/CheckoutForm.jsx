@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pane, Card, Button, Text, Spinner } from 'evergreen-ui'
+import { Pane, Button, Text, Spinner } from 'evergreen-ui'
 import { injectStripe } from 'react-stripe-elements'
 import CartCheckout from '../checkout//CartCheckout'
 import AddressCheckout from '../checkout//AddressCheckout'
@@ -87,7 +87,7 @@ const CheckoutForm = ({ stripe }) => {
   // }, [isPaymentSucceed])
 
   return (
-    <Card
+    <Pane
       is='form'
       onSubmit={handleSubmit}
       minWidth={!isMobile() ? 700 : 300}
@@ -98,7 +98,6 @@ const CheckoutForm = ({ stripe }) => {
       justifyContent='center'
       flexDirection='column'
       elevation={2}
-      border
     >
       <Pane
         display='block'
@@ -158,7 +157,7 @@ const CheckoutForm = ({ stripe }) => {
           !isPaying && errors && <Text size={600} color='red'>{errors.payment_failed}</Text>
         }
       </Pane>
-    </Card>
+    </Pane>
   )
 }
 
