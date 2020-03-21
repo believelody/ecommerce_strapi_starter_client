@@ -20,7 +20,9 @@ const ContactPage = () => {
             <Pane marginBottom={16}>
                 <Heading>A question? A reclamation? Feel free to ask us your preoccupation !</Heading>
                 <Paragraph>
-                    Don't forget that you can probably find your answer in <Link to='/faq'><Strong>F.A.Q</Strong></Link>
+                    <i>
+                        Don't forget that you can probably find your answer in <Link to='/faq'><Strong>F.A.Q</Strong></Link>
+                    </i>
                 </Paragraph>
             </Pane>
             <ContactForm />

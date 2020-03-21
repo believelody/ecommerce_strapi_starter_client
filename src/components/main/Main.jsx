@@ -14,6 +14,7 @@ import ResetPasswordPage from '../../pages/ResetPasswordPage'
 import ProductListPage from '../../pages/ProductListPage'
 import CategoryDetailPage from '../../pages/CategoryDetailPage'
 import ContactPage from '../../pages/ContactPage'
+import FAQPage from '../../pages/FAQPage'
 
 const Main = () => {
 
@@ -30,6 +31,7 @@ const Main = () => {
           <Route path='/forgot-password' exact component={PasswordForgottenPage} />
           <Route path='/reset-password' exact component={ResetPasswordPage} />
           <Route path='/contact' exact component={ContactPage} />
+          <Route path='/faq' exact component={FAQPage} />
           <PrivateRoute path='/profile' exact component={ProfilePage} />
           <PrivateRoute path='/checkout' exact component={CheckoutPage} />
         </Switch>
