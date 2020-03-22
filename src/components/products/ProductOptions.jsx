@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import randomstring from 'randomstring'
 import { Pane, Menu, Button, InlineAlert, toaster, Text } from 'evergreen-ui'
-import Label from '../label/Label'
 import OptionQuantity from '../options/OptionQuantity'
 import OptionColor from '../options/OptionColor'
 import OptionSize from '../options/OptionSize'
@@ -82,7 +82,17 @@ const ProductOptions = ({
     }
     else {
       setErrors(null)
-      const newItem = {product, quantity, color: product.colors[selectedColor], size: product.sizes[selectedSize]}
+      const newItem = {
+        id: randomstring.generate({
+          length: 8,
+          charset: 'alphanumeric',
+          capitalization : 'lowercase'
+        }),
+        product,
+        quantity,
+        color: product.colors[selectedColor],
+        size: product.sizes[selectedSize]
+      }
       setCart([newItem, ...cart])
       dispatchCart({ type: ADD_TO_CART, payload: {item: newItem}})
       toaster.success(`You successfully added ${product.name} in your cart`, {
