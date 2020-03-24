@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Pane } from 'evergreen-ui'
-import Label from '../label/Label'
 import ProductOptions from '../products/ProductOptions'
 import { useAppHooks } from '../../context'
-import { ADD_TO_CART, IMPORT_CART_FROM_LOCALSTORAGE, DECREMENT_QUANTITY, INCREMENT_QUANTITY, UPDATE_COLOR, UPDATE_SIZE, QUANTITY_MAX, REMOVE_FROM_CART } from '../../reducers/cartReducer'
+import { DECREMENT_QUANTITY, INCREMENT_QUANTITY, UPDATE_COLOR, UPDATE_SIZE, QUANTITY_MAX, REMOVE_FROM_CART } from '../../reducers/cartReducer'
 import { OPEN_MODAL } from '../../reducers/modalReducer'
-import {setCart, deleteCart, getCart} from '../../utils/cart.utils'
-import isMobile from '../../utils/isMobile.utils'
+import {setCart, deleteCart} from '../../utils/cart.utils'
 import {arrayColor, arraySize} from '../../utils/product.utils'
 
 const ContentCartItem = ({ item, currentIndex }) => {
@@ -21,9 +19,6 @@ const ContentCartItem = ({ item, currentIndex }) => {
   const [{cart}, dispatchCart] = useCart
   const [modalState, dispatchModal] = useModal
 
-  // const [quantity, setQuantity] = useState(item.quantity)
-  // const [selectedColor, setColor] = useState(item.product.colors.findIndex(color => color._id === item.color._id))
-  // const [selectedSize, setSize] = useState(item.product.sizes.findIndex(size => size._id === item.size._id))
   const [errors, setErrors] = useState(null)
 
   const removeItem = () => {

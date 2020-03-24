@@ -13,15 +13,19 @@ const MIN_SKU = 5
 const ProductOptions = ({
   product, width, withCartButton = false, qt = 0, color = 0, size = 0, decreaseQuantity = null, increaseQuantity = null, colors, sizes, handleColor = null, handleSize = null, getQuantityFromParent = null
 }) => {
+
   const { useCart } = useAppHooks()
   const [{cart}, dispatchCart] = useCart
 
   const [quantity, setQuantity] = useState(0)
-  const [selectedColor, setColor] = useState(color)
-  const [selectedSize, setSize] = useState(size)
+  const [selectedColor, setColor] = useState(withCartButton ? 0 : color)
+  const [selectedSize, setSize] = useState(withCartButton ? 0 : size)
   const [sku, setSku] = useState()
   const [errors, setErrors] = useState(null)
 
+  if (product.name.includes('Combinaison') && !withCartButton) {
+    console.log('In detail: ', withCartButton, color, selectedColor, product.name)
+  }
 
   const lessThanMin = () => {
     if (sku && sku.unit <= MIN_SKU && sku.unit > 0 && quantity >= 1) {
@@ -46,7 +50,7 @@ const ProductOptions = ({
       setErrors({ moreThanSku: `Sorry, there is not enough quantity, please choose underneath.` })
     }
     else if (errors && errors.nomore) {
-      delete errors.moreThanSku  
+      setErrors({ moreThanSku: null })
     }
   }
 
@@ -73,6 +77,7 @@ const ProductOptions = ({
       setErrors({...errors, quantity: 'You have to choose at least 1 item'})
     }
     else if (cart.length > 0 && checkItemInCart(cart, product) > -1) {
+      console.log(selectedColor)
       let itemIndex = checkItemInCart(cart, product)
       let updatedCart = cart
       updatedCart[itemIndex].quantity += quantity
@@ -94,7 +99,7 @@ const ProductOptions = ({
         size: product.sizes[selectedSize]
       }
       setCart([newItem, ...cart])
-      dispatchCart({ type: ADD_TO_CART, payload: {item: newItem}})
+      dispatchCart({ type: ADD_TO_CART, payload: { item: newItem } })
       toaster.success(`You successfully added ${product.name} in your cart`, {
         description: `Item: ${product.name} x ${quantity} - Color: ${product.colors[selectedColor].name} - Size: ${product.sizes[selectedSize].name}`
       })
@@ -108,8 +113,11 @@ const ProductOptions = ({
   const _handleSize = value => {
     setSize(value)
   }
-
+  
   useEffect(() => {
+    if (product.name.includes('Combinaison') && !withCartButton) {
+      console.log('In detail: ', withCartButton, color, selectedColor, product.name)
+    }
     setSku(product.skus.find(sku => sku.color._id === product.colors[selectedColor]._id && sku.size._id === product.sizes[selectedSize]._id))
     lessThanMin()
     quantityMoreThanSku()
@@ -132,14 +140,14 @@ const ProductOptions = ({
         <Menu.Item>
           <OptionColor
             colors={colors}
-            value={withCartButton ? selectedColor : color}
+            value={selectedColor}
             handleValue={!withCartButton ? handleColor : _handleColor}
           />
         </Menu.Item>
         <Menu.Item>
           <OptionSize
             sizes={sizes}
-            value={withCartButton ? selectedSize : size}
+            value={selectedSize}
             handleValue={!withCartButton ? handleSize : _handleSize}
           />
         </Menu.Item>
